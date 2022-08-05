@@ -1,0 +1,91 @@
+[{
+  "firstname": "Admin",
+  "lastname": "Admin",
+  "username": "admin",
+  "phone": "6552321234",
+  "email": "admin@test.com",
+  "password": "123456",
+  "role": "admin",
+  "address": {
+    "country": "United States",
+    "state": "NewYork",
+    "city": "NewYork",
+    "street": "63 Wall Street",
+    "zipcode": 10005
+  }
+},{
+  "firstname": "John",
+  "lastname": "Smith",
+  "username": "john",
+  "phone": "6412321234",
+  "email": "john.smith@test.com",
+  "password": "123456",
+  "role": "operator",
+  "address": {
+    "country": "United States",
+    "state": "Illinois",
+    "city": "Franklin Park",
+    "street": "9500 Belmont Avenue",
+    "zipcode": 60131
+  }
+}, {
+  "firstname": "Anh",
+  "lastname": "Nguyen",
+  "username": "anhnguyen",
+  "phone": "1234567809",
+  "email": "ngoc.nguyen@miu.edu",
+  "password": "1234",
+  "role": "staff",
+  "address": {
+    "country": "United States",
+    "state": "Iowa",
+    "city": "Fairfield",
+    "street": "1025 South Main street",
+    "zipcode": 52556
+  }
+},{
+  "firstname": "Yen",
+  "lastname": "Truong",
+  "username": "yentruong",
+  "phone": "6418192578",
+  "email": "thi.truong@miu.edu",
+  "password": "12345678",
+  "role": "staff",
+  "address": {
+    "country": "United States",
+    "state": "Iowa",
+    "city": "Fairfield",
+    "street": "2067 LibertyVille Road",
+    "zipcode": 52556
+  }
+}, {
+  "firstname": "Peter",
+  "lastname": "Edward",
+  "username": "peter",
+  "phone": "3241234567",
+  "email": "peter.edward@test.com",
+  "password": "aaaa",
+  "role": "operator",
+  "address": {
+    "country": "United States",
+    "state": "California",
+    "city": "Los Angeles",
+    "street": "700 S Grand Avenue",
+    "zipcode": 90017
+  }
+}, {
+  "firstname": "Mike",
+  "lastname": "Deep",
+  "username": "mike",
+  "phone": "1234567889",
+  "email": "mike.deep@test.com",
+  "password": "bbbb",
+  "role": "operator",
+  "address": {
+    "country": "United States",
+    "state": "California",
+    "city": "Los Angeles",
+    "street": "813 Flower St",
+    "zipcode": 90017
+  }
+}]

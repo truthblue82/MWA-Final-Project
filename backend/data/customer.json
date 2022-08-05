@@ -1,0 +1,41 @@
+[{
+  "state": "Texas",
+  "address":{
+    "country": "United States",
+    "state": "Texas",
+    "city": "Lubbock",
+    "street": "3121 4th St",
+    "zipcode": 79409
+  },
+  "location": [-101.88302217689463, 33.602250878929226]
+}, {
+  "state": "Oklahoma",
+  "address":{
+    "country": "United States",
+    "state": "Oklahoma",
+    "city": "Clayton",
+    "street": "704 Cherokee St",
+    "zipcode": 74536
+  },
+  "location": [-95.36143097264977,34.585681721938236]
+}, {
+  "state": "Kansas",
+  "address":{
+    "country": "United States",
+    "state": "Kansas",
+    "city": "Salina",
+    "street": "242 S Santa Fe Ave",
+    "zipcode": 67401
+  },
+  "location": [-97.60981629961879, 38.84167946304576]
+}, {
+  "state": "Iowa",
+  "address":{
+    "country": "United States",
+    "state": "Iowa",
+    "city": "Jefferson",
+    "street": "1000 W Lincoln Way",
+    "zipcode": 50129
+  },
+  "location": [-94.38892531993478, 42.01720773414533]
+}]

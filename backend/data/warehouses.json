@@ -1,0 +1,105 @@
+[{
+  "name": "Warehouse A",
+  "description": "",
+  "phone": 6552321234,
+  "address": {
+    "country": "United States",
+    "state": "Iowa",
+    "city": "Fairfield",
+    "street": "1025 South Main street",
+    "zipcode": 52556
+  },
+  "location": [-91.96273867312561, 40.997760510286554],
+  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd2f", "62ecc0aa115cc0056215dd2b"]
+}, {
+  "name": "Warehouse B",
+  "description": "",
+  "phone": 6552321234,
+  "address": {
+    "country": "United States",
+    "state": "Iowa",
+    "city": "Fairfield",
+    "street": "North 4th Street",
+    "zipcode": 52556
+  },
+  "location": [-91.96733634428917, 41.01809566299682 ],
+  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29","62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+}, {
+  "name": "Warehouse C",
+  "description": "",
+  "phone": 6552321234,
+  "address": {
+    "country": "United States",
+    "state": "Kansas",
+    "city": "Winona",
+    "street": "204 Bellview Ave",
+    "zipcode": 67764
+  }, 
+  "location": [-101.24560202366379, 39.064284904224884],
+  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+}, {
+  "name": "Warehouse D",
+  "description": "",
+  "phone": 6552321234,
+  "address": {
+    "country": "United States",
+    "state": "Kansas",
+    "city": "Emporia",
+    "street": "1320 Merchant St",
+    "zipcode": 66801
+  },
+  "location": [-96.18341335915808, 38.4203988233121],
+  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29","62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+}, {
+  "name": "Warehouse E",
+  "description": "",
+  "phone": 6552321234,
+  "address": {
+    "country": "United States",
+    "state": "Oklahoma",
+    "city": "Guymon",
+    "street": "1906 US-64",
+    "zipcode": 73942
+  },
+  "location": [-101.48355548455663, 36.70200317885884],
+  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+}, {
+  "name": "Warehouse F",
+  "description": "",
+  "phone": 6552321234,
+  "address": {
+    "country": "United States",
+    "state": "Oklahoma",
+    "city": "Muskogee",
+    "street": "220 Elgin St",
+    "zipcode": 74401
+  },
+  "location": [-95.37195916895918, 35.75142495213262],
+  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+}, {
+  "name": "Warehouse G",
+  "description": "",
+  "phone": 6552321234,
+  "address": {
+    "country": "United States",
+    "state": "Texas",
+    "city": "Amarillo",
+    "street": "1400 Streit Dr",
+    "zipcode": 79106
+  },
+  "location": [-101.9176206998431, 35.20892190475899],
+  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+},{
+  "name": "Warehouse H",
+  "description": "",
+  "phone": 6552321234,
+  "address": {
+    "country": "United States",
+    "state": "Texas",
+    "city": "Austin",
+    "street": "5808 McKinney Falls Pkwy",
+    "zipcode": 78744
+  },
+  "location": [-97.72326346662197, 30.194750637519295],
+  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+}]

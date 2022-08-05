@@ -1,0 +1,20 @@
+POST http://localhost:3000/employees/fill HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+DELETE http://localhost:3000/employees/clear HTTP/1.1
+
+###
+POST http://localhost:3000/warehouses/fill hTTP/1.1
+Content-Type: application/json
+
+{}
+###
+DELETE http://localhost:3000/warehouses/clear HTTP/1.1
+
+###
+GET http://localhost:3000/warehouses/search?lat=33.602250878929226&log=-101.88302217689463 HTTP/1.1
+
+###
