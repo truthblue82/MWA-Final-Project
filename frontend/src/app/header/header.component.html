@@ -1,1 +1,14 @@
-<mat-toolbar color="primary">Header</mat-toolbar>
+<mat-toolbar color="primary">
+  <span><a routerLink="/"><mat-icon aria-hidden="false" aria-label="Home icon" fontIcon="home"></mat-icon></a></span>
+
+  <span class="spacer"></span>
+
+  <ul>
+    <li>
+      <a mat-stroked-button routerLink="/signup" routerLinkActive="mat-accent">Sign up</a>
+    </li>
+    <li>
+      <a mat-stroked-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
+    </li>
+  </ul>
+</mat-toolbar>
