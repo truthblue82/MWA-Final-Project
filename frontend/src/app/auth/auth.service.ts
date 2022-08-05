@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 
 import { Employee } from "./employee.interface";
-import { AuthData } from "./authen.interface";
+import { AuthData } from "./auth.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +16,13 @@ export class AuthService {
   createEmployee(employee: Employee) {
     return this.http.post(`${this.urlPref}/signup`, employee)
       .subscribe(response => {
-        console.log(response);
         //this.router.navigate(['/', 'employees']);
       });
   }
 
   login(authData: AuthData) {
+    console.log('authData', authData);
+
     return this.http.post(`${this.urlPref}/login`, authData)
       .subscribe(response => {
         console.log(response);

@@ -44,28 +44,39 @@ exports.signup = async (employee) => {
 };
 
 exports.login = async (username, password) => {
-  let employee;
-  Employee.find({ username: username })
+  const employee = await Employee.findOne({ username: username });
+  console.log('employee', employee);
+  if (!employee) {
+    return { code: 401, message: 'Authencation failed' };
+  }
+  const compareResult = bcrypt.compare(password, employee.password);
+  console.log('compareResult', compareResult);
+  
+  /*Employee.findOne({ username: username })
     .then(empl => {
+      console.log('empl',empl);
       if (!empl) {
+        console.log('if !empl');
         return { code: 401, message: 'Auth failed' };
       }
       employee = empl;
       return bcrypt.compare(password, empl.password);
     })
     .then(result => {
+      console.log('then 2',result);
       if (!result) {
         return { code: 401, message: 'Auth failed' };
       }
-      console.log(process.env.SECRET_KEY);
+      console.log('SECRET_KEY',process.env.SECRET_KEY);
       const token = jwt.sign({
         employeeId: employee._id,
         username: employee.username,
-        fullname: `${employee.firstname} ${employee.lastname}`
+        fullname: `${employee.firstname} ${employee.lastname}`,
+        role: employee.role
       }, process.env.SECRET_KEY, { expiresIn: "1h" });
       
       return { code: 200, token: token };
     }).catch( err => {
       return { code: 401, message: err.message };
-  })
+  })*/
 };
