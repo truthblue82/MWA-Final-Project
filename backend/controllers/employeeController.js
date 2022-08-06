@@ -17,9 +17,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  console.log(req.body);
-  const result = await login(req.body.username, req.body.password);
-  console.log('employeeController',result);
+  const result = await login(req.body.email, req.body.password);
   if (result.code === 200) {
     res.status(result.code).json({ token: result.token });
   } else

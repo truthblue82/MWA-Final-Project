@@ -83,8 +83,7 @@ export class CustomMaterialModule {
   static forRoot() {
     return {
       ngModule: CustomMaterialModule,
-      providers: [
-      ]
+      providers: []
     };
   }
 }
