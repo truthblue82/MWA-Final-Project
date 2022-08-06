@@ -14,7 +14,7 @@ exports.initData = async () => {
     });
     return { message: 'success' };
   } catch (err) {
-    return { code: 500, error: err.message };
+    return { status: 500, error: err.message };
   }
 };
 
@@ -23,7 +23,7 @@ exports.deleteAll = async () => {
     const result = await Employee.deleteMany({});
     return result;
   } catch (err) {
-    return { code: 500, error: err.message };
+    return { status: 500, error: err.message };
   }
 };
 
@@ -39,7 +39,7 @@ exports.signup = async (employee) => {
         return result;
     })
   } catch (err) {
-    return { code: 500, error: err.message };
+    return { status: 500, error: err.message };
   }
 };
 
@@ -47,7 +47,7 @@ exports.login = async (email, password) => {
   const employee = await Employee.findOne({ email: email });
   
   if (!employee) {
-    return { code: 401, error: 'Employee is not found' };
+    return { status: 401, error: 'Employee is not found' };
   }
   const match = await bcrypt.compare('' + password, employee.password);
   
@@ -61,7 +61,7 @@ exports.login = async (email, password) => {
     
     return token;
   } else {
-    return { code: 401, error: 'Password does not match' };
+    return { status: 401, error: 'Password does not match' };
   }
 };
 
@@ -70,6 +70,6 @@ exports.getAll = async () => {
     const result = await Employee.find();
     return result;
   } catch (err) {
-    return { code: 500, error: err.message };
+    return { status: 500, error: err.message };
   }
 }
