@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate, CanLoad, Route, UrlSegment, UrlTree } from '@angular/router';
+import { Router, CanActivate, CanLoad, Route } from '@angular/router';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 
