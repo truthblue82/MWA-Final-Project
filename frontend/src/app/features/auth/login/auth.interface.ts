@@ -3,5 +3,5 @@ export interface AuthData {
   email: string;
   fullname: string;
   role: string;
-  expiration: number
+  exp: number;
 }

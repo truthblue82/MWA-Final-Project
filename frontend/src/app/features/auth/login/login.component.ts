@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
         this.authenticationService.userState$.next(response);
         this.authenticationService.persistState();
         this.router.navigate(['/']);
+        //this.loading = false;
       }, error => {
         this.notificationService.openSnackBar(error.error.error);
         this.loading = false;

@@ -56,8 +56,8 @@ exports.login = async (email, password) => {
       employeeId: employee._id,
       email: employee.email,
       fullname: `${employee.firstname} ${employee.lastname}`,
-      role: employee.role
-    }, process.env.SECRET_KEY, { expiresIn: "1h" });
+      role: employee.role 
+    }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
     
     return { code: 200, token: token };
   } else {
