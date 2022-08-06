@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
-import { AuthData } from './auth.interface';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   loading!: boolean;
+  userIsAuthenticated: boolean = false;
+  private authListenerSubs!: Subscription;
 
   constructor(private router: Router,
     private titleService: Title,
@@ -25,8 +27,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Delivery Management System - Login');
-    this.authenticationService.logout();
-    this.createForm();
+    this.authListenerSubs = this.authenticationService.getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+    })
+    //this.authenticationService.logout();
+    console.log(this.userIsAuthenticated);
+    if(!this.userIsAuthenticated)
+      this.createForm();
   }
 
   private createForm() {
@@ -56,12 +64,19 @@ export class LoginComponent implements OnInit {
         }
         this.authenticationService.userState$.next(response);
         this.authenticationService.persistState();
+        this.authenticationService.setAuthStatusListener(true);
         this.router.navigate(['/']);
-        //this.loading = false;
       }, error => {
         this.notificationService.openSnackBar(error.error.error);
         this.loading = false;
       });
+  }
+
+  //add more
+  logout() {
+    this.userIsAuthenticated = false;
+    this.authenticationService.setAuthStatusListener(false);
+    this.authenticationService.logout();
   }
 
   resetPassword() {

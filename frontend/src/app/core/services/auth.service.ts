@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { delay } from 'rxjs/operators';
-import { BehaviorSubject, of, EMPTY } from 'rxjs';
+import { BehaviorSubject, of, EMPTY, Subject } from 'rxjs';
 import { AuthData } from '../../features/auth/login/auth.interface';
 import jwt_decode from "jwt-decode";
 import * as moment from 'moment';
@@ -14,9 +14,21 @@ import { environment } from '../../../environments/environment';
 export class AuthenticationService {
   userState$ = new BehaviorSubject<{ token: string }>({ token: '' });
 
+  private authStatusListener = new Subject<boolean>();
+
   constructor(private http: HttpClient,
     @Inject('LOCALSTORAGE') private localStorage: Storage) {
   }
+
+  //add
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
+
+  setAuthStatusListener(value: boolean) {
+    this.authStatusListener.next(value);
+  }
+  //end
 
   login(email: string, password: string) {
     return this.http.post<{token: string}>(`${environment.urlPref}/employees/login`, { email, password });
