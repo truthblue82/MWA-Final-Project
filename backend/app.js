@@ -6,7 +6,10 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
+const checkAuth = require('./middlewares/checkAuth');
+
 const app = express();
+
 mongoose.connect(process.env.ATLAS_MONGODB_URL_FOR_APP, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const employeeRouter = require('./routers/employeeRouter');
@@ -20,11 +23,12 @@ const logStream = fs.createWriteStream(path.join(__dirname, 'logs', 'access.log'
 
 app.use(morgan('combined', { stream: logStream }));
 
-app.use('/employees', employeeRouter);
-app.use('/warehouses', warehouseRouter);
+app.use('/employees', checkAuth, employeeRouter);
+app.use('/warehouses', checkAuth, warehouseRouter);
 
 app.use((req, res, next) => {
-    next(new Error('Page Not Found'));
+  //need to build page 404
+  next(new Error('Page Not Found'));
 })
 
 app.use((err, req, res, next) => {

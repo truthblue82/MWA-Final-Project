@@ -14,7 +14,7 @@ exports.initData = async () => {
     });
     return { message: 'success' };
   } catch (err) {
-    return { error: err.message };
+    return { code: 500, error: err.message };
   }
 };
 
@@ -23,7 +23,7 @@ exports.deleteAll = async () => {
     const result = await Employee.deleteMany({});
     return result;
   } catch (err) {
-    return { error: err.message };
+    return { code: 500, error: err.message };
   }
 };
 
@@ -39,7 +39,7 @@ exports.signup = async (employee) => {
         return result;
     })
   } catch (err) {
-    return { error: err.message };
+    return { code: 500, error: err.message };
   }
 };
 
@@ -47,9 +47,9 @@ exports.login = async (email, password) => {
   const employee = await Employee.findOne({ email: email });
   
   if (!employee) {
-    return { code: 401, message: 'Employee is not found' };
+    return { code: 401, error: 'Employee is not found' };
   }
-  const match = await bcrypt.compare(password, employee.password);
+  const match = await bcrypt.compare('' + password, employee.password);
   
   if (match) {
     const token = jwt.sign({
@@ -59,8 +59,17 @@ exports.login = async (email, password) => {
       role: employee.role 
     }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
     
-    return { code: 200, token: token };
+    return token;
   } else {
-    return { code: 401, message: 'Password does not match' };
+    return { code: 401, error: 'Password does not match' };
   }
 };
+
+exports.getAll = async () => {
+  try {
+    const result = await Employee.find();
+    return result;
+  } catch (err) {
+    return { code: 500, error: err.message };
+  }
+}
