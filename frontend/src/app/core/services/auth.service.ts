@@ -15,7 +15,7 @@ export class AuthenticationService {
   userState$ = new BehaviorSubject<{ token: string }>({ token: '' });
 
   constructor(private http: HttpClient,
-    /*@Inject('LOCALSTORAGE') private localStorage: Storage*/) {
+    @Inject('LOCALSTORAGE') private localStorage: Storage) {
   }
 
   login(email: string, password: string) {
@@ -24,14 +24,14 @@ export class AuthenticationService {
 
   logout(): void {
     this.userState$.next({ token: '' });
-    localStorage.removeItem('userState');
+    this.localStorage.removeItem('userState');
   }
   getCurrentUser(): AuthData | null {
     const decoded = this.userState$.value.token && <AuthData>jwt_decode(this.userState$.value.token);
     return decoded || null;
   }
   persistState() {
-    localStorage.setItem('userState', JSON.stringify(this.userState$.value));
+    this.localStorage.setItem('userState', JSON.stringify(this.userState$.value));
   }
 
   passwordResetRequest(email: string) {
