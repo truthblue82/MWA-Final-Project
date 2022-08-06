@@ -7,6 +7,7 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
+
 mongoose.connect(process.env.ATLAS_MONGODB_URL_FOR_APP, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const employeeRouter = require('./routers/employeeRouter');
@@ -22,5 +23,13 @@ app.use(morgan('combined', { stream: logStream }));
 
 app.use('/employees', employeeRouter);
 app.use('/warehouses', warehouseRouter);
+
+app.use((req, res, next) => {
+    next(new Error('Page Not Found'));
+})
+
+app.use((err, req, res, next) => {
+  res.status(500).json({ error: err });
+})
 
 app.listen(process.env.PORT || 3000, () => console.log('Server is running on port ' + process.env.PORT || 3000));

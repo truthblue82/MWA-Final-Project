@@ -25,10 +25,9 @@ exports.deleteAll = async () => {
 };
 
 exports.searchNearestLocation = async (query) => {
-  console.log(query);
   try {
     const { lat, log } = query;
-    const result = await Warehouse.find({ location: { $near: [log, lat] } }).limit(1).toArray();
+    const result = await Warehouse.find({ location: { $near: [log, lat] } }).limit(1);
     return result;
   } catch (err) {
     return { error: err.message };
