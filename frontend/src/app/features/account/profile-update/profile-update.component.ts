@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { mergeMap } from "rxjs";
 
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { NotificationService } from "src/app/core/services/notification.service";
 import { SpinnerService } from 'src/app/core/services/spinner.service';
 import { AccountData } from "../account.interface";
 
@@ -25,7 +26,8 @@ export class ProfileUpdateComponent implements OnInit{
     private authService: AuthenticationService,
     private fb: FormBuilder,
     private router: Router,
-    public spinnerService: SpinnerService
+    public spinnerService: SpinnerService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -119,7 +121,10 @@ export class ProfileUpdateComponent implements OnInit{
     this.authService.updateCurrentAccount({ ...this.accountProfile, ...this.form.value })
       .subscribe(response => {
         this.accountProfile = response;
+        this.notificationService.openSnackBar('Update successfully');
         //reset form: this.form.reset(); // but no need to reset
+      }, error => {
+        this.notificationService.openSnackBar(error.error.error);
       });
   }
 

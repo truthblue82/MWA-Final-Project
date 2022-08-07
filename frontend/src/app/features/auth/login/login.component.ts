@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm!: FormGroup;
   loading!: boolean;
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  //add more
+  //10KG add more
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['auth/login']);
@@ -77,5 +77,9 @@ export class LoginComponent implements OnInit {
 
   resetPassword() {
       this.router.navigate(['auth/password-reset-request']);
+  }
+
+  ngOnDestroy(): void {
+      //
   }
 }

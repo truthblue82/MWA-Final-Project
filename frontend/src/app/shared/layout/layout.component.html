@@ -15,12 +15,17 @@
 
     <span class="navbar-spacer"></span>
 
-    <button mat-button [matMenuTriggerFor]="userMenu">
+    <mat-chip [matMenuTriggerFor]="userMenu">
+      <img matChipAvatar [src]="authData.avatar" width="24" [alt]="authData.fullname" />
+      {{authData.fullname}}
+    </mat-chip>
+
+    <!-- <button mat-button [matMenuTriggerFor]="userMenu">
       <mat-icon>person</mat-icon>
       <span fxShow fxHide.xs>
-        {{userName}}
+        {{authData.fullname}}
       </span>
-    </button>
+    </button> -->
     <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
 
       <a mat-menu-item [routerLink]="['/account/profile']">

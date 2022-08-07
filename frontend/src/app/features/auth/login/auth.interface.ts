@@ -4,5 +4,6 @@ export interface AuthData {
   fullname: string;
   role: string;
   avatar: string;
+  gender: string;
   exp: number;
 }

@@ -1,3 +1,7 @@
 .profile-card {
     text-align: center;
 }
+.profile-img {
+  width: 150px;
+  margin: 0 auto;
+}

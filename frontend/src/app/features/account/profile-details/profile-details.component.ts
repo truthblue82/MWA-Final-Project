@@ -17,7 +17,8 @@ export class ProfileDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.authData = <AuthData>this.authService.getCurrentUser();
-    if (!this.authData.avatar) this.authData.avatar = this.imgUrl + '/male.jpg';
+    let defaultImg = `/${this.authData.gender}.jpg`;
+    if (!this.authData.avatar) this.authData.avatar = this.imgUrl + defaultImg;
   }
 
 }

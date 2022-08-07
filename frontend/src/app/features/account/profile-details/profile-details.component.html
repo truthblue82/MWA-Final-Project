@@ -1,5 +1,5 @@
 <div class="profile-card">
-<img [src]="authData.avatar" [alt]="authData.fullname" *ngIf="authData.avatar">
+<img mat-card-image class="profile-img" [src]="authData.avatar" [alt]="authData.fullname" *ngIf="authData.avatar">
 
   <h2 class="title">
     {{authData.fullname}}
