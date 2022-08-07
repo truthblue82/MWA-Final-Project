@@ -6,7 +6,7 @@ import { AuthData } from '../../features/auth/login/auth.interface';
 import jwt_decode from "jwt-decode";
 import * as moment from 'moment';
 
-import { environment } from '../../../environments/environment';
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<{token: string}>(`${environment.urlPref}/employees/login`, { email, password });
+    return this.http.post<{token: string}>(`${environment.baseUrl}/employees/login`, { email, password });
   }
 
   logout(): void {

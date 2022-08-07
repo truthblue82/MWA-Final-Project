@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlPref: 'http://localhost:3000'
+  baseUrl: process.env.NG_APP_BASE_URL,
+  appTitle: process.env.NG_APP_TITLE
 };
 
 /*

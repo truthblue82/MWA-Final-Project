@@ -1,15 +1,11 @@
 <div class="profile-card">
-  <img src="assets/images/user.png" [alt]="fullName">
+<img [src]="authData.avatar" [alt]="authData.fullname" *ngIf="authData.avatar">
 
   <h2 class="title">
-    {{fullName}}
+    {{authData.fullname}}
   </h2>
 
   <label>
-    {{alias}}
-  </label>
-
-  <label>
-    {{email}}
+    {{authData.email}}
   </label>
 </div>

@@ -56,7 +56,8 @@ exports.login = async (email, password) => {
       employeeId: employee._id,
       email: employee.email,
       fullname: `${employee.firstname} ${employee.lastname}`,
-      role: employee.role 
+      role: employee.role,
+      avatar: employee.avatar
     }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
     
     return token;

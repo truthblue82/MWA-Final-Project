@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   loading!: boolean;
+  appTitle: string = process.env.NG_APP_TITLE;
 
   constructor(private router: Router,
     private titleService: Title,

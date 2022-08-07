@@ -18,6 +18,7 @@ export class PasswordResetComponent implements OnInit {
   loading!: boolean;
   hideNewPassword: boolean;
   hideNewPasswordConfirm: boolean;
+  appTitle: string = process.env.NG_APP_TITLE;
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
@@ -25,7 +26,7 @@ export class PasswordResetComponent implements OnInit {
     private notificationService: NotificationService,
     private titleService: Title) {
 
-    this.titleService.setTitle('Delivery Management System - Password Reset');
+    this.titleService.setTitle(process.env.NG_APP_TITLE + ' - Password Reset');
     this.hideNewPassword = true;
     this.hideNewPasswordConfirm = true;
   }
