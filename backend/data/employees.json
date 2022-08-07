@@ -6,6 +6,8 @@
   "email": "admin@test.com",
   "password": "123456",
   "role": "admin",
+  "gender": "Female",
+  "avatar": "",
   "address": {
     "country": "United States",
     "state": "NewYork",
@@ -21,6 +23,8 @@
   "email": "john.smith@test.com",
   "password": "123456",
   "role": "operator",
+  "gender": "Male",
+  "avatar": "",
   "address": {
     "country": "United States",
     "state": "Illinois",
@@ -36,6 +40,8 @@
   "email": "ngoc.nguyen@miu.edu",
   "password": "1234",
   "role": "staff",
+  "gender": "Female",
+  "avatar": "",
   "address": {
     "country": "United States",
     "state": "Iowa",
@@ -51,6 +57,8 @@
   "email": "thi.truong@miu.edu",
   "password": "12345678",
   "role": "staff",
+  "gender": "Female",
+  "avatar": "",
   "address": {
     "country": "United States",
     "state": "Iowa",
@@ -66,6 +74,8 @@
   "email": "peter.edward@test.com",
   "password": "aaaa",
   "role": "operator",
+  "gender": "Male",
+  "avatar": "",
   "address": {
     "country": "United States",
     "state": "California",
@@ -81,6 +91,8 @@
   "email": "mike.deep@test.com",
   "password": "bbbb",
   "role": "operator",
+  "gender": "Male",
+  "avatar": "",
   "address": {
     "country": "United States",
     "state": "California",

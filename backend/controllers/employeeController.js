@@ -51,8 +51,7 @@ exports.getEmployeeById = async (req, res) => {
 };
 
 exports.updateEmployeeById = async (req, res) => {
-  const employee = req.body;
-  const result = await updateEmployeeById(req.params.id, employee);
+  const result = await updateEmployeeById(req);
   if (result && result.status)
     res.status(result.status).json({ error: result.error });
   else res.status(200).json({ result: result });

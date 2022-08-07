@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const Employee = require('../models/employees');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 exports.initData = async () => {
   try {
@@ -85,13 +86,24 @@ exports.getEmployeeById = async (id) => {
   }
 };
 
-exports.updateEmployeeById = async (id, employee) => {
+exports.updateEmployeeById = async (request) => {
+  const { id } = request.params;
+  const employee = request.body;
+  const pictureName = Date.now() + path.extname(request.file.originalname);
+  const picturePath = path.join('/', 'images', pictureName);
+  employee.avatar = picturePath;
   try {
     const result = await Employee.findOneAndUpdate({ _id: id }, employee);
     return employee;
   } catch (err) {
     return { status: 500, error: err.message };
   }
+
+    // try {
+    //   return await Students.updateOne({ _id: request.params.id }, { picture: picturePath });
+    // } catch (err) {
+    //   return { error: err.message };
+    // }
 };
 
 exports.updateEmployeePassword = async (id, password) => {
