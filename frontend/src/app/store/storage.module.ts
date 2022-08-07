@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import * as reducer from './reducer';
-import { OrderEffects } from './order/order.effect';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../../environments/environment';
+import { reducers } from '.';
+import { OrderEffects } from './effects/order.effects';
 
 @NgModule({
   imports: [
-    StoreModule.forRoot(reducer.fromOrder.reducer),
-    EffectsModule.forRoot([ OrderEffects])
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([ OrderEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   exports: [StoreModule]
 })

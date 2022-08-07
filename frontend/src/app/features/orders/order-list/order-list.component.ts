@@ -1,46 +1,126 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Title } from '@angular/platform-browser';
-import { NotificationService } from 'src/app/core/services/notification.service';
-import { Order } from '../../../models/order.model';
-import { State } from "../../../store/reducer";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  AfterViewInit,
+} from "@angular/core";
+import { Order } from "../../../models/order";
+import { MatSort, Sort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { GlobalState } from "../../../store/states/global.state";
 import { Store, select } from "@ngrx/store";
-import { selectAllOrders } from "../../../store/order/order.selector";
+import {
+  selectAllOrder,
+  selectOrderTotal,
+  selectOrderError,
+  selectOrderLoading,
+} from "../../../store/selectors/order.selectors";
+import {
+  loadingOrders,
+} from "../../../store/actions/order.actions";
+import { MatPaginator } from "@angular/material/paginator";
+import { Observable, merge, Subject, Subscription } from "rxjs";
+import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 @Component({
-  selector: 'app-order-list',
-  templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.css']
+  selector: "app-order-list",
+  templateUrl: "./order-list.component.html",
+  styleUrls: ["./order-list.component.scss"],
 })
-export class OrderListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'sender_name', 'receiver_name', 'receiver_phone'];
-  dataSource!: MatTableDataSource<Order>;
-  noData: Order[] = [<Order>{}];
+export class OrderListComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
+  @ViewChild(MatSort, { static: false })
+  sort!: MatSort;
+  @ViewChild(MatPaginator, { static: false })
+  paginator!: MatPaginator;
 
-  // @ViewChild(MatSort, { static: true })
-  // sort: MatSort = new MatSort;
+  public displayedColumns: string[] = [
+    "id",
+    "role",
+    "firstName",
+    "lastName",
+    "amount",
+  ];
+  public dataSource!: MatTableDataSource<Order>;
+  public orderTotal!: number;
+  public noData: Order[] = [<Order>{}];
+  public loading!: boolean;
+  public error$!: Observable<boolean>;
+  public filterSubject = new Subject<string>();
+  public defaultSort: Sort = { active: "role", direction: "asc" };
 
-  constructor(
-    private notificationService: NotificationService,
-    private titleService: Title,
-    private store: Store<State>
-  ) { }
+  private filter: string = "";
+  private subscription: Subscription = new Subscription();
 
-  ngOnInit() {
-    this.titleService.setTitle('angular-material-template - Customers');
-    this.notificationService.openSnackBar('Orders loaded');
-    //this.dataSource.sort = this.sort;
-    console.log(">>>>>>");
+  constructor(public store: Store<GlobalState>) {}
+
+  public ngOnInit(): void {
     this.store
-      .pipe(select(selectAllOrders))
+      .pipe(select(selectAllOrder))
       .subscribe((orders) => this.initializeData(orders));
+    this.store
+      .pipe(select(selectOrderTotal))
+      .subscribe((total) => (this.orderTotal = total));
+    this.subscription.add(
+      this.store.pipe(select(selectOrderLoading)).subscribe((loading) => {
+        if (loading) {
+          this.dataSource = new MatTableDataSource(this.noData);
+        }
+        this.loading = loading;
+      })
+    );
+    this.error$ = this.store.pipe(select(selectOrderError));
+  }
+
+  public ngAfterViewInit(): void {
+    this.loadOrders();
+    let filter$ = this.filterSubject.pipe(
+      debounceTime(150),
+      distinctUntilChanged(),
+      tap((value: string) => {
+        this.paginator.pageIndex = 0;
+        this.filter = value;
+      })
+    );
+
+    let sort$ = this.sort.sortChange.pipe(
+      tap(() => (this.paginator.pageIndex = 0))
+    );
+
+    this.subscription.add(
+      merge(filter$, sort$, this.paginator.page)
+        .pipe(tap(() => this.loadOrders()))
+        .subscribe()
+    );
+  }
+
+  private loadOrders(): void {
+    this.store.dispatch(
+      loadingOrders({
+        params: {
+          filter: this.filter.toLocaleLowerCase(),
+          pageIndex: this.paginator.pageIndex,
+          pageSize: this.paginator.pageSize,
+          sortDirection: this.sort.direction,
+          sortField: this.sort.active,
+        },
+      })
+    );
   }
 
   private initializeData(orders: Order[]): void {
-    console.log("11111111111", orders);
     this.dataSource = new MatTableDataSource(
       orders.length ? orders : this.noData
     );
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  public retry(): void {
+    this.loadOrders();
   }
 }

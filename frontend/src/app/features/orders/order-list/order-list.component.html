@@ -1,42 +1,67 @@
-<div class="container" fxLayout="row" fxLayoutAlign="center none">
-  <div fxFlex="95%">
+<div class="order-content">
+    <div class="table-header">
+        <div class="dc-h3 header">
+          Orders ({{orderTotal}})
+        </div>
+        <div class="search-bar">
+          <input class="dc-search" placeholder="Search Order" (keyup)="filterSubject.next($any($event.target).value)">
+        </div>
+      </div>
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort matSortDisableClear="true"
+      [matSortActive]="defaultSort.active" [matSortDirection]="defaultSort.direction">
 
-    <mat-card>
-      <mat-card-content>
-        <h2>Orders</h2>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell class="dc-content" *matCellDef="let element">{{element.id}} </td>
+      </ng-container>
 
-        <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="role">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell class="dc-content" *matCellDef="let element">{{element.role}} </td>
+      </ng-container>
 
-          <!-- Position Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-          </ng-container>
-        
-          <!-- Name Column -->
-          <ng-container matColumnDef="sender_name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sender Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.sender_name}} </td>
-          </ng-container>
-        
-          <!-- Weight Column -->
-          <ng-container matColumnDef="receiver_name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Receiver Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.receiver_name}} </td>
-          </ng-container>
-        
-          <!-- receiver_phone Column -->
-          <ng-container matColumnDef="receiver_phone">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Receiver Phone </th>
-            <td mat-cell *matCellDef="let element"> {{element.receiver_phone}} </td>
-          </ng-container>
-        
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        
-      </mat-card-content>
-    </mat-card>
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>First Name</th>
+        <td mat-cell class="dc-content" *matCellDef="let element"> {{ element.firstName }} </td>
+      </ng-container>
 
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Last Name</th>
+        <td mat-cell class="dc-content" *matCellDef="let element">{{element.lastName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+          <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Amount</th>
+          <td mat-cell class="dc-content" *matCellDef="let element">{{element.amount}} </td>
+        </ng-container>
+
+      <ng-container matColumnDef="noData">
+        <td mat-cell class="dc-label no-data-cell" *matCellDef="let element"
+          [attr.colspan]="displayedColumns.length">
+          <ng-container *ngIf="!(error$ | async) && !loading">
+            <span class="dc-content">No Orders</span>
+          </ng-container>
+          <ng-container *ngIf="(error$ | async) && !loading">
+            <span class="dc-label">System Failure</span>
+            <span class="dc-content">Error</span>
+            <span class="retry" (click)="retry()">Retry</span>
+          </ng-container>
+          <ng-container *ngIf="loading">
+              <span class="dc-label">Retrieving data...</span>  
+            </ng-container>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></tr>
+      <ng-container *ngIf="orderTotal && !loading">
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="order-row"></tr>
+      </ng-container>
+      <ng-container *ngIf="!orderTotal || loading">
+        <tr mat-row *matRowDef="let row; columns: ['noData'];"class="no-data-row" ></tr>
+      </ng-container>
+    </table>
+
+    <mat-paginator [length]="orderTotal" [pageSize]="3"  [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
   </div>
 </div>

@@ -1,8 +1,12 @@
 export interface Order {
-    id?: string;
-    sender_name: string;
-    receiver_name: string;
-    receiver_phone: string;
+    id: string;
+    role: string;
+    firstName: string;
+    lastName: string;
+    amount: number;
+    // sender_name: string;
+    // receiver_name: string;
+    // receiver_phone: string;
     // receiver_address: {
     //     street: string,
     //     city: string,
