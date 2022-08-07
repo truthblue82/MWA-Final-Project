@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
     //this.authenticationService.logout();
     const user = this.authenticationService.getCurrentUser();
     if (!user) {
-      console.log('if not user')
       this.createForm();
     }
     else this.logout();

@@ -29,7 +29,7 @@ exports.deleteAll = async () => {
 
 exports.signup = async (employee) => {
   try {
-    const bcryptPassword = bcrypt.hash(employee.password, 10)
+    bcrypt.hash(employee.password, 10)
       .then(async hash => {
         const employee = new Employee({
           ...employee,
@@ -73,4 +73,36 @@ exports.getAll = async () => {
   } catch (err) {
     return { status: 500, error: err.message };
   }
-}
+};
+
+exports.getEmployeeById = async (id) => {
+  try {
+    const result = await Employee.findOne({ _id: id });
+    return result;
+  } catch (err) {
+    return { status: 500, error: err.message };
+  }
+};
+
+exports.updateEmployeeById = async (id, employee) => {
+  try {
+    const result = await Employee.findOneAndUpdate({ _id: id }, employee);
+    const updatedEmp = { ...result, ...employee };
+    console.log(updatedEmp);
+    return updatedEmp;
+  } catch (err) {
+    return { status: 500, error: err.message };
+  }
+};
+
+exports.updateEmployeePassword = async (id, password) => {
+  try {
+    bcrypt.hash(password, 10)
+      .then(async hash => {
+        const result = await Employee.findOneAndUpdate({ _id: id }, { password: hash });
+        return result;
+    })
+  } catch (err) {
+    return { status: 500, error: err.message };
+  }
+};

@@ -3,6 +3,7 @@ export interface AccountData {
   lastname: string;
   phone: string;
   email: string;
+  username: string;
   role: string;
   avatar: string;
   gender: string;
