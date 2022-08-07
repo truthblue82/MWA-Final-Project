@@ -14,21 +14,9 @@ import { environment } from '../../../environments/environment';
 export class AuthenticationService {
   userState$ = new BehaviorSubject<{ token: string }>({ token: '' });
 
-  private authStatusListener = new Subject<boolean>();
-
   constructor(private http: HttpClient,
     @Inject('LOCALSTORAGE') private localStorage: Storage) {
   }
-
-  //add
-  getAuthStatusListener() {
-    return this.authStatusListener.asObservable();
-  }
-
-  setAuthStatusListener(value: boolean) {
-    this.authStatusListener.next(value);
-  }
-  //end
 
   login(email: string, password: string) {
     return this.http.post<{token: string}>(`${environment.urlPref}/employees/login`, { email, password });
@@ -39,8 +27,21 @@ export class AuthenticationService {
     this.localStorage.removeItem('userState');
   }
   getCurrentUser(): AuthData | null {
-    const decoded = this.userState$.value.token && <AuthData>jwt_decode(this.userState$.value.token);
-    return decoded || null;
+    let decoded;
+    if (this.userState$.value.token) {
+      decoded = <AuthData>jwt_decode(this.userState$.value.token);
+    } else {
+      const tk = <any>this.localStorage.getItem('userState');
+      if (tk) {
+        this.userState$.next(tk);
+        decoded = <AuthData>jwt_decode(tk);
+      } else {
+        decoded = null;
+      }
+    }
+    //const decoded = this.userState$.value.token && <AuthData>jwt_decode(this.userState$.value.token);
+
+    return decoded;
   }
   persistState() {
     this.localStorage.setItem('userState', JSON.stringify(this.userState$.value));

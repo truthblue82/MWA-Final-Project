@@ -9,6 +9,7 @@ const employeeSchema = new Schema({
   phone: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, required: true },
+  avatar: { type: String},
   address: { 
     country: { type: String },
     state: { type: String },

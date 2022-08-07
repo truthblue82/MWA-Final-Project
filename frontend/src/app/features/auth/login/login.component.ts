@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
 
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -16,8 +15,6 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   loading!: boolean;
-  userIsAuthenticated: boolean = false;
-  private authListenerSubs!: Subscription;
 
   constructor(private router: Router,
     private titleService: Title,
@@ -27,14 +24,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Delivery Management System - Login');
-    this.authListenerSubs = this.authenticationService.getAuthStatusListener()
-      .subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
-    })
+
     //this.authenticationService.logout();
-    console.log(this.userIsAuthenticated);
-    if(!this.userIsAuthenticated)
+    const user = this.authenticationService.getCurrentUser();
+    if (!user) {
+      console.log('if not user')
       this.createForm();
+    }
+    else this.logout();
   }
 
   private createForm() {
@@ -64,7 +61,6 @@ export class LoginComponent implements OnInit {
         }
         this.authenticationService.userState$.next(response);
         this.authenticationService.persistState();
-        this.authenticationService.setAuthStatusListener(true);
         this.router.navigate(['/']);
       }, error => {
         this.notificationService.openSnackBar(error.error.error);
@@ -74,9 +70,8 @@ export class LoginComponent implements OnInit {
 
   //add more
   logout() {
-    this.userIsAuthenticated = false;
-    this.authenticationService.setAuthStatusListener(false);
     this.authenticationService.logout();
+    this.router.navigate(['auth/login']);
   }
 
   resetPassword() {
