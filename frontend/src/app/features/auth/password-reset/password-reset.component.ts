@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-password-reset',
@@ -18,7 +19,7 @@ export class PasswordResetComponent implements OnInit {
   loading!: boolean;
   hideNewPassword: boolean;
   hideNewPasswordConfirm: boolean;
-  appTitle: string = process.env.NG_APP_TITLE;
+  appTitle: string = environment.appTitle;
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
@@ -26,7 +27,7 @@ export class PasswordResetComponent implements OnInit {
     private notificationService: NotificationService,
     private titleService: Title) {
 
-    this.titleService.setTitle(process.env.NG_APP_TITLE + ' - Password Reset');
+    this.titleService.setTitle(environment.appTitle + ' - Password Reset');
     this.hideNewPassword = true;
     this.hideNewPasswordConfirm = true;
   }

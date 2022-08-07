@@ -4,14 +4,14 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 
 const appRoutes: Routes = [
-  // {
-  //   path: 'auth',
-  //   loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
-  // },
+  {
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
+  },
   {
     path: 'orders',
     loadChildren: () => import('./features/orders/orders.module').then(m => m.OrdersModule),
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'account',

@@ -5,20 +5,20 @@ import {
   OnDestroy,
   AfterViewInit,
 } from "@angular/core";
-import { Order } from "../../../models/order";
+import { Order } from "src/app/models/order";
 import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { GlobalState } from "../../../store/states/global.state";
+import { GlobalState } from "src/app/store/states/global.state";
 import { Store, select } from "@ngrx/store";
 import {
   selectAllOrder,
   selectOrderTotal,
   selectOrderError,
   selectOrderLoading,
-} from "../../../store/selectors/order.selectors";
+} from "src/app/store/selectors/order.selectors";
 import {
   loadingOrders,
-} from "../../../store/actions/order.actions";
+} from "src/app/store/actions/order.actions";
 import { MatPaginator } from "@angular/material/paginator";
 import { Observable, merge, Subject, Subscription } from "rxjs";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";

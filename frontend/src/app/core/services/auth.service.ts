@@ -55,9 +55,14 @@ export class AuthenticationService {
   }
 
   updateCurrentAccount(accountData: AccountData) {
-    //
+    console.log('updateCurrentAccount', accountData);
+    if (accountData.avatar === '\"') {
+      accountData.avatar = "";
+    }
+    return this.http.put<AccountData>(`${environment.backendUrl}/employees/${accountData._id}`, accountData);
   }
-  //
+
+  //from now is not check by 10KG
 
   passwordResetRequest(email: string) {
     return of(true).pipe(delay(1000));

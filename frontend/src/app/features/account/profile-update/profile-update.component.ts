@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { mergeMap } from "rxjs";
 
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { SpinnerService } from 'src/app/core/services/spinner.service';
 import { AccountData } from "../account.interface";
 
 
@@ -14,8 +15,6 @@ import { AccountData } from "../account.interface";
 })
 export class ProfileUpdateComponent implements OnInit{
   accountProfile!: AccountData;
-  isLoading: boolean = false;
-  //disableSubmit!: boolean;
   selectedRole!: string;
   selectedGender!: string;
   roles: Array<string> = ['admin', 'staff', 'operator'];
@@ -25,42 +24,24 @@ export class ProfileUpdateComponent implements OnInit{
     private ar: ActivatedRoute,
     private authService: AuthenticationService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    public spinnerService: SpinnerService
   ) { }
 
   ngOnInit(): void {
-    this.isLoading = true;
-    this.form = this.fb.group({
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
-      phone: [Validators.required, Validators.pattern('/(\d)+/')],
-      email: [Validators.required, Validators.email],
-      username: [Validators.required, Validators.pattern('/[a-zA-Z0-9]+/')],
-      role: [Validators.required],
-      avatar: [],
-      gender: [Validators.required]
-    });
+    this.buildAccountFrom();
+
     this.ar.paramMap.pipe(
       mergeMap(() => this.authService.getCurrentAccount())
     )
-      .subscribe(account => {
-        this.isLoading = false;
-        this.accountProfile = account;
-        this.selectedGender = this.accountProfile.gender ? this.accountProfile.gender : '';
-        this.selectedRole = this.accountProfile.role ? this.accountProfile.role : '';
-        this.form.setValue({
-          firstname: this.accountProfile.firstname,
-          lastname: this.accountProfile.lastname,
-          phone: this.accountProfile.phone,
-          email: this.accountProfile.email,
-          username: this.accountProfile.username,
-          role: this.accountProfile.role,
-          avatar: this.accountProfile.avatar,
-          gender: this.accountProfile.gender
-        })
+    .subscribe(account => {
+      this.accountProfile = account;
+      this.setRolesByAccount(account.role);
+      this.selectedGender = this.accountProfile.gender ? this.accountProfile.gender : '';
+      this.selectedRole = this.accountProfile.role ? this.accountProfile.role : '';
+      this.setFormValue(account);
     })
 
-        //this.editForm.get('title')?.patchValue(this.todo.title);
     // this.form = new FormGroup({
     //   'firstname': new FormControl(null, {validators: [Validators.required]}),
     //   'lastname': new FormControl(null, { validators: [Validators.required] }),
@@ -91,14 +72,58 @@ export class ProfileUpdateComponent implements OnInit{
     // });
   }
 
+  private buildAccountFrom() {
+    this.form = this.fb.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      phone: [Validators.required, Validators.pattern('^[0-9]{10}$')],
+      email: [Validators.required, Validators.email],
+      username: [Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,}$')],
+      role: [Validators.required],
+      avatar: [],
+      gender: [Validators.required]
+    });
+  }
+
+  private setFormValue(data: AccountData) {
+    this.form.setValue({
+        firstname: data.firstname,
+        lastname: data.lastname,
+        phone: data.phone,
+        email: data.email,
+        username: data.username,
+        role: data.role,
+        avatar: data.avatar,
+        gender: data.gender
+      });
+  }
+
+  private setRolesByAccount(role: string) {
+    switch (role) {
+      case 'staff':
+        this.roles = ['staff', 'operator']
+        break;
+      case 'operator':
+        this.roles = ['operator'];
+        break;
+      default:
+        break;
+    }
+  }
+
   onUpdateAccount() {
     if (this.form.invalid) {
       return;
     }
-    this.isLoading = true;
-    this.authService.updateCurrentAccount({ ...this.accountProfile, ...this.form.value });
-      // .subscribe(response => {
-      //   //reset form: this.form.reset(); // but no need to reset
-      // });
+    console.log('form value', this.form.value);
+    this.authService.updateCurrentAccount({ ...this.accountProfile, ...this.form.value })
+      .subscribe(response => {
+        this.accountProfile = response;
+        //reset form: this.form.reset(); // but no need to reset
+      });
+  }
+
+  setPropertyFormValue(propName: string, newValue: string) {
+    this.form.value[propName] = newValue;
   }
 }

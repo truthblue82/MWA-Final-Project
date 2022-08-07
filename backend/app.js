@@ -23,6 +23,8 @@ const logStream = fs.createWriteStream(path.join(__dirname, 'logs', 'access.log'
 
 app.use(morgan('combined', { stream: logStream }));
 
+app.use('/images', express.static(path.join(__dirname, 'assets', 'images')));
+
 app.use('/employees', checkAuth, employeeRouter);
 app.use('/warehouses', checkAuth, warehouseRouter);
 

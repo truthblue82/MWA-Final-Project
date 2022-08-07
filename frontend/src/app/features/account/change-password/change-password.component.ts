@@ -60,7 +60,7 @@ export class ChangePasswordComponent implements OnInit {
 
     this.authService.changePassword(email, this.currentPassword, this.newPassword)
       .subscribe(
-        //YEN fix for deprecated
+        //10KG need to update here
         response => {
           this.form.reset();
           this.notificationService.openSnackBar('Your password has been changed.');

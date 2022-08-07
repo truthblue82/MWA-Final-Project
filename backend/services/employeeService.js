@@ -57,7 +57,8 @@ exports.login = async (email, password) => {
       email: employee.email,
       fullname: `${employee.firstname} ${employee.lastname}`,
       role: employee.role,
-      avatar: employee.avatar
+      avatar: employee.avatar,
+      gender: employee.gender
     }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
     
     return token;
@@ -87,9 +88,7 @@ exports.getEmployeeById = async (id) => {
 exports.updateEmployeeById = async (id, employee) => {
   try {
     const result = await Employee.findOneAndUpdate({ _id: id }, employee);
-    const updatedEmp = { ...result, ...employee };
-    console.log(updatedEmp);
-    return updatedEmp;
+    return employee;
   } catch (err) {
     return { status: 500, error: err.message };
   }

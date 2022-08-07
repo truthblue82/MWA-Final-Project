@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   loading!: boolean;
-  appTitle: string = process.env.NG_APP_TITLE;
+  appTitle: string = environment.appTitle;
 
   constructor(private router: Router,
     private titleService: Title,

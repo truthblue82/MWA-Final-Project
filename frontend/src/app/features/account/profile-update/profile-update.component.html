@@ -1,29 +1,49 @@
 <mat-card>
-  <form [formGroup]="form" (submit)="onUpdateAccount()" *ngIf="!isLoading">
+  <mat-spinner color="primary" *ngIf="spinnerService.visibility | async"></mat-spinner>
+  <form [formGroup]="form" (submit)="onUpdateAccount()">
     <mat-form-field>
-      <input matInput type="text" placeholder="Firstname" formControlName="firstname" />
+      <input matInput type="text"
+      placeholder="Firstname"
+      formControlName="firstname" />
+
       <mat-error *ngIf="form.controls['firstname'].hasError('required')">Please enter firstname.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="text" placeholder="Lastname" formControlName="lastname" />
+      <input matInput type="text"
+      placeholder="Lastname"
+      formControlName="lastname" />
+
       <mat-error *ngIf="form.controls['lastname'].hasError('required')">Please enter lastname.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="text" placeholder="Username"
-      formControlName="usename" [disabled]="true" />
-      <mat-error *ngIf="form.controls['username'].hasError('required') || form.controls['username'].getError('required')">Please enter username.</mat-error>
+      <input matInput type="text"
+      placeholder="Username"
+      formControlName="username"
+      [readonly]="true" />
+
+      <mat-error *ngIf="form.controls['username'].hasError('required') || form.controls['username'].hasError('required')">Please enter username.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="email" placeholder="Email" formControlName="email" [disabled]="true" />
-      <mat-error *ngIf="form.controls['email'].getError('required') || form.controls['email'].getError('email')">Please enter valid email.</mat-error>
+      <input matInput
+      type="email"
+      placeholder="Email"
+      formControlName="email"
+      [readonly]="true" />
+
+      <mat-error *ngIf="form.controls['email'].hasError('required') || form.controls['email'].hasError('email')" >Please enter valid email.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" placeholder="Phone" formControlName="phone" />
-      <mat-error *ngIf="form.controls['phone'].getError('required') || form.controls['phone'].getError('pattern')">Please enter valid phone.</mat-error>
+      <input matInput
+      type="number"
+      placeholder="Phone"
+      formControlName="phone"
+      />
+
+      <mat-error *ngIf="form.controls['phone'].hasError('required') || form.controls['phone'].hasError('pattern')">Please enter valid phone.</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Employee roles</mat-label>
-      <mat-select [(value)]="selectedRole">
+      <mat-select [(value)]="selectedRole" (selectionChange)="setPropertyFormValue('role', $event.value)">
         <mat-option *ngFor="let role of roles" [value]="role">
           {{role}}
         </mat-option>
@@ -31,16 +51,16 @@
     </mat-form-field>
     <div>
       <button mat-stroked-button type="button" (click)="filePicker.click()">Upload avatar</button>
-      <input type="file" #filePicker/>
+      <input type="file" #filePicker />
     </div>
     <mat-form-field appearance="fill">
       <mat-label>Gender</mat-label>
-      <mat-select [(value)]="selectedGender">
+      <mat-select [(value)]="selectedGender" (selectionChange)="setPropertyFormValue('gender', $event.value)">
         <mat-option value="Female">Female</mat-option>
         <mat-option value="Male">Male</mat-option>
       </mat-select>
     </mat-form-field>
     <!-- address -->
-    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Update</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Update</button>
   </form>
 </mat-card>
