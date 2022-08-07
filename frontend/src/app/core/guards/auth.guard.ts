@@ -12,7 +12,8 @@ export class AuthGuard implements CanActivate {
     private notificationService: NotificationService,
     private authService: AuthenticationService) { }
 
-  canActivate() {
+
+  canActivate(): boolean {
     const user = this.authService.getCurrentUser();
     if (user && user.exp) {
 

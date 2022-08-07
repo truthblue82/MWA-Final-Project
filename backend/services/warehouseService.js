@@ -11,7 +11,7 @@ exports.initData = async () => {
     
     return { message: 'success' };
   } catch (err) {
-    return { code: 500, error: err.message };
+    return { status: 500, error: err.message };
   }
 };
 
@@ -20,7 +20,7 @@ exports.deleteAll = async () => {
     const result = await Warehouse.deleteMany({});
     return result;
   } catch (err) {
-    return { code: 500, error: err.message };
+    return { status: 500, error: err.message };
   }
 };
 
@@ -30,6 +30,6 @@ exports.searchNearestLocation = async (query) => {
     const result = await Warehouse.find({ location: { $near: [log, lat] } }).limit(1);
     return result;
   } catch (err) {
-    return { code: 500, error: err.message };
+    return { status: 500, error: err.message };
   }
 };

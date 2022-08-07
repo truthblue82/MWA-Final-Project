@@ -5,6 +5,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { AccountPageComponent } from './account-page/account-page.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
+import { ProfileUpdateComponent } from './profile-update/profile-update.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -13,7 +14,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
     AccountRoutingModule
   ],
-  declarations: [AccountPageComponent, ChangePasswordComponent, ProfileDetailsComponent],
+  declarations: [
+    AccountPageComponent,
+    ChangePasswordComponent,
+    ProfileDetailsComponent,
+    ProfileUpdateComponent
+  ],
   exports: [AccountPageComponent]
 })
 export class AccountModule { }

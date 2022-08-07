@@ -5,7 +5,6 @@ import { Title } from '@angular/platform-browser';
 
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
-import { AuthData } from './auth.interface';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   loading!: boolean;
+  appTitle: string = process.env.NG_APP_TITLE;
 
   constructor(private router: Router,
     private titleService: Title,
@@ -25,8 +25,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Delivery Management System - Login');
-    this.authenticationService.logout();
-    this.createForm();
+
+    //this.authenticationService.logout();
+    const user = this.authenticationService.getCurrentUser();
+    if (!user) {
+      this.createForm();
+    }
+    else this.logout();
   }
 
   private createForm() {
@@ -57,14 +62,19 @@ export class LoginComponent implements OnInit {
         this.authenticationService.userState$.next(response);
         this.authenticationService.persistState();
         this.router.navigate(['/']);
-        //this.loading = false;
       }, error => {
         this.notificationService.openSnackBar(error.error.error);
         this.loading = false;
       });
   }
 
+  //add more
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['auth/login']);
+  }
+
   resetPassword() {
-      this.router.navigate(['/password-reset-request']);
+      this.router.navigate(['auth/password-reset-request']);
   }
 }

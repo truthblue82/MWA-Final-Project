@@ -1,12 +1,13 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { delay } from 'rxjs/operators';
-import { BehaviorSubject, of, EMPTY } from 'rxjs';
+import { BehaviorSubject, of, EMPTY, Subject } from 'rxjs';
 import { AuthData } from '../../features/auth/login/auth.interface';
 import jwt_decode from "jwt-decode";
 import * as moment from 'moment';
 
-import { environment } from '../../../environments/environment';
+import { environment } from "src/environments/environment";
+import { AccountData } from 'src/app/features/account/account.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<{token: string}>(`${environment.urlPref}/employees/login`, { email, password });
+    return this.http.post<{token: string}>(`${environment.backendUrl}/employees/login`, { email, password });
   }
 
   logout(): void {
@@ -27,12 +28,36 @@ export class AuthenticationService {
     this.localStorage.removeItem('userState');
   }
   getCurrentUser(): AuthData | null {
-    const decoded = this.userState$.value.token && <AuthData>jwt_decode(this.userState$.value.token);
-    return decoded || null;
+    let decoded;
+    if (this.userState$.value.token) {
+      decoded = <AuthData>jwt_decode(this.userState$.value.token);
+    } else {
+      const tk = <any>this.localStorage.getItem('userState');
+      if (tk) {
+        this.userState$.next(tk);
+        decoded = <AuthData>jwt_decode(tk);
+      } else {
+        decoded = null;
+      }
+    }
+    //const decoded = this.userState$.value.token && <AuthData>jwt_decode(this.userState$.value.token);
+
+    return decoded;
   }
+
   persistState() {
     this.localStorage.setItem('userState', JSON.stringify(this.userState$.value));
   }
+
+  getCurrentAccount() {
+    const loginUser = this.getCurrentUser();
+    return this.http.get<AccountData>(`${environment.backendUrl}/employees/${loginUser?.employeeId}`);
+  }
+
+  updateCurrentAccount(accountData: AccountData) {
+    //
+  }
+  //
 
   passwordResetRequest(email: string) {
     return of(true).pipe(delay(1000));

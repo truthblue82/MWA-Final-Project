@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxEnvModule } from '@ngx-env/core';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -9,6 +10,7 @@ import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { StorageModule } from './store/storage.module';
 import { OrderService } from './services/order.service';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { OrderService } from './services/order.service';
     SharedModule,
     CustomMaterialModule.forRoot(),
     AppRoutingModule,
-    StorageModule
+    StorageModule,
+    NgxEnvModule
   ],
   providers: [OrderService],
   bootstrap: [AppComponent]

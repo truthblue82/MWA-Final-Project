@@ -37,8 +37,7 @@ import { AdminGuard } from './guards/admin.guard';
     },
     { provide: 'LOCALSTORAGE', useValue: window.localStorage }
   ],
-  exports: [
-  ]
+  exports: []
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

@@ -16,6 +16,7 @@ export class PasswordResetRequestComponent implements OnInit {
   private email!: string;
   form!: FormGroup;
   loading!: boolean;
+  appTitle: string = process.env.NG_APP_TITLE;
 
   constructor(private authService: AuthenticationService,
     private notificationService: NotificationService,
@@ -23,7 +24,7 @@ export class PasswordResetRequestComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Delivery Management System - Password Reset Request');
+    this.titleService.setTitle(process.env.NG_APP_TITLE + ' - Password Reset Request');
 
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email])

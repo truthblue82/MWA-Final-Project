@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { AuthData } from '../../auth/login/auth.interface';
 
 @Component({
   selector: 'app-profile-details',
@@ -8,15 +10,12 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 })
 export class ProfileDetailsComponent implements OnInit {
 
-  fullName: string = "";
-  email: string = "";
-  alias: string = "";
+  authData!: AuthData;
 
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
-    this.fullName = <string>this.authService.getCurrentUser()?.fullname;
-    this.email = <string>this.authService.getCurrentUser()?.email;
+    this.authData = <AuthData>this.authService.getCurrentUser();
   }
 
 }
