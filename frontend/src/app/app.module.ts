@@ -7,7 +7,8 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { AppRoutingModule } from './app-routing.module';
-import { environment } from '../environments/environment';
+import { StorageModule } from './store/storage.module';
+import { OrderService } from './services/order.service';
 
 @NgModule({
   declarations: [
@@ -19,8 +20,10 @@ import { environment } from '../environments/environment';
     CoreModule,
     SharedModule,
     CustomMaterialModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    StorageModule
   ],
+  providers: [OrderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
