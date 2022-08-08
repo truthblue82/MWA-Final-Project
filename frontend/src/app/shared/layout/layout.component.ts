@@ -6,7 +6,8 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { SpinnerService } from '../../core/services/spinner.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { environment } from 'src/environments/environment';
-import { AuthData } from 'src/app/features/auth/login/auth.interface';
+//import { AuthData } from 'src/app/features/auth/login/auth.interface';
+import { AccountData } from 'src/app/features/account/account.interface';
 
 @Component({
   selector: 'app-layout',
@@ -17,10 +18,12 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private _mobileQueryListener: () => void;
   mobileQuery: MediaQueryList;
-  authData!: AuthData;
-  imgUrl: string = environment.backendUrl + '/images';
+  //authData!: AuthData;
+  accountProfile!: AccountData;
+  imgUrl: string = environment.backendUrl;
   isAdmin: boolean = false;
   appTitle: string = environment.appTitle;
+  fullname!: string;
 
   //private autoLogoutSubscription: Subscription = new Subscription;
 
@@ -37,11 +40,16 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.authData = <AuthData>this.authService.getCurrentUser();
-
-    this.isAdmin = this.authData?.role === 'admin' ? true: false;
-    let defaultImg = `/${this.authData?.gender}.jpg`;
-    if (!this.authData?.avatar) this.authData.avatar = this.imgUrl + defaultImg;
+    //10KG
+    //this.authData = <AuthData>this.authService.getCurrentUser();
+    this.authService.getCurrentAccount().subscribe(account => {
+      this.accountProfile = account;
+      let defaultImg = `/images/${account.gender}.jpg`;
+      if (!account.avatar) account.avatar = this.imgUrl + defaultImg;
+      else account.avatar = this.imgUrl + account.avatar;
+      this.fullname = `${account.firstname} ${account.lastname}`;
+      this.isAdmin = this.accountProfile?.role === 'admin' ? true : false;
+    });
 
     // Auto log-out subscription
     // const timer$ = timer(2000, 5000);

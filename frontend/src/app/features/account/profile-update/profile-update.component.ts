@@ -96,8 +96,9 @@ export class ProfileUpdateComponent implements OnInit{
     }
     this.authService.updateCurrentAccount({ ...this.accountProfile, ...this.form.value })
       .subscribe(response => {
-        this.accountProfile = response.result;
+        this.accountProfile = response;
         this.notificationService.openSnackBar('Update successful');
+        //this.router.navigate(['account/profile']);
         //reset form: this.form.reset(); // but no need to reset
       }, error => {
         this.notificationService.openSnackBar(error.error.error);

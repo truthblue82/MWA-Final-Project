@@ -45,8 +45,18 @@
       <mat-error *ngIf="form.controls['phone'].hasError('required') || form.controls['phone'].hasError('pattern')">Please enter valid phone.</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
+      <mat-label>Employee gender</mat-label>
+      <mat-select formControlName="gender" [(value)]="selectedGender"
+        (selectionChange)="setPropertyFormValue('gender', $event.value)">
+        <mat-option *ngFor="let gender of genders" [value]="gender">
+          {{gender}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Employee roles</mat-label>
-      <mat-select formControlName="role" [(value)]="selectedRole" (selectionChange)="setPropertyFormValue('role', $event.value)">
+      <mat-select formControlName="role" [(value)]="selectedRole"
+        (selectionChange)="setPropertyFormValue('role', $event.value)">
         <mat-option *ngFor="let role of roles" [value]="role">
           {{role}}
         </mat-option>
@@ -61,14 +71,6 @@
     <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
       <img [src]="imagePreview" [alt]="form.value.fullname">
     </div>
-    <mat-form-field appearance="fill">
-      <mat-label>Employee gender</mat-label>
-      <mat-select formControlName="gender" [(value)]="selectedGender" (selectionChange)="setPropertyFormValue('gender', $event.value)">
-        <mat-option *ngFor="let gender of genders" [value]="gender">
-          {{gender}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
     <!-- address -->
     <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Update</button>
   </form>

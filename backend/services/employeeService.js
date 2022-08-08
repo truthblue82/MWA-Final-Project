@@ -56,10 +56,10 @@ exports.login = async (email, password) => {
     const token = jwt.sign({
       employeeId: employee._id,
       email: employee.email,
-      fullname: `${employee.firstname} ${employee.lastname}`,
-      role: employee.role,
-      avatar: employee.avatar,
-      gender: employee.gender
+      //fullname: `${employee.firstname} ${employee.lastname}`,
+      //role: employee.role,
+      //avatar: employee.avatar,
+      //gender: employee.gender
     }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
     
     return token;
@@ -91,11 +91,12 @@ exports.updateEmployeeById = async (request) => {
   const employee = request.body;
 
   if (request.file && request.file.originalname) {
-    const pictureName = Date.now() + path.extname(request.file.originalname);
+    //const pictureName = Date.now() + path.extname(request.file.originalname);
+    const pictureName = request.file.originalname;
     const picturePath = path.join('/', 'images', pictureName);
     employee.avatar = picturePath;
     employee.address = JSON.parse(employee.address);
-    employee.gender = employee.gender[0];
+    employee.gender = employee.gender;
   }
 
   try {

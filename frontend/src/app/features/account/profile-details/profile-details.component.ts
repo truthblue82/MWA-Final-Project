@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { AuthData } from '../../auth/login/auth.interface';
 import { environment } from 'src/environments/environment';
+import { AccountData } from '../account.interface';
 
 @Component({
   selector: 'app-profile-details',
@@ -10,15 +11,24 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./profile-details.component.css']
 })
 export class ProfileDetailsComponent implements OnInit {
-  authData!: AuthData;
-  imgUrl: string = environment.backendUrl + '/images';
+  accountProfile!: AccountData;
+  imgUrl: string = environment.backendUrl;
+  fullname!: string;
+  mailTo!: string;
 
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
-    this.authData = <AuthData>this.authService.getCurrentUser();
-    let defaultImg = `/${this.authData.gender}.jpg`;
-    if (!this.authData.avatar) this.authData.avatar = this.imgUrl + defaultImg;
+    //10KG
+    //this.authData = <AuthData>this.authService.getCurrentUser();
+    this.authService.getCurrentAccount().subscribe(account => {
+      this.accountProfile = account;
+      let defaultImg = `/images/${account.gender}.jpg`;
+      if (!account.avatar) account.avatar = this.imgUrl + defaultImg;
+      else account.avatar = this.imgUrl + account.avatar;
+      this.fullname = `${account.firstname} ${account.lastname}`;
+      this.mailTo = 'mailTo:' + account.email;
+    })
   }
 
 }

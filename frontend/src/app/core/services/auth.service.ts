@@ -58,17 +58,17 @@ export class AuthenticationService {
     if (typeof accountData.file !== 'string') {
       const postData = new FormData();
       postData.append('image', accountData.file, accountData.avatar);
+      postData.append('role', accountData.role);
       postData.append('gender', accountData.gender);
       postData.append('firstname', accountData.firstname);
       postData.append('lastname', accountData.lastname);
       postData.append('phone', accountData.phone);
-      postData.append('role', accountData.role);
-      postData.append('gender', accountData.gender);
+      postData.append('username', accountData.username);
       postData.append('address', JSON.stringify(accountData.address));
 
-      return this.http.post<any>(`${environment.backendUrl}/employees/${accountData._id}`, postData);
+      return this.http.post<AccountData>(`${environment.backendUrl}/employees/${accountData._id}`, postData);
     }
-    else return this.http.put<any>(`${environment.backendUrl}/employees/${accountData._id}`, accountData);
+    else return this.http.put<AccountData>(`${environment.backendUrl}/employees/${accountData._id}`, accountData);
   }
 
   //from now is not check by 10KG

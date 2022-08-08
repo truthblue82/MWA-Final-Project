@@ -47,14 +47,14 @@ exports.getEmployeeById = async (req, res) => {
   const result = await getEmployeeById(req.params.id);
   if (result && result.status)
     res.status(result.status).json({ error: result.error });
-  else res.status(200).json(result );
+  else res.status(200).json(result);
 };
 
 exports.updateEmployeeById = async (req, res) => {
   const result = await updateEmployeeById(req);
   if (result && result.status)
     res.status(result.status).json({ error: result.error });
-  else res.status(200).json({ result: result });
+  else res.status(200).json(result);
 };
 
 exports.updateEmployeePassword = async (req, res) => {

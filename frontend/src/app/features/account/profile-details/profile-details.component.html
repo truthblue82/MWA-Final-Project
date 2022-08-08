@@ -1,10 +1,12 @@
 <div class="profile-card">
-<img mat-card-image class="profile-img" [src]="authData.avatar" [alt]="authData.fullname" *ngIf="authData.avatar">
+<img mat-card-image class="profile-img" [src]="accountProfile.avatar" [alt]="fullname" *ngIf="accountProfile.avatar">
 
   <h2 class="title">
-    {{authData.fullname}}
+    {{fullname}}
   </h2>
   <label>
-    {{authData.email}}
+    <a [href]="mailTo">
+    {{accountProfile.email}}
+    </a>
   </label>
 </div>
