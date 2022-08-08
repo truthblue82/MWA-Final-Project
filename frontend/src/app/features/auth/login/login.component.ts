@@ -28,11 +28,12 @@ export class LoginComponent implements OnInit {
     this.titleService.setTitle('Delivery Management System - Login');
 
     //this.authenticationService.logout();
-    const user = this.authenticationService.getCurrentUser();
-    if (!user) {
-      this.createForm();
-    }
-    else this.logout();
+    //const user = this.authenticationService.getCurrentUser();
+
+    this.createForm();
+
+    if (this.router.url === '/auth/logout')
+      this.logout();
   }
 
   private createForm() {

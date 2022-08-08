@@ -15,6 +15,8 @@ export class ProfileDetailsComponent implements OnInit {
   imgUrl: string = environment.backendUrl;
   fullname!: string;
   mailTo!: string;
+  avatar!: string;
+  email!: string;
 
   constructor(private authService: AuthenticationService) { }
 
@@ -23,9 +25,12 @@ export class ProfileDetailsComponent implements OnInit {
     //this.authData = <AuthData>this.authService.getCurrentUser();
     this.authService.getCurrentAccount().subscribe(account => {
       this.accountProfile = account;
+
       let defaultImg = `/images/${account.gender}.jpg`;
-      if (!account.avatar) account.avatar = this.imgUrl + defaultImg;
-      else account.avatar = this.imgUrl + account.avatar;
+      if (!account.avatar) this.avatar = this.imgUrl + defaultImg;
+      else this.avatar = this.imgUrl + account.avatar;
+      this.accountProfile.avatar = this.avatar;
+      this.email = account.email;
       this.fullname = `${account.firstname} ${account.lastname}`;
       this.mailTo = 'mailTo:' + account.email;
     })

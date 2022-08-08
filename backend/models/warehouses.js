@@ -12,7 +12,7 @@ const warehouseSchema = new Schema({
     zipcode: { type: Number }
   },
   location: [Number, Number],
-  employees: []
+  employees: [] // [ employee_id, employee_id]
 });
 warehouseSchema.index({location: '2d'});
 module.exports = model('Warehouse', warehouseSchema);

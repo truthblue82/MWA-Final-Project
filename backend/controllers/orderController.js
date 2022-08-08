@@ -1,7 +1,15 @@
-const orderService = require('../services/orderService');
+const { fetchAll, addOrder} = require('../services/orderService');
 
 exports.fetchAll = async (req, res) => {
-    const result = await orderService.fetchAll();
+    const result = await fetchAll();
+    if (result && result.status)
+        res.status(result.status).json({ error: result.error });
+    else
+        res.status(200).json(result);
+};
+
+exports.addOrder = async (req, res) => {
+    const result = await addOrder(req.body);
     if (result && result.status)
         res.status(result.status).json({ error: result.error });
     else

@@ -1,0 +1,19 @@
+mat-grid-tile {
+  background: #eee;
+}
+.vertical-separate {
+  background-color: #fff;
+}
+.col-2{
+  background-color: #F3F6F9;
+  padding: 10px;
+  width: calc(100% - 20px);
+}
+.widen {
+  width: 100% !important;
+}
+.verizontal-seperator {
+  background-color: #000;
+  width: 100%;
+  margin-top: 30px;
+}

@@ -99,3 +99,8 @@ a.mat-list-item.active {
   overflow: hidden;
   object-fit: cover;
 }
+.sub-list {
+  margin-left: 15px;
+  border-left: 2px solid #000;
+  background-color: #F3F6F9;
+}

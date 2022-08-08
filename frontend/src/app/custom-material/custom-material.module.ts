@@ -51,7 +51,7 @@ export const MY_FORMATS = {
 @NgModule({
   imports: [
     CommonModule,
-    MatMomentDateModule,
+    MatMomentDateModule, MatGridListModule,
     MatSidenavModule, MatIconModule, MatToolbarModule, MatButtonModule,
     MatListModule, MatCardModule, MatProgressBarModule, MatInputModule,
     MatSnackBarModule, MatProgressSpinnerModule, MatDatepickerModule,
@@ -61,7 +61,7 @@ export const MY_FORMATS = {
     MatExpansionModule, DragDropModule, MatSortModule
   ],
   exports: [
-    CommonModule,
+    CommonModule, MatGridListModule,
     MatSidenavModule, MatIconModule, MatToolbarModule, MatButtonModule,
     MatListModule, MatCardModule, MatProgressBarModule, MatInputModule,
     MatSnackBarModule, MatMenuModule, MatProgressSpinnerModule, MatDatepickerModule,

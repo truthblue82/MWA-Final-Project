@@ -16,16 +16,10 @@
     <span class="navbar-spacer"></span>
 
     <mat-chip [matMenuTriggerFor]="userMenu">
-      <img matChipAvatar [src]="accountProfile.avatar" width="24" [alt]="fullname" />
+      <img matChipAvatar [src]="avatar" width="24" [alt]="fullname" />
       {{fullname}}
     </mat-chip>
 
-    <!-- <button mat-button [matMenuTriggerFor]="userMenu">
-      <mat-icon>person</mat-icon>
-      <span fxShow fxHide.xs>
-        {{fullname}}
-      </span>
-    </button> -->
     <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
 
       <a mat-menu-item [routerLink]="['/account/profile']">
@@ -56,6 +50,13 @@
           </mat-icon>
           <p mat-line> Oders </p>
         </a>
+
+        <mat-list class="sub-list">
+          <a mat-list-item [routerLink]="['/orders/create']">
+            <mat-icon mat-list-icon>local_shipping</mat-icon>
+            <p mat-line> Make Order </p>
+          </a>
+        </mat-list>
 
         <a mat-list-item [routerLink]="['/account/profile']">
           <mat-icon mat-list-icon>person</mat-icon>

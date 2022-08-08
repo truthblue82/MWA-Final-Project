@@ -24,6 +24,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   isAdmin: boolean = false;
   appTitle: string = environment.appTitle;
   fullname!: string;
+  avatar!: string;
 
   //private autoLogoutSubscription: Subscription = new Subscription;
 
@@ -45,8 +46,8 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.authService.getCurrentAccount().subscribe(account => {
       this.accountProfile = account;
       let defaultImg = `/images/${account.gender}.jpg`;
-      if (!account.avatar) account.avatar = this.imgUrl + defaultImg;
-      else account.avatar = this.imgUrl + account.avatar;
+      if (!account.avatar) this.avatar = this.imgUrl + defaultImg;
+      else this.avatar = this.imgUrl + account.avatar;
       this.fullname = `${account.firstname} ${account.lastname}`;
       this.isAdmin = this.accountProfile?.role === 'admin' ? true : false;
     });

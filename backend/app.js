@@ -28,7 +28,7 @@ app.use('/images', express.static(path.join(__dirname, 'assets', 'images')));
 
 app.use('/employees', checkAuth, employeeRouter);
 app.use('/warehouses', checkAuth, warehouseRouter);
-app.use('/orders', orderRouter);
+app.use('/orders', checkAuth, orderRouter);
 
 app.use((req, res, next) => {
   //need to build page 404

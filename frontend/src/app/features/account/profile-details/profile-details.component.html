@@ -1,12 +1,12 @@
 <div class="profile-card">
-<img mat-card-image class="profile-img" [src]="accountProfile.avatar" [alt]="fullname" *ngIf="accountProfile.avatar">
+<img mat-card-image class="profile-img" [src]="avatar" [alt]="fullname" *ngIf="avatar">
 
   <h2 class="title">
     {{fullname}}
   </h2>
   <label>
     <a [href]="mailTo">
-    {{accountProfile.email}}
+    {{email}}
     </a>
   </label>
 </div>
