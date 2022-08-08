@@ -13,27 +13,27 @@
 
       <ng-container matColumnDef="id">
         <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Id</th>
-        <td mat-cell class="dc-content" *matCellDef="let element">{{element.id}} </td>
+        <td mat-cell class="dc-content" *matCellDef="let element">{{element._id}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="role">
-        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Role</th>
-        <td mat-cell class="dc-content" *matCellDef="let element">{{element.role}} </td>
+      <ng-container matColumnDef="senderName">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Sender Name</th>
+        <td mat-cell class="dc-content" *matCellDef="let element">{{element.senderName}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="firstName">
-        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>First Name</th>
-        <td mat-cell class="dc-content" *matCellDef="let element"> {{ element.firstName }} </td>
+      <ng-container matColumnDef="senderPhone">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Sender Phone</th>
+        <td mat-cell class="dc-content" *matCellDef="let element"> {{ element.senderPhone }} </td>
       </ng-container>
 
-      <ng-container matColumnDef="lastName">
-        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Last Name</th>
-        <td mat-cell class="dc-content" *matCellDef="let element">{{element.lastName}} </td>
+      <ng-container matColumnDef="receiverName">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Receiver Name</th>
+        <td mat-cell class="dc-content" *matCellDef="let element">{{element.receiverName}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="amount">
-          <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Amount</th>
-          <td mat-cell class="dc-content" *matCellDef="let element">{{element.amount}} </td>
+      <ng-container matColumnDef="receiverPhone">
+          <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Receiver Phone</th>
+          <td mat-cell class="dc-content" *matCellDef="let element">{{element.receiverPhone}} </td>
         </ng-container>
 
       <ng-container matColumnDef="noData">

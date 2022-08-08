@@ -8,7 +8,7 @@ export interface OrderState extends EntityState<Order> {
 }
 
 export const orderAdapter: EntityAdapter<Order> = createEntityAdapter<Order>({
-  selectId: (order: Order) => order.id
+  selectId: (order: Order) => order._id
 });
 
 export const initialOrderState: OrderState = orderAdapter.getInitialState({

@@ -38,10 +38,10 @@ export class OrderListComponent
 
   public displayedColumns: string[] = [
     "id",
-    "role",
-    "firstName",
-    "lastName",
-    "amount",
+    "senderName",
+    "senderPhone",
+    "receiverName",
+    "receiverPhone"
   ];
   public dataSource!: MatTableDataSource<Order>;
   public orderTotal!: number;
