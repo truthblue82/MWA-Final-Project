@@ -62,8 +62,8 @@
             <h3>Routes Definition</h3>
 
             <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
-              <mat-form-field class="chip-list" appearance="fill">
-                <mat-label>Favorite Fruits</mat-label>
+              <mat-form-field class="search-box" appearance="fill">
+                <mat-label>Search Route</mat-label>
                 <mat-chip-list #chipList aria-label="Fruit selection">
                   <mat-chip *ngFor="let fruit of fruits">
                     Test chip
@@ -84,14 +84,79 @@
                     {{fruit}}
                   </mat-option>
                 </mat-autocomplete>
+                <mat-hint class="hint">Press enter to select the searched route!</mat-hint>
               </mat-form-field>
 
+            </div>
+
+            <div fxLayout="column" fxLayout.sm="column" fxLayout.xs="column">
               <h4>Routes List</h4>
+
+              <mat-chip-list class="order-list-stacked" aria-label="Selected Routes">
+                <!-- <mat-chip *ngFor="let chip of availableColors" selected [color]="chip.color">
+                  {{chip.name}}
+                </mat-chip> -->
+                <mat-chip color="primary">1st route: from A to B</mat-chip>
+                <mat-chip color="primary">2nd route: from B to C</mat-chip>
+                <mat-chip color="primary">Final route: from C to receiver</mat-chip>
+              </mat-chip-list>
             </div>
 
             <hr class="verizontal-seperator" />
 
             <h3>Order Information</h3>
+            <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+              <div class="col-2" fxFlex="49%" fxFlex.sm="95%" fxFlex.xs="95%">
+                <mat-form-field class="widen">
+                  <input matInput type="number" placeholder="Cost" formControlName="cost" required />
+
+                  <!-- <mat-error *ngIf="form.controls['cost'].hasError('required')">Please enter sender name.</mat-error> -->
+                </mat-form-field>
+
+                <mat-form-field class="widen">
+                  <input matInput type="number" placeholder="Size" formControlName="size" required />
+
+                  <!-- <mat-error *ngIf="form.controls['size'].hasError('required')">Please enter sender name.</mat-error> -->
+                </mat-form-field>
+
+                <mat-form-field class="widen">
+                  <input matInput type="number" placeholder="Order Price" formControlName="orderValue" required />
+
+                  <!-- <mat-error *ngIf="form.controls['orderValue'].hasError('required')">Please enter sender name.</mat-error> -->
+                </mat-form-field>
+              </div>
+              <div class="col-2" fxFlex="49%" fxFlex.sm="95%" fxFlex.xs="95%">
+                <mat-form-field class="widen">
+                  <mat-label>Tax</mat-label>
+                  <input matInput type="number" placeholder="Tax" formControlName="tax" value=0 required />
+
+                  <!-- <mat-error *ngIf="form.controls['tax'].hasError('required')">Please enter sender name.</mat-error> -->
+                </mat-form-field>
+
+                <mat-form-field class="widen">
+                  <input matInput type="number" placeholder="Weight" formControlName="weight" required />
+
+                  <!-- <mat-error *ngIf="form.controls['weight'].hasError('required')">Please enter sender name.</mat-error> -->
+                </mat-form-field>
+
+                <section class="section" >
+                  <mat-checkbox formControlName="insurance">Insurance</mat-checkbox>
+                </section>
+              </div>
+            </div>
+
+            <div class="widen note">
+              <mat-form-field class="widen">
+                <textarea rows="6" matInput name="content" placeholder="Description"></textarea>
+                <mat-hint class="hint">Input order description: number of child item, color, status,...</mat-hint>
+
+              </mat-form-field>
+            </div>
+
+            <div class="center">
+              <button mat-raised-button color="basic" type="button">Cancel</button>
+              <button mat-raised-button color="accent" type="submit">Save</button>
+            </div>
           </div>
         </form>
 

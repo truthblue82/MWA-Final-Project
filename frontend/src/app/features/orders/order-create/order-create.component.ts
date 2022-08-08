@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { FormControl, FormGroup } from "@angular/forms";
 import { Observable } from "rxjs";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-order-create',
@@ -17,9 +18,11 @@ export class OrderCreateComponent implements OnInit {
   fruits: string[] = ['Lemon'];
   allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
-  constructor( ) { }
+  constructor(
+    private titleServic: Title
+  ) { }
 
   ngOnInit(): void {
-      //
+    this.titleServic.setTitle('Delivery Management System - Create Order');
   }
 }

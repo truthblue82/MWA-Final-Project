@@ -2,37 +2,35 @@ const { Schema, model } = require('mongoose');
 
 const orderSchema = new Schema({
   senderName: { type: String, required: true },
-  senderPhone: { type: String, required: true },
+  senderPhone: { type: String, required: true, index: true },
   senderEmail: { type: String },
   senderAddress: { type: String},
   
   receiverName: { type: String, required: true },
-  receiverPhone: { type: String, required: true },
+  receiverPhone: { type: String, required: true, index: true },
   receiverEmail: { type: String },
   receiverAddress: { type: String},
-  receiverLocation: [Number, Number],
+  receiverLocation: [Number, Number], //no need to use google map api, we don't have enough time
   
-  routes: [], //[{address, location, routeStatus, operator}, {...}]
+  routes: [], //[{address: string, location, routeStatus, operator: {id, name}}, {...}]
   sourceAddress: { type: String },
   sourceLocation: [Number, Number],
   
   orderDate: { type: Date, required: true },
   cost: { type: Number, required: true },
   tax: { type: Number, required: true },
+  total: { type: Number, required: true},
   images: [String, String],
   weight: { type: String },
   size: { type: String},
   orderValue: { type: Number },
-  deliveryType: { type: String },
-  insurance: { type: String},
+  insurance: { type: Boolean},
   note: { type: String },
   orderStatus: { type: String }, //status at final
   
   createdStaff: { type: String }, //id string of employee id
   deleted: { type: Number} // create: 0, 1: deleted
 });
-
-orderSchema.index({ receiverLocation: '2d' });
 
 module.exports = model('Orders', orderSchema);
 
