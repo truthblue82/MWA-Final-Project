@@ -14,6 +14,7 @@ mongoose.connect(process.env.ATLAS_MONGODB_URL_FOR_APP, { useNewUrlParser: true,
 
 const employeeRouter = require('./routers/employeeRouter');
 const warehouseRouter = require('./routers/warehouseRouter');
+const orderRouter = require('./routers/orderRouter');
 
 app.use(cors());
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use(morgan('combined', { stream: logStream }));
 
 app.use('/employees', checkAuth, employeeRouter);
 app.use('/warehouses', checkAuth, warehouseRouter);
+app.use('/orders', orderRouter);
 
 app.use((req, res, next) => {
   //need to build page 404
