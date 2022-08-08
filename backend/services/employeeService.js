@@ -89,21 +89,21 @@ exports.getEmployeeById = async (id) => {
 exports.updateEmployeeById = async (request) => {
   const { id } = request.params;
   const employee = request.body;
-  const pictureName = Date.now() + path.extname(request.file.originalname);
-  const picturePath = path.join('/', 'images', pictureName);
-  employee.avatar = picturePath;
+
+  if (request.file && request.file.originalname) {
+    const pictureName = Date.now() + path.extname(request.file.originalname);
+    const picturePath = path.join('/', 'images', pictureName);
+    employee.avatar = picturePath;
+    employee.address = JSON.parse(employee.address);
+    employee.gender = employee.gender[0];
+  }
+
   try {
     const result = await Employee.findOneAndUpdate({ _id: id }, employee);
     return employee;
   } catch (err) {
     return { status: 500, error: err.message };
   }
-
-    // try {
-    //   return await Students.updateOne({ _id: request.params.id }, { picture: picturePath });
-    // } catch (err) {
-    //   return { error: err.message };
-    // }
 };
 
 exports.updateEmployeePassword = async (id, password) => {

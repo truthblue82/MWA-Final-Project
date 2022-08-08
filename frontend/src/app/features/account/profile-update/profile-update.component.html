@@ -46,7 +46,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Employee roles</mat-label>
-      <mat-select [(value)]="selectedRole" (selectionChange)="setPropertyFormValue('role', $event.value)">
+      <mat-select formControlName="role" [(value)]="selectedRole" (selectionChange)="setPropertyFormValue('role', $event.value)">
         <mat-option *ngFor="let role of roles" [value]="role">
           {{role}}
         </mat-option>
@@ -57,16 +57,16 @@
         <mat-icon>file_upload</mat-icon>
       </button>
       <input type="file" #filePicker [accept]="requiredImgType" (change)="onImagePicker($event)" />
-
     </div>
     <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
       <img [src]="imagePreview" [alt]="form.value.fullname">
     </div>
     <mat-form-field appearance="fill">
-      <mat-label>Gender</mat-label>
-      <mat-select [(value)]="selectedGender" (selectionChange)="setPropertyFormValue('gender', $event.value)">
-        <mat-option value="Female">Female</mat-option>
-        <mat-option value="Male">Male</mat-option>
+      <mat-label>Employee gender</mat-label>
+      <mat-select formControlName="gender" [(value)]="selectedGender" (selectionChange)="setPropertyFormValue('gender', $event.value)">
+        <mat-option *ngFor="let gender of genders" [value]="gender">
+          {{gender}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <!-- address -->

@@ -6,6 +6,7 @@
 backend/node_modules
 backend/.env
 backend/logs/*
+backend/assets/images
 
 frontend/node_modules
 frontend/.env

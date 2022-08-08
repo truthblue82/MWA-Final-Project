@@ -7,6 +7,7 @@ export interface AccountData {
   username: string;
   role: string;
   avatar: string;
+  file: File;
   gender: string;
   address: {
     country: string;

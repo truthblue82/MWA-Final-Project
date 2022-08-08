@@ -8,7 +8,10 @@ const { initData, deleteAll, login, signup, getAll,
 const router = express.Router();
 
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, '..', 'assets', 'images'),
+  destination: (req, file, cb) => { 
+    const dest = path.join(__dirname, '..', 'assets', 'images');
+    cb(null, dest);
+  },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
   }
@@ -34,8 +37,11 @@ router.post('/signup', signup);
 router.post('/login', login);
 router.get('', getAll);
 router.get('/:id', getEmployeeById);
-router.put('/:id', imageUpload.single('avatar'), updateEmployeeById);
-router.patch('/:id', updateEmployeePassword);
 
+router.put('/:id', updateEmployeeById);
+
+router.post('/:id', imageUpload.single('image'), updateEmployeeById);
+
+router.patch('/:id', updateEmployeePassword);
 
 module.exports = router;

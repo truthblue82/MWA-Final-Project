@@ -19,6 +19,7 @@ export class ProfileUpdateComponent implements OnInit{
   selectedRole!: string;
   selectedGender!: string;
   roles: Array<string> = ['admin', 'staff', 'operator'];
+  genders: Array<string> = ['Male', 'Female'];
   form!: FormGroup;
   imagePreview!: string;
   requiredImgType: Array<string> = ['.jpg', '.png', '.jpeg'];
@@ -49,15 +50,16 @@ export class ProfileUpdateComponent implements OnInit{
   }
 
   private buildAccountFrom() {
-    this.form = new FormGroup({
-      'firstname': new FormControl(null, {validators: [Validators.required]}),
-      'lastname': new FormControl(null, { validators: [Validators.required] }),
-      'phone': new FormControl(null, { validators: [Validators.required, Validators.pattern('^[0-9]{10}$')] }),
-      'email': new FormControl(null, { validators: [Validators.required, Validators.email] }),
-      'username': new FormControl(null, { validators: [Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,}$')]}),
-      'role': new FormControl('operator', { validators: [Validators.required]}),
-      'avatar': new FormControl(null, { validators: [], asyncValidators: [mimeType]}),
-      'gender': new FormControl('Female', {validators: [Validators.required]})
+    this.form = this.fb.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      phone: [Validators.required, Validators.pattern('^[0-9]{10}$')],
+      email: [Validators.required, Validators.email],
+      username: [Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,}$')],
+      role: [Validators.required],
+      avatar: [],
+      file: [],
+      gender: [Validators.required]
     });
   }
 
@@ -70,6 +72,7 @@ export class ProfileUpdateComponent implements OnInit{
         username: data.username,
         role: data.role,
         avatar: data.avatar,
+        file: '',
         gender: data.gender
       });
   }
@@ -93,7 +96,7 @@ export class ProfileUpdateComponent implements OnInit{
     }
     this.authService.updateCurrentAccount({ ...this.accountProfile, ...this.form.value })
       .subscribe(response => {
-        this.accountProfile = response;
+        this.accountProfile = response.result;
         this.notificationService.openSnackBar('Update successful');
         //reset form: this.form.reset(); // but no need to reset
       }, error => {
@@ -102,20 +105,15 @@ export class ProfileUpdateComponent implements OnInit{
   }
 
   setPropertyFormValue(propName: string, newValue: string) {
-    console.log(propName, newValue);
     this.form.get(propName)?.patchValue(newValue);
-    //this.form.value[propName] = newValue;
-    console.log(this.form.value[propName]);
-    console.log('form valid',this.form.valid);
   }
 
   onImagePicker(event: Event) {
     const element = (event.target as HTMLInputElement);
     const files = element.files ? element.files[0] : null;
-    this.form.get('avatar')?.patchValue(files);
-    console.log(this.form.value['avatar']);
-    //this.form.get('avatar')?.updateValueAndValidity();
-    console.log('form valid', this.form.valid);
+    this.form.get('file')?.patchValue(files);
+    this.form.get('avatar')?.patchValue(files?.name);
+    this.form.get('file')?.updateValueAndValidity();
 
     const reader = new FileReader();
     reader.onload = () => {
