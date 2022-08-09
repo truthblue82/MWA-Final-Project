@@ -41,7 +41,8 @@ export class OrderListComponent
     "senderName",
     "senderPhone",
     "receiverName",
-    "receiverPhone"
+    "receiverPhone",
+    "actions"
   ];
   public dataSource!: MatTableDataSource<Order>;
   public orderTotal!: number;

@@ -38,7 +38,15 @@
               <ng-container matColumnDef="receiverPhone">
                   <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Receiver Phone</th>
                   <td mat-cell class="dc-content" *matCellDef="let element">{{element.receiverPhone}} </td>
-                </ng-container>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Actions</th>
+                <td mat-cell class="dc-content" *matCellDef="let element">
+                  <a href="/orders/view/{{element._id}}">View</a>&nbsp;
+                  <a href="/orders/edit/{{element._id}}">Edit</a>
+                </td>
+              </ng-container>
 
               <ng-container matColumnDef="noData">
                 <td mat-cell class="dc-label no-data-cell" *matCellDef="let element"
