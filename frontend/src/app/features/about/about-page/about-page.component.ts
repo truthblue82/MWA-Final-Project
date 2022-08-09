@@ -5,6 +5,7 @@ import { Store } from "@ngrx/store";
 import { GlobalState } from "src/app/store/states/global.state";
 import { LoadOrder } from "src/app/store/actions/order.actions";
 import { getCurrentOrder } from "src/app/store/selectors/order.selectors";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: 'app-about-page',
@@ -16,6 +17,7 @@ export class AboutPageComponent implements OnInit {
   order$ = this.store.select(getCurrentOrder);
   //loading$ = this.store.select(selectUsersLoading);
   checked = true;
+  backend = environment.backendUrl;
 
   constructor(private store: Store<GlobalState>, private route: ActivatedRoute) { }
 

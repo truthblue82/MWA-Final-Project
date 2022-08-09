@@ -114,7 +114,7 @@
       </mat-tab>
       <mat-tab label="Picture">
         <h3>Package Image</h3>
-        <img src="{{ (order$ | async)?.images }}" alt="Package Image">
+        <img src="{{backend}}{{ (order$ | async)?.images != ''?(order$ | async)?.images:'/images/default.png' }}" alt="Package Image">
       </mat-tab>
     </mat-tab-group>
   </div>
