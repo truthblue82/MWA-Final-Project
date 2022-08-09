@@ -38,16 +38,41 @@ exports.getOrderById = async (id) => {
         if (result.routes.length <= 0) {
             result.routes.push({
                 name: 'Start point',
-                address: result.senderAddress,
-                PIC: 'N/A',
-                status: 'Arrived'
+                from: {
+                    name: 'Start point',
+                    address: result.senderAddress,
+                    contact: result.senderPhone
+                },
+                to: {
+                    name: '',
+                    address: '',
+                    contact: ''
+                },
+                assignee: {
+                    id: '',
+                    name: ''
+                },
+                routeStatus: 'Arrived'
             })
         }
         result.routes.push({
             name: 'End point',
-            address: result.receiverAddress || "No address",
-            PIC: 'N/A',
-            status: 'New'});
+            from: {
+                name: '',
+                address: '',
+                contact: ''
+            },
+            to: {
+                name: result.receiverName,
+                address: result.receiverAddress,
+                contact: result.receiverPhone
+            },
+            assignee: {
+                id: '',
+                name: ''
+            },
+            routeStatus: 'New'
+        });
         return result;
     } catch (err) {
         return { status: 500, error: err.message };
