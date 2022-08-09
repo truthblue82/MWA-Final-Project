@@ -87,6 +87,7 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
     fromEvent(this.searchInput.nativeElement, 'keyup')
       .pipe(
         map((event: any) => {
@@ -207,7 +208,6 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
       this.form.get('routes')?.patchValue(this.odRoutes);
       this.orderService.updateOrderById(this.orderId, { ...this.form.value })
         .subscribe(response => {
-          console.log(response);
           this.order = response;
 
           this.router.navigate(['/orders']);

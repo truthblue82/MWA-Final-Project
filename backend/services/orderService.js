@@ -84,7 +84,7 @@ exports.getOrderById = async (id) => {
                 routeStatus: 'Arrived'
             })
         }
-        result.routes.push({
+        /*result.routes.push({
             name: 'End point',
             from: {
                 name: '',
@@ -101,7 +101,7 @@ exports.getOrderById = async (id) => {
                 name: ''
             },
             routeStatus: 'New'
-        });
+        });*///no need here
         return result;
     } catch (err) {
         return { status: 500, error: err.message };
@@ -130,21 +130,7 @@ exports.updateOrderById = async (orderId, req) => {
         }
         if (orderObj.routes) {
             const routes = JSON.parse(orderObj.routes);
-            //add last route from last warehouse to receiver home
-            const lastRoute = routes[routes.length - 1];
-            routes.push({
-                name: `House of ${orderObj.receiverName}`,
-                from: {
-                    ...lastRoute.to
-                },
-                to: {
-                    name: `House of ${orderObj.receiverName}`,
-                    address: orderObj.receiverAddress,
-                    contac: orderObj.receiverPhone
-                },
-                color: '',
-                note: ''
-            });
+            
             orderObj.routes = routes;
         }
         const token = req.headers.authorization.replace(/Bearer /gi, '');
@@ -157,7 +143,6 @@ exports.updateOrderById = async (orderId, req) => {
         
         return orderObj;
     } catch (err) {
-        console.log(err.message)
         return { status: 500, error: err.message };
     }
 }

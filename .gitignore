@@ -7,6 +7,8 @@ backend/node_modules
 backend/.env
 backend/logs/*
 backend/assets/images
+!backend/assets/male.jpg
+!backend/assets/female.jpg
 
 frontend/node_modules
 frontend/.env

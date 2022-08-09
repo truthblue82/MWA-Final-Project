@@ -15,22 +15,22 @@
                 <h3>Sender Information</h3>
 
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Sender Name" formControlName="senderName" />
+                  <input matInput type="text" placeholder="Sender Name" formControlName="senderName" [readonly]="mode=='view'" />
 
                   <mat-error *ngIf="form.controls['senderName'].hasError('required')">Please enter a valid sender name.</mat-error>
                 </mat-form-field>
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Sender Phone" formControlName="senderPhone" />
+                  <input matInput type="text" placeholder="Sender Phone" formControlName="senderPhone" [readonly]="mode=='view'"/>
 
                   <mat-error *ngIf="form.controls['senderPhone'].hasError('required') || form.controls['senderPhone'].hasError('pattern')">Please enter a valid sender phone number.</mat-error>
                 </mat-form-field>
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Sender Email" formControlName="senderEmail" />
+                  <input matInput type="text" placeholder="Sender Email" formControlName="senderEmail" [readonly]="mode=='view'"/>
 
                   <mat-error *ngIf="form.controls['senderEmail'].hasError('required') || form.controls['senderEmail'].hasError('email')">Please enter a valid sender email.</mat-error>
                 </mat-form-field>
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Sender Address" formControlName="senderAddress" />
+                  <input matInput type="text" placeholder="Sender Address" formControlName="senderAddress" [readonly]="mode=='view'"/>
 
                   <mat-error *ngIf="form.controls['senderAddress'].hasError('required')">Please enter a valid sender address.</mat-error>
                 </mat-form-field>
@@ -43,22 +43,22 @@
                 <h3>Receiver Information</h3>
 
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="ReceiverName" formControlName="receiverName" />
+                  <input matInput type="text" placeholder="ReceiverName" formControlName="receiverName" [readonly]="mode=='view'"/>
 
                   <mat-error *ngIf="form.controls['receiverName'].hasError('required')">Please enter a valid receiver name.</mat-error>
                 </mat-form-field>
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Receiver Phone" formControlName="receiverPhone" />
+                  <input matInput type="text" placeholder="Receiver Phone" formControlName="receiverPhone" [readonly]="mode=='view'"/>
 
                   <mat-error *ngIf="form.controls['receiverPhone'].hasError('required') || form.controls['receiverPhone'].hasError('pattern')">Please enter a valid receiver phone number.</mat-error>
                 </mat-form-field>
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="ReceiverEmail" formControlName="receiverEmail" />
+                  <input matInput type="text" placeholder="ReceiverEmail" formControlName="receiverEmail" [readonly]="mode=='view'"/>
 
                   <mat-error *ngIf="form.controls['receiverEmail'].hasError('required') || form.controls['receiverEmail'].hasError('email')">Please enter a valid receiver email.</mat-error>
                 </mat-form-field>
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Receiver Address" formControlName="receiverAddress" />
+                  <input matInput type="text" placeholder="Receiver Address" formControlName="receiverAddress" [readonly]="mode=='view'" />
 
                   <mat-error *ngIf="form.controls['receiverAddress'].hasError('required')">Please enter a valid receiver address.</mat-error>
                 </mat-form-field>
@@ -78,6 +78,7 @@
                   [matAutocomplete]="auto"
                   [matChipInputFor]="routeList"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [readonly]="mode=='view'"
                   >
                 </mat-chip-list>
                 <mat-autocomplete #auto="matAutocomplete" >
@@ -93,7 +94,7 @@
             <div fxLayout="column" fxLayout.sm="column" fxLayout.xs="column">
               <h4>Routes List</h4>
 
-              <mat-chip-list class="mat-chip-list-wrapper-custom" aria-label="Selected Routes">
+              <mat-chip-list *ngIf="mode ==='create' || mode === 'edit' " class="mat-chip-list-wrapper-custom" aria-label="Selected Routes">
                 <mat-chip *ngFor="let odRoute of odRoutes; let i = index" selected [color]="odRoute.color" (removed)="removeRoute(i)">
                   Route {{i+1}}: {{odRoute.from.name}} - {{odRoute.to.name}}
                   <button matChipRemove>
@@ -101,6 +102,13 @@
                   </button>
                 </mat-chip>
 
+              </mat-chip-list>
+
+              <mat-chip-list *ngIf="mode === 'view'" class="mat-chip-list-wrapper-custom"
+                aria-label="Selected Routes">
+                <mat-chip *ngFor="let odRoute of odRoutes; let i = index" selected [color]="odRoute.color" >
+                  Route {{i+1}}: {{odRoute.from.name}} - {{odRoute.to.name}}
+                </mat-chip>
 
               </mat-chip-list>
               <div *ngIf="odRoutes.length === 0">The order hasn't set any route yet.</div>
@@ -113,19 +121,19 @@
             <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
               <div class="col-2" fxFlex="49%" fxFlex.sm="95%" fxFlex.xs="95%">
                 <mat-form-field class="widen">
-                  <input matInput type="number" placeholder="Cost ($)" formControlName="cost" />
+                  <input matInput type="number" placeholder="Cost ($)" formControlName="cost" [readonly]="mode === 'view'" />
 
                   <mat-error *ngIf="form.controls['cost'].hasError('required')">Please enter cost for the order.</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Size (w x l x h)" formControlName="size" />
+                  <input matInput type="text" placeholder="Size (w x l x h)" formControlName="size" [readonly]="mode === 'view'" />
 
                   <mat-error *ngIf="form.controls['size'].hasError('required')">Please enter size of the order.</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="widen">
-                  <input matInput type="number" placeholder="Order Price" formControlName="orderValue" />
+                  <input matInput type="number" placeholder="Order Price" formControlName="orderValue" [readonly]="mode === 'view'" />
 
                   <mat-error *ngIf="form.controls['orderValue'].hasError('required')">Please enter value of the order.</mat-error>
                 </mat-form-field>
@@ -133,7 +141,7 @@
                 <mat-form-field class="widen">
                   <mat-label>Total</mat-label>
 
-                  <input matInput type="number" placeholder="Total (lb)" formControlName="total" value=0 />
+                  <input matInput type="number" placeholder="Total (lb)" formControlName="total" value=0 [readonly]="mode === 'view'"/>
 
                   <mat-error *ngIf="form.controls['total'].hasError('required')">Please enter total.</mat-error>
                 </mat-form-field>
@@ -142,14 +150,14 @@
                 <mat-form-field class="widen">
                   <mat-label>Tax</mat-label>
 
-                  <input matInput type="number" placeholder="Tax (%)" formControlName="tax" />
+                  <input [readonly]="mode === 'view'" matInput type="number" placeholder="Tax (%)" formControlName="tax"  />
 
                   <mat-error *ngIf="form.controls['tax'].hasError('required')">Please enter tax.</mat-error>
                 </mat-form-field>
 
 
                 <mat-form-field class="widen">
-                  <input matInput type="number" placeholder="Weight (lb)" formControlName="weight" />
+                  <input matInput type="number" placeholder="Weight (lb)" formControlName="weight" [readonly]="mode === 'view'" />
 
                   <mat-error *ngIf="form.controls['weight'].hasError('required')">Please enter weight of the order.</mat-error>
                 </mat-form-field>
@@ -176,22 +184,22 @@
 
             <div class="image-preview" *ngIf="imagePreview && imagePreview !== '' ">
               <img [src]="imagePreview" alt="order image">
-              <button class="img-delete" mat-icon-button color="accent" type="button" (click)="onDeleteImage()">
+              <button *ngIf="mode !== 'view'" class="img-delete" mat-icon-button color="accent" type="button" (click)="onDeleteImage()">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
 
             <div class="image-preview" *ngIf="orderImages && orderImages !== '' && imagePreview == ''">
               <img [src]="backendUrl + orderImages" alt="order image">
-              <button class="img-delete" mat-icon-button color="accent" type="button" (click)="onDeleteImage2()">
+              <button *ngIf="mode !== 'view'" class="img-delete" mat-icon-button color="accent" type="button" (click)="onDeleteImage2()">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
 
 
             <div class="widen note">
-              <mat-form-field class="widen">
-                <textarea rows="6" matInput formControlName="note" placeholder="Description"></textarea>
+              <mat-form-field class="widen" >
+                <textarea [readonly]="mode==='view'" rows="6" matInput formControlName="note" placeholder="Description"></textarea>
                 <mat-hint class="hint">Input order description: number of child item, color, status,...</mat-hint>
 
               </mat-form-field>
