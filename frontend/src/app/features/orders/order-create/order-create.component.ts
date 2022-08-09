@@ -41,7 +41,7 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   requiredImgType: Array<string> = ['.jpg', '.png', '.jpeg'];
   from!: Warehouse;
   to!: Warehouse;
-  orderImages!: Array<string>;
+  orderImages!: string;
   backendUrl: string = environment.backendUrl;
 
   constructor(
