@@ -39,6 +39,8 @@ router.get('/:id', getOrderById);
 //using post for updating because of uploading image
 router.post('/:id', imageUpload.single('images'), updateOrderById);
 
+//for public delivery tracking
+router.get('/delivery/:id', getOrderById);
 // router.patch('/:id',);
 // router.delete('/:id',);
 
