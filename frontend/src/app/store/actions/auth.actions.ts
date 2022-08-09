@@ -1,26 +1,24 @@
 import { createAction, props } from "@ngrx/store";
-import { AccountData } from "src/app/models/account";
-import { AuthData } from "src/app/models/auth";
+import { AccountData } from "../../models/account";
+import { AuthData } from "../../models/auth";
 
-
-enum AuthenActionType{
-  login = "[Login Page] login",
-  logout = "[Login Page] logout",
-  signup = "[Signup Page] signup",
-  updateMe = "[Account Page] update"
+enum ActionType {
+  LoadingLogin = "[Login] Loading",
+  LoadLoginSuccess = "[Login] Loaded Success",
+  LoadLoginFailure = "[Login] Loaded Failure"
 }
 
-export const login = createAction(
-  AuthenActionType.login,
+export const loadLogin = createAction(
+  ActionType.LoadingLogin,
   props<{ email: string, password: string }>()
 );
 
-export const logout = createAction(
-  AuthenActionType.logout,
-  props<{ token: string }>()
+export const loadLoginSuccess = createAction(
+  ActionType.LoadLoginSuccess,
+  props<{ accessToken: string }>()
 );
 
-export const updateMe = createAction(
-  AuthenActionType.updateMe,
-  props<{ profile: AccountData }>()
+export const loadLoginFailure = createAction(
+  ActionType.LoadLoginFailure,
+  props<{ error: any }>()
 );

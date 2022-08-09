@@ -1,13 +1,13 @@
 import { OrderState, initialOrderState } from './order.state';
-import { initialOrderStatusState, OrderStatusState } from './order-status.state';
+import { AuthState, initialAuthState } from './auth.state';
 import { OrderStatus } from 'src/app/models/order-status';
 
 export interface GlobalState {
   order: OrderState;
-  //orderStatusState: OrderStatusState;
+  auth: AuthState;
 }
 
 export const initialGlobalState: GlobalState = {
   order: initialOrderState,
-  //orderStatusState: initialOrderStatusState,
+  auth: initialAuthState,
 };
