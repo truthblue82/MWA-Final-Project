@@ -42,12 +42,6 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
 
   tests: Array<string> = ['1st route: from A to B', '2nd route: from B to C','Final route: from C to receiver']
 
-  //need to change
-  //fruitCtrl = new FormControl('');
-  //filteredFruits!: Observable<string[]>;
-  //fruits: string[] = ['Lemon'];
-  //allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-
   constructor(
     private titleServic: Title,
     private ar: ActivatedRoute,
