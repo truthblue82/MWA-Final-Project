@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { OrderResponse } from '../models/order-response';
 import { environment } from "src/environments/environment";
+import { Warehouse } from "../models/warehouse";
 
 
 @Injectable()
@@ -74,8 +75,14 @@ export class OrderService {
     return this.http.post<Order>(`${environment.backendUrl}/orders/${orderId}`, postData);
   }
   //for public delivery
-  public getOrderById(_id: String): Observable<Order> {
+  public getOrderById(_id: string): Observable<Order> {
     return this.http.get<Order>(`${environment.backendUrl}/orders/delivery/${_id}`);
+  }
+
+  //warehouses/nearest-search
+  public getNearestWareHouse(query: string): Observable<Array<Warehouse>> {
+    //query += query + `&lat=`;
+    return this.http.get<Array<Warehouse>>(`${environment.backendUrl}/warehouses/nearest-search?${query}`);
   }
 }
 

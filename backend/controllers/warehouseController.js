@@ -1,4 +1,4 @@
-const { initData, deleteAll, searchNearestLocation } = require('../services/warehouseService');
+const { initData, deleteAll, searchNearestLocation, searchNearestWareHouse } = require('../services/warehouseService');
 
 exports.initData = async (req, res) => { 
   const result = await initData();
@@ -23,3 +23,12 @@ exports.searchNearestLocation = async (req, res) => {
   else
     res.status(200).json(result);
 };
+
+exports.searchNearestWareHouse = async (req, res) => {
+  const result = await searchNearestWareHouse(req);
+  if (result && result.status) {
+    res.status(result.status).json({ error: result.error });
+  } else {
+    res.status(200).json(result);
+  }
+}

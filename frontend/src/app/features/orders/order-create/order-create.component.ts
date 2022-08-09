@@ -1,18 +1,20 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { C, COMMA, ENTER } from '@angular/cdk/keycodes';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { COMMA, ENTER, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
+import { ThemePalette } from "@angular/material/core";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 
-import { Observable } from "rxjs";
+import { debounceTime, Observable, Subject, fromEvent, identity } from "rxjs";
+import { map, distinctUntilChanged, filter } from 'rxjs/operators';
 //import { Store, select } from "@ngrx/store";
 
 import { Order } from 'src/app/models/order';
 import { OrderRoute } from "src/app/models/order-route";
 import { OrderService } from "src/app/services/order.service";
-import { ThemePalette } from "@angular/material/core";
-import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { SpinnerService } from "src/app/core/services/spinner.service";
 import { NotificationService } from "src/app/core/services/notification.service";
+import { Warehouse } from "src/app/models/warehouse";
 //import { GlobalState } from "src/app/store/states/global.state";
 
 @Component({
@@ -20,12 +22,13 @@ import { NotificationService } from "src/app/core/services/notification.service"
   templateUrl: './order-create.component.html',
   styleUrls: ['./order-create.component.css']
 })
-export class OrderCreateComponent implements OnInit {
+export class OrderCreateComponent implements OnInit, AfterViewInit {
   @ViewChild('filePicker') fileUploader!: ElementRef;
+  @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
 
   colors: Array<ThemePalette> = [undefined, 'primary', 'warn'];
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  orderRoutes: OrderRoute[] = [];
+  odRoutes: OrderRoute[] = [];
   form!: FormGroup;
   private mode: string = 'create';
   private orderId!: string;
@@ -33,13 +36,17 @@ export class OrderCreateComponent implements OnInit {
   //imagePreviews: Array<string> = [];
   imagePreview: string = '';
   requiredImgType: Array<string> = ['.jpg', '.png', '.jpeg'];
+  whList!: Warehouse;
+  from!: Warehouse;
+  to!: Warehouse;
+
+  tests: Array<string> = ['1st route: from A to B', '2nd route: from B to C','Final route: from C to receiver']
 
   //need to change
-  panelOpenState: boolean = false;
-  fruitCtrl = new FormControl('');
-  filteredFruits!: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  //fruitCtrl = new FormControl('');
+  //filteredFruits!: Observable<string[]>;
+  //fruits: string[] = ['Lemon'];
+  //allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
   constructor(
     private titleServic: Title,
@@ -55,6 +62,7 @@ export class OrderCreateComponent implements OnInit {
     this.buildForm();
     this.ar.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('id')) {
+        //check view or edit mode
         this.titleServic.setTitle('Delivery Management System - Edit Order');
         this.mode = 'edit';
         this.orderId = <string>paramMap.get('id');
@@ -62,6 +70,7 @@ export class OrderCreateComponent implements OnInit {
         this.orderService.getOrder(this.orderId).subscribe(response => {
           this.order = response;
           this.setFormValue(this.order);
+          this.odRoutes = this.order.routes;
         }, error => {
           console.log(error.error.error);
           this.notificationService.openSnackBar(error.error.error);
@@ -72,6 +81,56 @@ export class OrderCreateComponent implements OnInit {
         this.orderId = '';
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    fromEvent(this.searchInput.nativeElement, 'keyup')
+      .pipe(
+        map((event: any) => {
+          return event.target.value;
+        })
+        , filter(res => res.length > 2)
+        , debounceTime(1000)
+        , distinctUntilChanged()
+    ).subscribe((value: string) => {
+
+      let query = `state=${value}`;
+      if(!this.to) {
+        query += `&first=1`;
+      } else {
+        query += `&whname=${this.to.name}`;
+      }
+
+      this.orderService.getNearestWareHouse(query) //lat,log get in service
+        .subscribe(response => {
+          this.searchInput.nativeElement.value = '';
+          if (!response[1]) {
+            this.notificationService.openSnackBar('Can not find the destination of route')
+          } else {
+            this.from = response[0];
+            this.to = response[1];
+
+            this.odRoutes.push({
+              name: this.to.name,
+              from: {
+                name: this.from.name,
+                address: JSON.stringify(this.from.address),
+                contact: this.from.phone
+              },
+              to: {
+                name: this.to.name,
+                address: JSON.stringify(this.to.address),
+                contact: this.to.phone,
+              },
+              color: ''
+            });
+          }
+
+        }, error => {
+          this.searchInput.nativeElement = '';
+          this.notificationService.openSnackBar(error.error.error);
+        })
+       });
   }
 
   private buildForm() {
@@ -85,6 +144,7 @@ export class OrderCreateComponent implements OnInit {
       receiverEmail: ['', Validators.email],
       receiverAddress: ['', Validators.required],
       //define fo routes //
+      routes: [''],
       cost: ['', Validators.required],
       size: ['', Validators.required],
       orderValue: ['', Validators.required],
@@ -127,18 +187,23 @@ export class OrderCreateComponent implements OnInit {
       return;
     }
     if (this.mode === 'create') {
+      if (this.odRoutes.length) {
+        this.form.get('routes')?.patchValue(this.odRoutes.length);
+      }
       this.orderService.addOrder({ ...this.form.value })
         .subscribe(response => {
-          console.log(response);
+
           this.order = response;
           this.route.navigate(['orders']);
         }, error => {
           this.notificationService.openSnackBar(error.error.error);
         });
     } else {
+      this.form.get('routes')?.patchValue(this.odRoutes);
       this.orderService.updateOrderById(this.orderId, { ...this.order, ...this.form.value })
         .subscribe(response => {
           this.order = response;
+
           this.route.navigate(['orders']);
         }, error => {
           this.notificationService.openSnackBar(error.error.error);
@@ -172,5 +237,16 @@ export class OrderCreateComponent implements OnInit {
   public onCancel() {
     this.form.reset();
     this.route.navigate(['orders']);
+  }
+
+  public removeRoute(index: number): void {
+    this.odRoutes.splice(index, 1);
+  }
+
+  public searchWarehouse(event: Event) {
+    //(keyup)="searchWarehouse($event)"
+    const el = (event.target as HTMLInputElement);
+
+    const searchText = el.value;
   }
 }

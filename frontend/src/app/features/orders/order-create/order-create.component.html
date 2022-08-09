@@ -71,28 +71,21 @@
 
             <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
               <mat-form-field class="search-box" appearance="fill">
-                <mat-label>Search Route</mat-label>
-                <mat-chip-list #chipList aria-label="Fruit selection">
-                  <mat-chip *ngFor="let fruit of fruits">
-                    Test chip
-                    <button matChipRemove>
-                      <mat-icon>cancel</mat-icon>
-                    </button>
-                  </mat-chip>
+                <mat-label>Search nearest route by the next state</mat-label>
+                <mat-chip-list #routeList aria-label="Warehouse selection">
                   <input placeholder="Type to search warehouse..."
-                  #fruitInput
-                  [formControl]="fruitCtrl"
+                  #searchInput
                   [matAutocomplete]="auto"
-                  [matChipInputFor]="chipList"
+                  [matChipInputFor]="routeList"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   >
                 </mat-chip-list>
                 <mat-autocomplete #auto="matAutocomplete" >
-                  <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-                    {{fruit}}
+                  <mat-option color="primary" *ngFor="let odRoute of odRoutes" [value]="odRoute.name">
+                    {{odRoute.name}}
                   </mat-option>
                 </mat-autocomplete>
-                <mat-hint class="hint">Press enter to select the searched route!</mat-hint>
+                <mat-hint class="hint">Press wait for a minute, the route will be add automaticly (or click into dropdown box, or using keyboard and enter!</mat-hint>
               </mat-form-field>
 
             </div>
@@ -100,14 +93,17 @@
             <div fxLayout="column" fxLayout.sm="column" fxLayout.xs="column">
               <h4>Routes List</h4>
 
-              <mat-chip-list class="order-list-stacked" aria-label="Selected Routes">
-                <!-- <mat-chip *ngFor="let chip of availableColors" selected [color]="chip.color">
-                  {{chip.name}}
-                </mat-chip> -->
-                <mat-chip color="primary">1st route: from A to B</mat-chip>
-                <mat-chip color="primary">2nd route: from B to C</mat-chip>
-                <mat-chip color="primary">Final route: from C to receiver</mat-chip>
+              <mat-chip-list class="mat-chip-list-wrapper-custom" aria-label="Selected Routes">
+                <mat-chip *ngFor="let odRoute of odRoutes; let i = index" selected [color]="odRoute.color" (removed)="removeRoute(i)">
+                  Route {{i+1}}: {{odRoute.from.name}} - {{odRoute.to.name}}
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+
+
               </mat-chip-list>
+              <div *ngIf="odRoutes.length === 0">The order hasn't set any route yet.</div>
             </div>
 
             <hr class="verizontal-seperator" />

@@ -54,14 +54,15 @@
               <mat-stepper #stepper>
                 <mat-step *ngFor="let route of (order$ | async)?.routes">
                   <ng-template matStepLabel>{{ route.name }}</ng-template>
-                  <div>Address: {{ route.address }}</div>
-                  <div>PIC: {{ route.PIC }}</div>
-                  <div>Status: {{ route.status }}</div>
+                  <div>Address from: {{ route.from.address }}</div>
+                  <div>Address to: {{ route.to.address }}</div>
+                  <!-- <div>PIC: {{ route.PIC }}</div> -->
+                  <div>Status: {{ route.routeStatus }}</div>
                 </mat-step>
               </mat-stepper>
 
               <hr class="verizontal-seperator"/>
-            
+
 
           </div>
         </form>
