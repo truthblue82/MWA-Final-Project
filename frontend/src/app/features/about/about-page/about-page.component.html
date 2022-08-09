@@ -14,20 +14,15 @@
 
                 <mat-form-field class="widen">
                   <input matInput type="text" placeholder="Sender Name" formControlName="senderName" value="{{ (order$ | async)?.senderName }}" readonly />
-
-                  <!-- <mat-error *ngIf="form.controls['senderName'].hasError('required')">Please enter sender name.</mat-error> -->
                 </mat-form-field>
                 <mat-form-field class="widen">
                   <input matInput type="text" placeholder="Sender Phone" formControlName="senderPhone" value="{{ (order$ | async)?.senderPhone }}" readonly />
-                  <!-- <mat-error *ngIf="form.controls['senderPhone'].hasError('required')">Please enter sender phone number.</mat-error> -->
                 </mat-form-field>
                 <mat-form-field class="widen">
                   <input matInput type="text" placeholder="Sender Email" formControlName="senderEmail" value="{{ (order$ | async)?.senderEmail }}" readonly />
-                  <!-- <mat-error *ngIf="form.controls['senderEmail'].hasError('required')">Please enter sender email.</mat-error> -->
                 </mat-form-field>
                 <mat-form-field class="widen">
                   <input matInput type="text" placeholder="Sender Address" formControlName="senderAddress" value="{{ (order$ | async)?.senderAddress }}" readonly />
-                  <!-- <mat-error *ngIf="form.controls['senderAddress'].hasError('required')">Please enter sender address.</mat-error> -->
                 </mat-form-field>
 
               </div>
@@ -39,20 +34,15 @@
 
                 <mat-form-field class="widen">
                   <input matInput type="text" placeholder="ReceiverName" formControlName="receiverName" value="{{ (order$ | async)?.receiverName }}" readonly />
-
-                  <!-- <mat-error *ngIf="form.controls['receiverName'].hasError('required')">Please enter receiver name.</mat-error> -->
                 </mat-form-field>
                 <mat-form-field class="widen">
                   <input matInput type="text" placeholder="Receiver Phone" formControlName="receiverPhone" value="{{ (order$ | async)?.receiverPhone }}" readonly />
-                  <!-- <mat-error *ngIf="form.controls['receiverPhone'].hasError('required')">Please enter receiver phone number.</mat-error> -->
                 </mat-form-field>
                 <mat-form-field class="widen">
                   <input matInput type="text" placeholder="ReceiverEmail" formControlName="receiverEmail" value="{{ (order$ | async)?.receiverEmail }}" readonly />
-                  <!-- <mat-error *ngIf="form.controls['receiverEmail'].hasError('required')">Please enter receiver email.</mat-error> -->
                 </mat-form-field>
                 <mat-form-field class="widen">
                   <input matInput type="text" placeholder="Receiver Address" formControlName="receiverAddress" value="{{ (order$ | async)?.receiverAddress }}" readonly />
-                  <!-- <mat-error *ngIf="form.controls['receiverAddress'].hasError('required')">Please enter receiver address.</mat-error> -->
                 </mat-form-field>
               </div>
             </div>
@@ -61,35 +51,16 @@
 
             <h3>Routes Definition</h3>
 
-            
               <mat-stepper #stepper>
-                <mat-step>
-                  <ng-template matStepLabel>Iowa</ng-template>
-                  <div>Address: 1302 S Main st</div>
-                  <div>Status: Done</div>
-                </mat-step>
-                <mat-step>
-                  <ng-template matStepLabel>Chicago</ng-template>
-                  <div>Address: 1303 S Main st</div>
-                  <div>Status: Done</div>
-                </mat-step>
-                <mat-step>
-                  <ng-template matStepLabel>Texas</ng-template>
-                  <div>Address: 1304 S Main st</div>
-                  <div>Status: Done</div>
-                </mat-step>
-                <mat-step>
-                  <ng-template matStepLabel>Washinton</ng-template>
-                  <div>Address: 1305 S Main st</div>
-                  <div>Status: Done</div>
-                </mat-step>
-                <mat-step>
-                  <ng-template matStepLabel>New York</ng-template>
-                  <div>Address: 1306 S Main st</div>
-                  <div>Status: Done</div>
+                <mat-step *ngFor="let route of (order$ | async)?.routes">
+                  <ng-template matStepLabel>{{ route.name }}</ng-template>
+                  <div>Address: {{ route.address }}</div>
+                  <div>PIC: {{ route.PIC }}</div>
+                  <div>Status: {{ route.status }}</div>
                 </mat-step>
               </mat-stepper>
 
+              <hr class="verizontal-seperator"/>
             
 
           </div>

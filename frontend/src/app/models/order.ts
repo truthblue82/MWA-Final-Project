@@ -8,6 +8,14 @@ export interface Order {
     receiverPhone: string;
     receiverEmail: string;
     receiverAddress: string;
+    routes: [
+      {
+        name: string,
+        address: string,
+        PIC: string,
+        status: string
+      }
+    ]
     // sender_name: string;
     // receiver_name: string;
     // receiver_phone: string;
