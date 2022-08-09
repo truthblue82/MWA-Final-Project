@@ -187,11 +187,9 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   }
 
   public onSaveOrder() {
-    console.log('onSaveOrder',this.form.invalid);
     if (this.form.invalid) {
       return;
     }
-    console.log('' + this.mode);
     if (this.mode === 'create') {
       if (this.odRoutes.length) {
         this.form.get('routes')?.patchValue(this.odRoutes);
@@ -200,19 +198,18 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
         .subscribe(response => {
 
           this.order = response;
-          //this.router.navigate(['orders']);
+          this.router.navigate(['orders']);
         }, error => {
           this.notificationService.openSnackBar(error.error.error);
         });
     } else {
-      console.log('before update order');
       this.form.get('routes')?.patchValue(this.odRoutes);
       this.orderService.updateOrderById(this.orderId, { ...this.form.value })
         .subscribe(response => {
           console.log(response);
           this.order = response;
 
-          //this.router.navigate(['/orders']);
+          this.router.navigate(['/orders']);
         }, error => {
           this.notificationService.openSnackBar(error.error.error);
       })

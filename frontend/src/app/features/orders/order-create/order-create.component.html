@@ -181,7 +181,7 @@
               </button>
             </div>
 
-            <div class="image-preview" *ngIf="orderImages != '' && imagePreview == ''">
+            <div class="image-preview" *ngIf="orderImages && orderImages !== '' && imagePreview == ''">
               <img [src]="backendUrl + orderImages" alt="order image">
               <button class="img-delete" mat-icon-button color="accent" type="button" (click)="onDeleteImage2()">
                 <mat-icon>delete</mat-icon>
