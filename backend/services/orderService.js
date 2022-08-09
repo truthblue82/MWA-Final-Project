@@ -119,10 +119,9 @@ exports.getOrderById2 = async (orderId) => {
 exports.updateOrderById = async (orderId, req) => {
     try {
         const orderObj = req.body;
-        console.log(orderObj.trackingNumber);
+        
         if (!orderObj.trackingNumber) {
             orderObj.trackingNumber = trackingNumberGenerator();
-            console.log(orderObj.trackingNumber);
         }
         if (req.file && req.file.filename) {
             const pictureName = req.file.filename;
