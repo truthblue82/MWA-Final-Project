@@ -156,6 +156,7 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
       weight: ['', Validators.required],
       insurance: [false],
       orderDate: [Date.now()],
+      imageFile: [''],
       images: [''],
       imageName: [''],
       note: ['']
