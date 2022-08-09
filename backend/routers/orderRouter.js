@@ -4,7 +4,7 @@ const path = require('path');
 
 const router = express.Router();
 
-const { fetchAll, addOrder, getOrderById, updateOrderById } = require('../controllers/orderController');
+const { fetchAll, addOrder, getOrderById, updateOrderById, deleteOrderById } = require('../controllers/orderController');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => { 
@@ -40,7 +40,7 @@ router.post('/:id', imageUpload.single('imageFile'), updateOrderById);
 
 //for public delivery tracking
 router.get('/delivery/:id', getOrderById);
+router.delete('/:id', deleteOrderById);
 // router.patch('/:id',);
-// router.delete('/:id',);
 
 module.exports = router;

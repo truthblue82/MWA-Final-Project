@@ -16,6 +16,8 @@ import { SpinnerService } from "src/app/core/services/spinner.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { Warehouse } from "src/app/models/warehouse";
 import { environment } from "src/environments/environment";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 //import { GlobalState } from "src/app/store/states/global.state";
 
 @Component({
@@ -49,6 +51,7 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
     private router: Router,
     private orderService: OrderService,
     private notificationService: NotificationService,
+    private dialog: ConfirmDialogComponent,
     public spinnerService: SpinnerService
   ) { }
 
@@ -60,6 +63,16 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
         if (this.router.url.includes('/edit/')) {
           this.mode = 'edit';
           this.titleServic.setTitle('Delivery Management System - Edit Order');
+        } else if (this.router.url.includes('/delete/')) {
+          this.mode = 'delete';
+          this.orderId = <string>paramMap.get('id');
+          //Dialog here
+          // this.orderService.deleteOrderById(this.orderId).subscribe(response => {
+          //   this.router.navigate(['orders']);
+          // }, error => {
+          //   this.notificationService.openSnackBar(error.error.error);
+          // });
+
         } else {
           this.mode = 'view';
           this.titleServic.setTitle('Delivery Management System - Order Detail');

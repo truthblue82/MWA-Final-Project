@@ -166,3 +166,11 @@ exports.updateOrderById = async (orderId, req) => {
         return { status: 500, error: err.message };
     }
 }
+
+exports.deleteOrderById = async (order_id) => {
+    try {
+        return await Order.deleteOne({ _id: order_id });
+    } catch (err) {
+        return { status: 500, error: err.message };
+    }
+}

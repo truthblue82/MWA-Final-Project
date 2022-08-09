@@ -5,6 +5,7 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderCreateComponent } from './order-create/order-create.component';
+import { ConfirmDialogModel } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 
 @NgModule({
   imports: [

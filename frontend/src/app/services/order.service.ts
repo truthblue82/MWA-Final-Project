@@ -88,5 +88,9 @@ export class OrderService {
     //query += query + `&lat=`;
     return this.http.get<Array<Warehouse>>(`${environment.backendUrl}/warehouses/nearest-search?${query}`);
   }
+
+  public deleteOrderById(order_id: string): Observable<any> {
+    return this.http.delete<any>(`${environment.backendUrl}/orders/${order_id}`);
+  }
 }
 
