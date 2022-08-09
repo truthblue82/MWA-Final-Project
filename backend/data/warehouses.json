@@ -23,7 +23,7 @@
     "zipcode": 52556
   },
   "location": [-91.96733634428917, 41.01809566299682 ],
-  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29","62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+  "employees": [ "62ecc0aa115cc0056215dd29","62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
 }, {
   "name": "Warehouse C",
   "description": "",
@@ -36,7 +36,7 @@
     "zipcode": 67764
   }, 
   "location": [-101.24560202366379, 39.064284904224884],
-  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+  "employees": [ "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
 }, {
   "name": "Warehouse D",
   "description": "",
@@ -49,7 +49,7 @@
     "zipcode": 66801
   },
   "location": [-96.18341335915808, 38.4203988233121],
-  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29","62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+  "employees": [ "62ecc0aa115cc0056215dd29","62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
 }, {
   "name": "Warehouse E",
   "description": "",
@@ -62,7 +62,7 @@
     "zipcode": 73942
   },
   "location": [-101.48355548455663, 36.70200317885884],
-  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+  "employees": [ "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
 }, {
   "name": "Warehouse F",
   "description": "",
@@ -75,7 +75,7 @@
     "zipcode": 74401
   },
   "location": [-95.37195916895918, 35.75142495213262],
-  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+  "employees": [ "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
 }, {
   "name": "Warehouse G",
   "description": "",
@@ -88,7 +88,7 @@
     "zipcode": 79106
   },
   "location": [-101.9176206998431, 35.20892190475899],
-  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+  "employees": ["62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
 },{
   "name": "Warehouse H",
   "description": "",
@@ -101,5 +101,5 @@
     "zipcode": 78744
   },
   "location": [-97.72326346662197, 30.194750637519295],
-  "employees": ["62ecc0aa115cc0056215dd2d", "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
+  "employees": [ "62ecc0aa115cc0056215dd29", "62ecc0aa115cc0056215dd31","62ecc0aa115cc0056215dd2b", "62ecc0aa115cc0056215dd2f"]
 }]

@@ -53,3 +53,11 @@ input[type="file"] {
   margin-left: -24px;
   margin-top: -18px;
 }
+.mat-chip-list-wrapper-custom .mat-chip-list-wrapper {
+  display: flex;
+  flex-direction: column !important;
+  align-items: flex-start;
+}
+.mat-chip-list-wrapper .mat-standard-chip {
+  width: 100%;
+}

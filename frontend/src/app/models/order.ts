@@ -26,19 +26,19 @@ export interface Order {
   orderStatus: string;
   total: number;
   note: string;
-  routes2: OrderRoute[], //{from: {name: string, address: string, contact: string}, to: {name: string, address: string, contact: string}, routeStatus, assignee: {id, name}, note};
+  routes: OrderRoute[], //{from: {name: string, address: string, contact: string}, to: {name: string, address: string, contact: string}, routeStatus, assignee: {id, name}, note};
   orderCreator: {
     id: string;
     name: string;
   },
-  routes: [
+  /*routes: [
       {
         name: string,
         address: string,
         PIC: string,
         status: string
       }
-  ]
+  ]*/
 }
 // routes: [
 //       {
