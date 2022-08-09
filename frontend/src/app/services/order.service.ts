@@ -16,4 +16,8 @@ export class OrderService {
   public getOrders(params: OrderParams): Observable<Array<Order>> {
     return this.http.get<Array<Order>>('http://localhost:3000/orders');
   }
+
+  public getOrderById(_id: String): Observable<Order> {
+    return this.http.get<Order>(`http://localhost:3000/orders/${_id}`);
+  }
 }

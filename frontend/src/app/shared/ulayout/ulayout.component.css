@@ -1,0 +1,106 @@
+.navbar-spacer {
+  flex: 1 1 auto;
+}
+
+.navbar {
+  z-index: 2;
+}
+
+.navbar-brand {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.navbar-is-mobile .navbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+.navbar-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+           causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.navbar-is-mobile .navbar-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+           `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+/*Set sidenav width*/
+
+mat-sidenav {
+  min-width: 180px !important;
+  border-right: 1px solid #eee;
+  box-shadow: 6px 0 6px rgba(0, 0, 0, .1);
+  /* background-color:rgb(63, 81, 181); */
+}
+
+/* Set height of wrapper to stop content from moving up & down */
+
+.progress-bar-container {
+  height: 5px;
+}
+
+a.mat-list-item.active {
+  background: rgba(0, 0, 0, .04);
+}
+
+#push-bottom {
+  position: absolute;
+  bottom: 0;
+}
+.mat-standard-chip {
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  padding: 2px 12px;
+  border-radius: 16px;
+  align-items: center;
+  cursor: default;
+  min-height: 32px;
+  height: 1px;
+  cursor: pointer;
+}
+.mat-chip-ripple {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+.mat-standard-chip .mat-chip-avatar {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  margin-left: 4px;
+}
+
+.mat-chip-avatar {
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  object-fit: cover;
+}
+.sub-list {
+  margin-left: 15px;
+  border-left: 2px solid #000;
+  background-color: #F3F6F9;
+}

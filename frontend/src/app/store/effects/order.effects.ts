@@ -7,13 +7,13 @@ import { OrderParams } from "../../models/order-params";
 import { Order } from '../../models/order';
 import { OrderResponse } from "../../models/order-response";
 import { OrderService } from "../../services/order.service";
-import { loadOrdersFailure, loadOrdersSuccess, loadingOrders } from "../actions/order.actions";
+import { loadOrdersFailure, loadOrdersSuccess, loadingOrders, LoadOrderFailure, LoadOrderSuccess, LoadOrder } from "../actions/order.actions";
 
 @Injectable()
 export class OrderEffects {
   constructor(private actions$: Actions, private service: OrderService) {}
 
-  public loadOrder$ = createEffect(
+  public loadOrders$ = createEffect(
     (): Observable<Action> =>
       this.actions$.pipe(
         ofType(loadingOrders),
@@ -30,6 +30,19 @@ export class OrderEffects {
         )
       )
   );
+
+  public loadOrder$ = createEffect((): Observable<Action> => this.actions$.pipe(
+    ofType(LoadOrder),
+    map((action) => action._id),
+    switchMap(_id => {
+      return this.service.getOrderById(_id).pipe(
+        map((order: Order) => {
+          return LoadOrderSuccess({order});
+        }),
+        catchError(err => of(LoadOrderFailure({err})))
+      );
+    })
+  ));
 
   private getFilterOrder(orders: Order[], params: OrderParams): OrderResponse {
     let data = <Order[]>[];

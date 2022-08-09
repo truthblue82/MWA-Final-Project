@@ -18,3 +18,12 @@ exports.addOrder = async (order) => {
         return { status: 500, error: err.message };
     }
 };
+
+exports.getOrderById = async (id) => {
+    try {
+        const result = await Order.findOne({"_id": id});
+        return result;
+    } catch (err) {
+        return { status: 500, error: err.message };
+    }
+};

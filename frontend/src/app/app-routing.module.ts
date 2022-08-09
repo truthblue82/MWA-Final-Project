@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-
 import { AuthGuard } from './core/guards/auth.guard';
 
 const appRoutes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
+  },
+  {
+    path: 'delivery',
+    loadChildren: () => import('./features/about/about.module').then(m => m.AboutModule)
   },
   {
     path: 'orders',

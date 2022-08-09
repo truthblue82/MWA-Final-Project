@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LayoutComponent } from '../../shared/layout/layout.component';
+import { ULayoutComponent } from '../../shared/ulayout/ulayout.component';
 import { AboutPageComponent } from './about-page/about-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LayoutComponent,
+    component: ULayoutComponent,
     children: [
-      { path: '', component: AboutPageComponent },
+      { path: ':order_id', component: AboutPageComponent },
     ]
   }
 ];

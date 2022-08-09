@@ -2,8 +2,12 @@ export interface Order {
     _id: string;
     senderName: string;
     senderPhone: string;
+    senderEmail: string;
+    senderAddress: string;
     receiverName: string;
     receiverPhone: string;
+    receiverEmail: string;
+    receiverAddress: string;
     // sender_name: string;
     // receiver_name: string;
     // receiver_phone: string;

@@ -7,13 +7,21 @@ import { createReducer, on } from "@ngrx/store";
 
 export const orderReducer = createReducer(
   initialOrderState,
-  on(order.loadingOrders, (state) => ({ ...state, loading: true })),
+  on(order.loadingOrders, order.LoadOrder, (state) => ({ ...state, selectedOrderId: null!, loading: true })),
   on(order.loadOrdersSuccess, (state, { response }) =>
     orderAdapter.setAll(response.orders, {
       ...state,
       error: false,
       loading: false,
       total: response.total,
+    })
+  ),
+  on(order.LoadOrderSuccess, (state, { order }) =>
+    orderAdapter.addOne(order, {
+      ...state,
+      error: false,
+      loading: false,
+      selectedOrderId: order._id
     })
   ),
   on(order.loadOrdersFailure, (state) =>
@@ -23,5 +31,10 @@ export const orderReducer = createReducer(
       loading: false,
       total: 0,
     })
-  )
+  ),
+  on(order.LoadOrderFailure, (state, { err }) => ({
+      ...state,
+      loading: false,
+      errorMessage: err.message
+  }))
 );
