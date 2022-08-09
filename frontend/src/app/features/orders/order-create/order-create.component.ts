@@ -182,7 +182,7 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
     }
     if (this.mode === 'create') {
       if (this.odRoutes.length) {
-        this.form.get('routes')?.patchValue(this.odRoutes.length);
+        this.form.get('routes')?.patchValue(this.odRoutes);
       }
       this.orderService.addOrder({ ...this.form.value })
         .subscribe(response => {
