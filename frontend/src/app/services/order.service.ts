@@ -74,7 +74,7 @@ export class OrderService {
     return this.http.post<Order>(`${environment.backendUrl}/orders/${orderId}`, postData);
   }
   public getOrderById(_id: String): Observable<Order> {
-    return this.http.get<Order>(`${environment}/orders/${_id}`);
+    return this.http.get<Order>(`${environment.backendUrl}/orders/${_id}`);
   }
 }
 

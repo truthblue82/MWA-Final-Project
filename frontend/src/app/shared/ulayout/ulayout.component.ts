@@ -7,7 +7,7 @@ import { SpinnerService } from '../../core/services/spinner.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { environment } from 'src/environments/environment';
 //import { AuthData } from 'src/app/features/auth/login/auth.interface';
-import { AccountData } from 'src/app/features/account/account.interface';
+import { AccountData } from 'src/app/models/account';
 
 @Component({
   selector: 'uapp-layout',

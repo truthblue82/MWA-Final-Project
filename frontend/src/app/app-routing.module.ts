@@ -9,7 +9,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'delivery',
-    loadChildren: () => import('./features/about/about.module').then(m => m.AboutModule)
+    loadChildren: () => import('./features/about/about.module').then(m => m.AboutModule),
   },
   {
     path: 'orders',
