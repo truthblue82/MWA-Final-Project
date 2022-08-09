@@ -90,13 +90,11 @@ exports.updateEmployeeById = async (request) => {
   const { id } = request.params;
   const employee = request.body;
 
-  if (request.file && request.file.originalname) {
-    //const pictureName = Date.now() + path.extname(request.file.originalname);
-    const pictureName = request.file.originalname;
+  if (request.file && request.file.filename) {
+    const pictureName = request.file.filename;
     const picturePath = path.join('/', 'images', pictureName);
     employee.avatar = picturePath;
     employee.address = JSON.parse(employee.address);
-    employee.gender = employee.gender;
   }
 
   try {

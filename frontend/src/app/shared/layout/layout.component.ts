@@ -6,8 +6,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { SpinnerService } from '../../core/services/spinner.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { environment } from 'src/environments/environment';
-//import { AuthData } from 'src/app/features/auth/login/auth.interface';
-import { AccountData } from 'src/app/features/account/account.interface';
+import { AccountData } from 'src/app/models/account';
 
 @Component({
   selector: 'app-layout',
@@ -18,7 +17,6 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private _mobileQueryListener: () => void;
   mobileQuery: MediaQueryList;
-  //authData!: AuthData;
   accountProfile!: AccountData;
   imgUrl: string = environment.backendUrl;
   isAdmin: boolean = false;

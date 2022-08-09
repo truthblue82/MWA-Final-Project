@@ -1,9 +1,8 @@
 
 <mat-card>
   <mat-spinner color="primary" *ngIf="spinnerService.visibility | async"></mat-spinner>
-  <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress">
-
-  </mat-progress-bar>
+  <!-- <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress">
+  </mat-progress-bar> -->
   <form [formGroup]="form" (submit)="onUpdateAccount()">
     <mat-form-field>
       <input matInput type="text"
@@ -38,7 +37,7 @@
     </mat-form-field>
     <mat-form-field>
       <input matInput
-      type="number"
+      type="tel"
       placeholder="Phone"
       formControlName="phone"
       />
@@ -64,7 +63,7 @@
       </mat-select>
     </mat-form-field>
     <div>
-      <button mat-stroked-button type="button" (click)="filePicker.click()">Upload avatar
+      <button mat-stroked-button type="button" color="primary" (click)="filePicker.click()">Upload avatar
         <mat-icon>file_upload</mat-icon>
       </button>
       <input type="file" #filePicker [accept]="requiredImgType" (change)="onImagePicker($event)" />

@@ -1,4 +1,5 @@
-const { fetchAll, addOrder, getOrderById} = require('../services/orderService');
+
+const { fetchAll, addOrder, getOrderById, updateOrderById } = require('../services/orderService');
 
 exports.fetchAll = async (req, res) => {
     const result = await fetchAll();
@@ -9,7 +10,7 @@ exports.fetchAll = async (req, res) => {
 };
 
 exports.addOrder = async (req, res) => {
-    const result = await addOrder(req.body);
+    const result = await addOrder(req);
     if (result && result.status)
         res.status(result.status).json({ error: result.error });
     else
@@ -18,6 +19,14 @@ exports.addOrder = async (req, res) => {
 
 exports.getOrderById = async (req, res) => {
     const result = await getOrderById(req.params.id);
+    if (result && result.status)
+        res.status(result.status).json({ error: result.error });
+    else
+        res.status(200).json(result);
+};
+
+exports.updateOrderById = async (req, res) => {
+    const result = await updateOrderById(req.params.id, req.body);
     if (result && result.status)
         res.status(result.status).json({ error: result.error });
     else

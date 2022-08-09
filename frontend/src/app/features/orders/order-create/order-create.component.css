@@ -1,6 +1,15 @@
 mat-grid-tile {
   background: #eee;
 }
+mat-chip {
+  max-width: 100%;
+}
+mat-hint{
+  display: block;
+}
+input[type="file"] {
+  visibility: hidden;
+}
 .vertical-separate {
   background-color: #fff;
 }
@@ -16,4 +25,31 @@ mat-grid-tile {
   background-color: #000;
   width: 100%;
   margin-top: 30px;
+}
+.note {
+  margin: 20px 0;
+}
+.section {
+  margin-top: 20px;
+}
+.center {
+  text-align: center;
+}
+.center button {
+  margin: 20px;
+}
+.search-box {
+  width: 100%;
+}
+.image-preview {
+  height: 5rem;
+  margin: 1rem 1rem 1rem 0;
+  display: inline-flex;
+}
+.image-preview img {
+  height: 100%;
+}
+.img-delete {
+  margin-left: -24px;
+  margin-top: -18px;
 }

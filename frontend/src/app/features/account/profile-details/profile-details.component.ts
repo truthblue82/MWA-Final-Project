@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthenticationService } from 'src/app/core/services/auth.service';
-import { AuthData } from '../../auth/login/auth.interface';
+import { AuthData } from 'src/app/models/auth';
 import { environment } from 'src/environments/environment';
-import { AccountData } from '../account.interface';
+import { AccountData } from 'src/app/models/account';
 
 @Component({
   selector: 'app-profile-details',
