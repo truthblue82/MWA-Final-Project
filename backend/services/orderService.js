@@ -9,9 +9,15 @@ exports.fetchAll = async () => {
     }
 };
 
-exports.addOrder = async (order) => {
+exports.addOrder = async (req) => {
     try {
-        const order = new Order(order);
+        const orderObj = req.body;
+        console.log(orderObj);
+        if (req.file && req.filename) {
+            console.log(req.file.filename, req.file.originalname);
+            orderObj.images[req.file.filename];
+        }
+        const order = new Order(orderObj);
         const result = await order.save();
         return result;
     } catch (err) {

@@ -91,7 +91,6 @@ exports.updateEmployeeById = async (request) => {
   const employee = request.body;
 
   if (request.file && request.file.originalname) {
-    //const pictureName = Date.now() + path.extname(request.file.originalname);
     const pictureName = request.file.originalname;
     const picturePath = path.join('/', 'images', pictureName);
     employee.avatar = picturePath;

@@ -17,7 +17,7 @@ export interface Order {
   cost: number;
   tax: number;
   weight: number;
-  size: number;
+  size: string;
   orderValue: number;
   insurance: boolean;
   images: [string, string];

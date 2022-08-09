@@ -15,10 +15,18 @@ export class OrderService {
   }
 
   public getOrders(params: OrderParams): Observable<Array<Order>> {
-    return this.http.get<Array<Order>>('http://localhost:3000/orders');
+    return this.http.get<Array<Order>>(`${environment.backendUrl}/orders`);
   }
 
-  public addOrder(order: Order): Observable<Order | { error: string }> {
-    return this.http.post<Order | { error : string}>(`${environment.backendUrl}/orders`, order);
+  public addOrder(order: Order): Observable<Order> {
+    return this.http.post<Order>(`${environment.backendUrl}/orders`, order);
+  }
+
+  public getOrder(orderId: string): Observable<Order> {
+    return this.http.get<Order>(`${environment.backendUrl}/orders/${orderId}`);
+  }
+
+  public updateOrderById(orderId: string, updatedOrder: Order): Observable<Order> {
+    return this.http.put<Order>(`${environment.backendUrl}/orders/${orderId}`, updatedOrder);
   }
 }

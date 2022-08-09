@@ -9,7 +9,7 @@ exports.fetchAll = async (req, res) => {
 };
 
 exports.addOrder = async (req, res) => {
-    const result = await addOrder(req.body);
+    const result = await addOrder(req);
     if (result && result.status)
         res.status(result.status).json({ error: result.error });
     else

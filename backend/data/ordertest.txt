@@ -1,0 +1,9 @@
+address: 3121 4th St, Lubbock city, Texas, 79409, US
+
+address: 704 Cherokee St, Clayton city, Oklahoma, 74536, US
+
+address: 242 S Santa Fe Ave, Salina city, Kansas, 67401, US
+
+address: 
+
+Cannot access 'order' before initialization
