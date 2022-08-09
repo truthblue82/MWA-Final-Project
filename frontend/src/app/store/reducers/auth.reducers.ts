@@ -9,7 +9,8 @@ import { initialAuthState, authAdapter } from "../states/auth.state";
       authAdapter.addOne(accessToken, {
         ...state,
         error: false,
-        loading: false
+        loading: false,
+        token: accessToken
       })
     ),
     on(auth.loadLoginFailure, (state) =>

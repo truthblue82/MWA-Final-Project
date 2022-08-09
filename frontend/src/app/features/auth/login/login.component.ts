@@ -60,19 +60,20 @@ export class LoginComponent implements OnInit {
     const rememberMe = this.loginForm.get('rememberMe')?.value;
 
     this.loading = true;
+    //Call API to backend for login
     this.store.dispatch(loadLogin({
       email: email.toLowerCase(),
       password
     }));
+
+    // Get data from auth.selectors.ts
     this.store.select(selectToken).subscribe(data => {
-      console.log("111111111", data);
       if (data) {
         if (rememberMe) {
           localStorage.setItem('savedUserEmail', email);
         } else {
           localStorage.removeItem('savedUserEmail');
         }
-        console.log({token: data});
         this.authenticationService.userState$.next({token: data});
         this.authenticationService.persistState();
         this.router.navigate(['/']);

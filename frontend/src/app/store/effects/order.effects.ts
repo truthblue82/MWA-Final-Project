@@ -37,7 +37,6 @@ export class OrderEffects {
     switchMap(_id => {
       return this.service.getOrderById(_id).pipe(
         map((order: Order) => {
-          console.log("REturn value: ", order);
           return LoadOrderSuccess({order});
         }),
         catchError(err => of(LoadOrderFailure({err})))

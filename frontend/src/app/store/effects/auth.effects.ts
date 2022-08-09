@@ -18,7 +18,6 @@ export class AuthEffects {
         switchMap((payload) => {
           return this.service.login(payload.email, payload.password).pipe(
             map(response => {
-              console.log(response);
               return loadLoginSuccess({ accessToken: response.token })
             }),
             catchError((error: HttpErrorResponse) =>
