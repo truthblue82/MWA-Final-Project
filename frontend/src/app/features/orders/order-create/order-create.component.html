@@ -174,8 +174,15 @@
               </div>
             </div> //display fine but not process remove image and backend-->
 
-            <div class="image-preview" *ngIf="imagePreview && imagePreview !== ''">
+            <div class="image-preview" *ngIf="imagePreview && imagePreview !== '' ">
               <img [src]="imagePreview" alt="order image">
+              <button class="img-delete" mat-icon-button color="accent" type="button" (click)="onDeleteImage()">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+            <div class="image-preview" *ngIf="orderImages && orderImages.length > 0 && imagePreview == ''">
+              <img *ngFor="let image of orderImages" [src]="backendUrl + image" alt="order image">
               <button class="img-delete" mat-icon-button color="accent" type="button" (click)="onDeleteImage()">
                 <mat-icon>delete</mat-icon>
               </button>
@@ -190,10 +197,12 @@
               </mat-form-field>
             </div>
 
-            <div class="center">
-              <button mat-raised-button color="basic" type="button" (click)="onCancel()">Cancel</button>
-              <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">Save</button>
+            <div class="center" >
+              <button mat-raised-button color="basic" type="button" (click)="onCancel()" *ngIf="mode === 'add' ">Cancel</button>
+              <button mat-raised-button color="primary" type="button" routerLink="/orders" *ngIf="mode === 'view' || mode === 'edit'">Go to list page</button>
+              <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid" *ngIf="mode === 'create' || mode === 'edit' ">Save</button>
             </div>
+
           </div>
         </form>
 

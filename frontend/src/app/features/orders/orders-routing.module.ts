@@ -11,7 +11,9 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', component: OrderListComponent },
-      { path: 'create', component: OrderCreateComponent }
+      { path: 'create', component: OrderCreateComponent },
+      { path: 'view/:id', component: OrderCreateComponent },
+      { path: 'edit/:id', component: OrderCreateComponent}
     ]
   }
 ];

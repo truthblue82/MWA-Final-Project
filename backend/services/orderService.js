@@ -16,7 +16,10 @@ exports.addOrder = async (req) => {
         //generate trackingNumber
         const orderObj = req.body;
         orderObj.trackingNumber = trackingNumberGenerator();
-        console.log(orderObj);
+        
+        if (req.routes) {
+            orderObj.routes = JSON.parse(req.routes);
+        }
 
         if (req.file && req.file.filename) {
             const pictureName = req.file.filename;
@@ -97,7 +100,12 @@ exports.updateOrderById = async (orderId, req) => {
             const picturePath = path.join('/', 'images', pictureName);
             orderObj.images = [picturePath];
         }
+        if (req.routes) {
+            orderObj.routes = JSON.parse(req.routes);
+        }
+        console.log(orderObj)
         const result = await Order.findOneAndUpdate({ _id: orderId }, orderObj);
+        console.log(result);
         return orderObj;
     } catch (err) {
         return { status: 500, error: err.message };

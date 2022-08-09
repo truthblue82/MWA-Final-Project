@@ -12,8 +12,8 @@ const orderSchema = new Schema({
   receiverEmail: { type: String },
   receiverAddress: { type: String},
   receiverLocation: [Number, Number], //no need to use google map api, we don't have enough time
-  routes: [],
-  routes2: [], //[{from: {name: string, address: string, contact: string}, to: {name: string, address: string, contact: string}, routeStatus, operator: {id, name}, note}, {...}]
+  //routes: [],
+  routes: [], //[{from: {name: string, address: string, contact: string}, to: {name: string, address: string, contact: string}, routeStatus, operator: {id, name}, note}, {...}]
   sourceAddress: { type: String },
   sourceLocation: [Number, Number],
   

@@ -14,7 +14,6 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const filename = Date.now() + path.extname(file.originalname);
     cb(null, filename);
-    //cb(null, file.originalname);
   }
 });
 
@@ -33,11 +32,11 @@ const imageUpload = multer({
 });
 
 router.get('/', fetchAll);
-router.post('', imageUpload.single('images'), addOrder);
+router.post('', imageUpload.single('imageFile'), addOrder);
 router.get('/:id', getOrderById);
 
 //using post for updating because of uploading image
-router.post('/:id', imageUpload.single('images'), updateOrderById);
+router.post('/:id', imageUpload.single('imageFile'), updateOrderById);
 
 //for public delivery tracking
 router.get('/delivery/:id', getOrderById);

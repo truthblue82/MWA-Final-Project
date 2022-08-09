@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { COMMA, ENTER, RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { ThemePalette } from "@angular/material/core";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 
-import { debounceTime, Observable, Subject, fromEvent, identity } from "rxjs";
+import { debounceTime, Observable, Subject, fromEvent } from "rxjs";
 import { map, distinctUntilChanged, filter } from 'rxjs/operators';
 //import { Store, select } from "@ngrx/store";
 
@@ -15,6 +15,7 @@ import { OrderService } from "src/app/services/order.service";
 import { SpinnerService } from "src/app/core/services/spinner.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { Warehouse } from "src/app/models/warehouse";
+import { environment } from "src/environments/environment";
 //import { GlobalState } from "src/app/store/states/global.state";
 
 @Component({
@@ -30,23 +31,22 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   odRoutes: OrderRoute[] = [];
   form!: FormGroup;
-  private mode: string = 'create';
+  mode: string = 'create';
   private orderId!: string;
   order!: Order;
   //imagePreviews: Array<string> = [];
   imagePreview: string = '';
   requiredImgType: Array<string> = ['.jpg', '.png', '.jpeg'];
-  whList!: Warehouse;
   from!: Warehouse;
   to!: Warehouse;
-
-  tests: Array<string> = ['1st route: from A to B', '2nd route: from B to C','Final route: from C to receiver']
+  orderImages!: Array<string>;
+  backendUrl: string = environment.backendUrl;
 
   constructor(
     private titleServic: Title,
     private ar: ActivatedRoute,
     private fb: FormBuilder,
-    private route: Router,
+    private router: Router,
     private orderService: OrderService,
     private notificationService: NotificationService,
     public spinnerService: SpinnerService
@@ -56,17 +56,23 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
     this.buildForm();
     this.ar.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('id')) {
-        //check view or edit mode
-        this.titleServic.setTitle('Delivery Management System - Edit Order');
-        this.mode = 'edit';
-        this.orderId = <string>paramMap.get('id');
 
+        if (this.router.url.includes('/edit/')) {
+          this.mode = 'edit';
+          this.titleServic.setTitle('Delivery Management System - Edit Order');
+        } else {
+          this.mode = 'view';
+          this.titleServic.setTitle('Delivery Management System - Order Detail');
+        }
+
+        this.orderId = <string>paramMap.get('id');
         this.orderService.getOrder(this.orderId).subscribe(response => {
+
           this.order = response;
           this.setFormValue(this.order);
           this.odRoutes = this.order.routes;
+          this.orderImages = response.images;
         }, error => {
-          console.log(error.error.error);
           this.notificationService.openSnackBar(error.error.error);
         });
       } else {
@@ -154,32 +160,34 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   }
 
   private setFormValue(order: Order) {
-    this.form.setValue({
-      senderName: order.senderName,
-      senderPhone: order.senderPhone,
-      senderEmail: order.senderEmail,
-      senderAddress: order.senderAddress,
-      receiverName: order.receiverName,
-      receiverPhone: order.receiverPhone,
-      receiverEmail: order.receiverEmail,
-      receiverAddress: order.receiverAddress,
-      //define fo routes //
-      cost: order.cost,
-      size: order.size,
-      orderValue: order.orderValue,
-      tax: order.tax,
-      total: order.total,
-      weight: order.weight,
-      insurance: order.insurance,
-      orderDate: order.orderDate,
-      note: order.note
-      });
+
+    this.odRoutes = order.routes;
+    this.form.get('senderName')?.patchValue(order.senderName);
+    this.form.get('senderPhone')?.patchValue(order.senderPhone);
+    this.form.get('senderEmail')?.patchValue(order.senderEmail);
+    this.form.get('senderAddress')?.patchValue(order.senderAddress);
+    this.form.get('receiverName')?.patchValue(order.receiverName);
+    this.form.get('receiverPhone')?.patchValue(order.receiverPhone);
+    this.form.get('receiverEmail')?.patchValue(order.receiverEmail);
+    this.form.get('receiverAddress')?.patchValue(order.receiverAddress);
+    this.form.get('routes')?.patchValue(order.routes);
+    this.form.get('cost')?.patchValue(order.cost);
+    this.form.get('size')?.patchValue(order.size);
+    this.form.get('orderValue')?.patchValue(order.orderValue);
+    this.form.get('tax')?.patchValue(order.tax);
+    this.form.get('total')?.patchValue(order.total);
+    this.form.get('weight')?.patchValue(order.weight);
+    this.form.get('insurance')?.patchValue(order.insurance);
+    this.form.get('orderDate')?.patchValue(order.orderDate);
+    this.form.get('images')?.patchValue(order.images);
+    this.form.get('note')?.patchValue(order.note);
   }
 
   public onSaveOrder() {
     if (this.form.invalid) {
       return;
     }
+    console.log(this.mode);
     if (this.mode === 'create') {
       if (this.odRoutes.length) {
         this.form.get('routes')?.patchValue(this.odRoutes);
@@ -188,17 +196,19 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
         .subscribe(response => {
 
           this.order = response;
-          this.route.navigate(['orders']);
+          //this.router.navigate(['orders']);
         }, error => {
           this.notificationService.openSnackBar(error.error.error);
         });
     } else {
+      console.log('before update order');
       this.form.get('routes')?.patchValue(this.odRoutes);
-      this.orderService.updateOrderById(this.orderId, { ...this.order, ...this.form.value })
+      this.orderService.updateOrderById(this.orderId, { ...this.form.value })
         .subscribe(response => {
+          console.log(response);
           this.order = response;
 
-          this.route.navigate(['orders']);
+          //this.router.navigate(['/orders']);
         }, error => {
           this.notificationService.openSnackBar(error.error.error);
       })
@@ -209,8 +219,8 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
     const element = (event.target as HTMLInputElement);
     const files = element.files ? element.files[0] : null;
 
-    this.form.get('images')?.patchValue(files);
-    this.form.get('images')?.updateValueAndValidity();
+    this.form.get('imageFile')?.patchValue(files);
+    this.form.get('imageFile')?.updateValueAndValidity();
     this.form.get('imageName')?.patchValue(files?.name)
 
     const reader = new FileReader();
@@ -224,13 +234,13 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   public onDeleteImage() {
     this.fileUploader.nativeElement.value = null;
     this.imagePreview = '';
-    this.form.get('images')?.patchValue('');
+    this.form.get('imageFile')?.patchValue('');
     this.form.get('imageName')?.patchValue('');
   }
 
   public onCancel() {
     this.form.reset();
-    this.route.navigate(['orders']);
+    this.router.navigate(['orders']);
   }
 
   public removeRoute(index: number): void {
