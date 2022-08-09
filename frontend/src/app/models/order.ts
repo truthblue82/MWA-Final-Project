@@ -5,14 +5,17 @@ export interface Order {
   senderName: string;
   senderPhone: string;
   senderAddress: string;
+  senderEmail: string;
 
   receiverName: string;
   receiverPhone: string;
   receiverAddress: string;
+  receiverEmail: string;
 
   sourceAddress: string;
   orderDate: Date;
   cost: number;
+  tax: number;
   weight: number;
   size: number;
   orderValue: number;
