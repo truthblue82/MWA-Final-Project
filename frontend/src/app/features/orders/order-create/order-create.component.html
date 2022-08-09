@@ -6,7 +6,7 @@
 
         <mat-spinner color="primary" *ngIf="spinnerService.visibility | async"></mat-spinner>
 
-        <form [formGroup]="form" (submit)="onSaveOrder()">
+        <form [formGroup]="form" (ngSubmit)="onSaveOrder()">
           <div fxLayout="column" fxLayoutAlign="left none">
             <h3>Delivery Information</h3>
 
@@ -199,7 +199,7 @@
 
             <div class="center" >
               <button mat-raised-button color="basic" type="button" (click)="onCancel()" *ngIf="mode === 'add' ">Cancel</button>
-              <button mat-raised-button color="primary" type="button" routerLink="/orders" *ngIf="mode === 'view' || mode === 'edit'">Go to list page</button>
+              <button mat-raised-button color="primary" type="button" routerLink="/orders" >Go to list page</button>
               <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid" *ngIf="mode === 'create' || mode === 'edit' ">Save</button>
             </div>
 

@@ -13,7 +13,8 @@ const routes: Routes = [
       { path: '', component: OrderListComponent },
       { path: 'create', component: OrderCreateComponent },
       { path: 'view/:id', component: OrderCreateComponent },
-      { path: 'edit/:id', component: OrderCreateComponent}
+      { path: 'edit/:id', component: OrderCreateComponent },
+      { path: 'delete/:id', component: OrderCreateComponent}
     ]
   }
 ];

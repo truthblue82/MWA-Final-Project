@@ -160,7 +160,6 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   }
 
   private setFormValue(order: Order) {
-
     this.odRoutes = order.routes;
     this.form.get('senderName')?.patchValue(order.senderName);
     this.form.get('senderPhone')?.patchValue(order.senderPhone);
@@ -181,13 +180,15 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
     this.form.get('orderDate')?.patchValue(order.orderDate);
     this.form.get('images')?.patchValue(order.images);
     this.form.get('note')?.patchValue(order.note);
+    this.form.get('routes')?.patchValue(this.odRoutes);
   }
 
   public onSaveOrder() {
+    console.log('onSaveOrder',this.form.invalid);
     if (this.form.invalid) {
-      return;
+      //return;
     }
-    console.log(this.mode);
+    console.log('' + this.mode);
     if (this.mode === 'create') {
       if (this.odRoutes.length) {
         this.form.get('routes')?.patchValue(this.odRoutes);

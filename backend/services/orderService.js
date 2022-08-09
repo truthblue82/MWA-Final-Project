@@ -1,5 +1,6 @@
 const path = require('path');
 const Order = require('../models/orders');
+const jwt = require('jsonwebtoken');
 const { trackingNumberGenerator } = require('../utils/utils');
 
 exports.fetchAll = async () => {
@@ -17,9 +18,34 @@ exports.addOrder = async (req) => {
         const orderObj = req.body;
         orderObj.trackingNumber = trackingNumberGenerator();
         
-        if (req.routes) {
-            orderObj.routes = JSON.parse(req.routes);
+        if (orderObj.routes) {
+            const routes = JSON.parse(orderObj.routes);
+            for (let i = 0; i < routes.length; i++) {
+                console.log(routes[i]);
+            }
+            //add last route from last warehouse to receiver home
+            const lastRoute = routes[routes.length];
+            routes.push({
+                name: `House of ${orderObj.receiverName}`,
+                from: {
+                    ...lastRoute.to
+                },
+                to: {
+                    name: `House of ${orderObj.receiverName}`,
+                    address: orderObj.receiverAddress,
+                    contac: orderObj.receiverPhone
+                },
+                color: '',
+                note: ''
+            });
+            orderObj.routes = routes;
         }
+        
+        const token = req.headers.authorization.replace(/Bearer /gi, '');
+        const decode = jwt.decode(token, {
+            complete: true
+        });
+        orderObj.orderCreater = decode.payload.employeeId;
 
         if (req.file && req.file.filename) {
             const pictureName = req.file.filename;
@@ -93,21 +119,50 @@ exports.getOrderById2 = async (orderId) => {
 exports.updateOrderById = async (orderId, req) => {
     try {
         const orderObj = req.body;
-        if(!orderObj.trackingNumber)
+        console.log(orderObj.trackingNumber);
+        if (!orderObj.trackingNumber) {
             orderObj.trackingNumber = trackingNumberGenerator();
+            console.log(orderObj.trackingNumber);
+        }
         if (req.file && req.file.filename) {
             const pictureName = req.file.filename;
             const picturePath = path.join('/', 'images', pictureName);
             orderObj.images = [picturePath];
         }
         if (req.routes) {
-            orderObj.routes = JSON.parse(req.routes);
+            const routes = JSON.parse(orderObj.routes);
+            for (let i = 0; i < routes.length; i++) {
+                console.log(routes[i]);
+            }
+            //add last route from last warehouse to receiver home
+            const lastRoute = routes[routes.length];
+            routes.push({
+                name: `House of ${orderObj.receiverName}`,
+                from: {
+                    ...lastRoute.to
+                },
+                to: {
+                    name: `House of ${orderObj.receiverName}`,
+                    address: orderObj.receiverAddress,
+                    contac: orderObj.receiverPhone
+                },
+                color: '',
+                note: ''
+            });
+            orderObj.routes = routes;
         }
-        console.log(orderObj)
+        const token = req.headers.authorization.replace(/Bearer /gi, '');
+        const decode = jwt.decode(token, {
+            complete: true
+        });
+        orderObj.orderCreater = decode.payload.employeeId;
+        console.log('orderObj',orderObj)
         const result = await Order.findOneAndUpdate({ _id: orderId }, orderObj);
-        console.log(result);
+        
+        console.log('result',result);
         return orderObj;
     } catch (err) {
+        console.log(err.message)
         return { status: 500, error: err.message };
     }
 }

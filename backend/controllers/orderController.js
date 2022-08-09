@@ -26,9 +26,7 @@ exports.getOrderById = async (req, res) => {
 };
 
 exports.updateOrderById = async (req, res) => {
-    console.log(req.params);
-    console.log(req.body);
-    const result = await updateOrderById(req.params.id, req.body);
+    const result = await updateOrderById(req.params.id, req);
     if (result && result.status)
         res.status(result.status).json({ error: result.error });
     else

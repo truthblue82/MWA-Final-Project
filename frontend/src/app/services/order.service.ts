@@ -53,7 +53,9 @@ export class OrderService {
   public updateOrderById(orderId: string, updatedOrder: Order): Observable<Order> {
     //build formData because of image uploading
     const postData = new FormData();
-    postData.append('imageFile', updatedOrder.imageFile, updatedOrder.imageName);
+    console.log(updatedOrder);
+    if(updatedOrder.imageFile)
+      postData.append('imageFile', updatedOrder.imageFile, updatedOrder.imageName);
     postData.append('senderName', updatedOrder.senderName);
     postData.append('senderPhone', updatedOrder.senderPhone);
     postData.append('senderEmail', updatedOrder.senderEmail);
