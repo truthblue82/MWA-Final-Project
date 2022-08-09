@@ -12,7 +12,7 @@ const orderSchema = new Schema({
   receiverAddress: { type: String},
   receiverLocation: [Number, Number], //no need to use google map api, we don't have enough time
   
-  routes: [], //[{address: string, location, routeStatus, operator: {id, name}}, {...}]
+  routes: [], //[{from: {name: string, address: string, contact: string}, to: {name: string, address: string, contact: string}, routeStatus, operator: {id, name}, note}, {...}]
   sourceAddress: { type: String },
   sourceLocation: [Number, Number],
   
@@ -28,7 +28,7 @@ const orderSchema = new Schema({
   note: { type: String },
   orderStatus: { type: String }, //status at final
   
-  createdStaff: { type: String }, //id string of employee id
+  orderCreater: { type: String }, //id string of employee id
   deleted: { type: Number} // create: 0, 1: deleted
 });
 

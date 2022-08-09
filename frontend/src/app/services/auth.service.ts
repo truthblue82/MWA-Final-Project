@@ -1,32 +1,34 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { delay } from 'rxjs/operators';
-import { BehaviorSubject, of, EMPTY, Subject } from 'rxjs';
-import { AuthData } from 'src/app/models/auth';
+import { HttpClient } from "@angular/common/http";
+import { Injectable, Inject } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import jwt_decode from "jwt-decode";
-import * as moment from 'moment';
 
-import { environment } from "src/environments/environment";
+import { AuthData } from 'src/app/models/auth';
 import { AccountData } from 'src/app/models/account';
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
-  userState$ = new BehaviorSubject<{ token: string }>({ token: '' });
+export class AuthService {
+  userState$ = new BehaviorSubject<{ token: string }>({token: ''});
 
-  constructor(private http: HttpClient,
-    @Inject('LOCALSTORAGE') private localStorage: Storage) {
-  }
+  constructor(
+    private http: HttpClient,
+    @Inject('LOCALSTORAGE') private localStorage: Storage
+  ) { }
 
   login(email: string, password: string) {
     return this.http.post<{token: string}>(`${environment.backendUrl}/employees/login`, { email, password });
   }
 
-  logout(): void {
-    this.userState$.next({ token: '' });
+  logout(token: string) {
+    //token must be ''
+    this.userState$.next({ token: token });
     this.localStorage.removeItem('userState');
+    return { message: 'success' };
   }
+
   getCurrentUser(): AuthData | null {
     let decoded;
     if (this.userState$.value.token) {
@@ -69,19 +71,5 @@ export class AuthenticationService {
       return this.http.post<AccountData>(`${environment.backendUrl}/employees/${accountData._id}`, postData);
     }
     else return this.http.put<AccountData>(`${environment.backendUrl}/employees/${accountData._id}`, accountData);
-  }
-
-  //from now is not check by 10KG
-
-  passwordResetRequest(email: string) {
-    return of(true).pipe(delay(1000));
-  }
-
-  changePassword(email: string, currentPwd: string, newPwd: string) {
-    return of(true).pipe(delay(1000));
-  }
-
-  passwordReset(email: string, token: string, password: string, confirmPassword: string): any {
-    return of(true).pipe(delay(1000));
   }
 }

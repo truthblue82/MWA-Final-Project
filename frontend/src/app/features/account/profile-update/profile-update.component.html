@@ -1,9 +1,8 @@
 
 <mat-card>
   <mat-spinner color="primary" *ngIf="spinnerService.visibility | async"></mat-spinner>
-  <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress">
-
-  </mat-progress-bar>
+  <!-- <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress">
+  </mat-progress-bar> -->
   <form [formGroup]="form" (submit)="onUpdateAccount()">
     <mat-form-field>
       <input matInput type="text"

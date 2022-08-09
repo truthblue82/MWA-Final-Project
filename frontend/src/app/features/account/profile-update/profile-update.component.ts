@@ -6,7 +6,7 @@ import { mergeMap } from "rxjs";
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { NotificationService } from "src/app/core/services/notification.service";
 import { SpinnerService } from 'src/app/core/services/spinner.service';
-import { AccountData } from "../account.interface";
+import { AccountData } from "src/app/models/account";
 
 @Component({
   selector: 'app-profile-update',
@@ -22,7 +22,7 @@ export class ProfileUpdateComponent implements OnInit{
   form!: FormGroup;
   imagePreview!: string;
   requiredImgType: Array<string> = ['.jpg', '.png', '.jpeg'];
-  uploadProgress!: number;
+  //uploadProgress!: number;
 
   constructor(
     private ar: ActivatedRoute,

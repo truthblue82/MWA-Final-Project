@@ -19,7 +19,7 @@ export class DashboardHomeComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle('angular-material-template - Dashboard');
-    
+
     setTimeout(() => {
       this.notificationService.openSnackBar('Welcome!');
     });
