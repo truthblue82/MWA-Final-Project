@@ -1,18 +1,18 @@
-import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
-import { AuthData } from "src/app/models/auth";
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { AuthData } from '../../models/auth';
 
-
-export interface AuthState extends EntityState<AuthData> {
+export interface AuthState extends EntityState<any> {
   error: boolean;
-  success: boolean;
+  loading: boolean;
+  token: string;
 }
 
-export const authAdapter: EntityAdapter<AuthData> = createEntityAdapter<AuthData>({
-  selectId: (authData: AuthData) => authData.employeeId
+export const authAdapter: EntityAdapter<string> = createEntityAdapter<string>({
+  selectId: (auth: string) => auth
 });
 
 export const initialAuthState: AuthState = authAdapter.getInitialState({
   error: false,
-  success: false
+  loading: false,
+  token: null!
 });
-

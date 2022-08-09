@@ -7,6 +7,12 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { environment } from 'src/environments/environment';
 
+
+import { Store } from "@ngrx/store";
+import { AuthState} from "src/app/store/states/auth.state";
+import { loadLogin } from "src/app/store/actions/auth.actions";
+import { selectAuthLoading, selectToken } from "src/app/store/selectors/auth.selectors";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,11 +23,13 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   loading!: boolean;
   appTitle: string = environment.appTitle;
+  loading$ = this.store.select(selectAuthLoading);
 
   constructor(private router: Router,
     private titleService: Title,
     private notificationService: NotificationService,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private store: Store<AuthState>) {
   }
 
   ngOnInit() {
@@ -52,22 +60,47 @@ export class LoginComponent implements OnInit {
     const rememberMe = this.loginForm.get('rememberMe')?.value;
 
     this.loading = true;
-    this.authenticationService
-      .login(email.toLowerCase(), password)
-      .subscribe(response => {
-        // set the state
+    //Call API to backend for login
+    this.store.dispatch(loadLogin({
+      email: email.toLowerCase(),
+      password
+    }));
+
+    // Get data from auth.selectors.ts
+    this.store.select(selectToken).subscribe(data => {
+      console.log("111",data);
+      if (data) {
         if (rememberMe) {
           localStorage.setItem('savedUserEmail', email);
         } else {
           localStorage.removeItem('savedUserEmail');
         }
-        this.authenticationService.userState$.next(response);
+        this.authenticationService.userState$.next({token: data});
         this.authenticationService.persistState();
         this.router.navigate(['/']);
-      }, error => {
-        this.notificationService.openSnackBar(error.error.error);
+      } else {
+        this.notificationService.openSnackBar("Something wrong!");
         this.loading = false;
-      });
+      }
+     })
+
+    // this.authenticationService
+    //   .login(email.toLowerCase(), password)
+    //   .subscribe(response => {
+    //     // set the state
+    //     if (rememberMe) {
+    //       localStorage.setItem('savedUserEmail', email);
+    //     } else {
+    //       localStorage.removeItem('savedUserEmail');
+    //     }
+    //     console.log(response);
+    //     this.authenticationService.userState$.next(response);
+    //     this.authenticationService.persistState();
+    //     this.router.navigate(['/']);
+    //   }, error => {
+    //     this.notificationService.openSnackBar(error.error.error);
+    //     this.loading = false;
+    //   });
   }
 
   //10KG add more
