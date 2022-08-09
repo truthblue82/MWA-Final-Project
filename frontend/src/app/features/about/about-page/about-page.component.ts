@@ -15,6 +15,7 @@ export class AboutPageComponent implements OnInit {
   form!: FormGroup;
   order$ = this.store.select(getCurrentOrder);
   //loading$ = this.store.select(selectUsersLoading);
+  checked = true;
 
   constructor(private store: Store<GlobalState>, private route: ActivatedRoute) { }
 

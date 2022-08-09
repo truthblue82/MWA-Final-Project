@@ -1,72 +1,119 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="95%">
-    <mat-card>
-      <mat-card-content>
-        <h2>Order Detail</h2>
+    <mat-tab-group>
+      <mat-tab label="Delivery">
+        
+        <mat-card>
+          <mat-card-content>
+            <form [formGroup]="form">
+              <div fxLayout="column" fxLayoutAlign="left none">
+                <h3>Delivery Information</h3>
 
-        <form [formGroup]="form">
-          <div fxLayout="column" fxLayoutAlign="left none">
-            <h3>Delivery Information</h3>
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+                  <div class="col-2" fxFlex="49%" fxFlex.sm="95%" fxFlex.xs="95%">
+                    <h3>Sender Information</h3>
+
+                    <mat-form-field class="widen">
+                      <input matInput type="text" placeholder="Sender Name" formControlName="senderName" value="{{ (order$ | async)?.senderName }}" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="widen">
+                      <input matInput type="text" placeholder="Sender Phone" formControlName="senderPhone" value="{{ (order$ | async)?.senderPhone }}" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="widen">
+                      <input matInput type="text" placeholder="Sender Email" formControlName="senderEmail" value="{{ (order$ | async)?.senderEmail }}" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="widen">
+                      <input matInput type="text" placeholder="Sender Address" formControlName="senderAddress" value="{{ (order$ | async)?.senderAddress }}" readonly />
+                    </mat-form-field>
+
+                  </div>
+
+                  <div fxFlex class="vertical-separate">&nbsp;</div>
+
+                  <div class="col-2" fxFlex="49%" fxFlex.sm="95%" fxFlex.xs="95%">
+                    <h3>Receiver Information</h3>
+
+                    <mat-form-field class="widen">
+                      <input matInput type="text" placeholder="ReceiverName" formControlName="receiverName" value="{{ (order$ | async)?.receiverName }}" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="widen">
+                      <input matInput type="text" placeholder="Receiver Phone" formControlName="receiverPhone" value="{{ (order$ | async)?.receiverPhone }}" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="widen">
+                      <input matInput type="text" placeholder="ReceiverEmail" formControlName="receiverEmail" value="{{ (order$ | async)?.receiverEmail }}" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="widen">
+                      <input matInput type="text" placeholder="Receiver Address" formControlName="receiverAddress" value="{{ (order$ | async)?.receiverAddress }}" readonly />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <hr class="verizontal-seperator"/>
+
+                <h3>Routes Definition</h3>
+
+                  <mat-stepper #stepper>
+                    <mat-step *ngFor="let route of (order$ | async)?.routes">
+                      <ng-template matStepLabel>{{ route.name }}</ng-template>
+                      <div>Address: {{ route.address }}</div>
+                      <div>PIC: {{ route.PIC }}</div>
+                      <div>Status: {{ route.status }}</div>
+                    </mat-step>
+                  </mat-stepper>
+              </div>
+            </form>
+
+          </mat-card-content>
+        </mat-card>
+
+    
+      </mat-tab>
+
+      <mat-tab label="Order">
+        <h3>Order Information</h3>
 
             <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
               <div class="col-2" fxFlex="49%" fxFlex.sm="95%" fxFlex.xs="95%">
-                <h3>Sender Information</h3>
-
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Sender Name" formControlName="senderName" value="{{ (order$ | async)?.senderName }}" readonly />
-                </mat-form-field>
-                <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Sender Phone" formControlName="senderPhone" value="{{ (order$ | async)?.senderPhone }}" readonly />
-                </mat-form-field>
-                <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Sender Email" formControlName="senderEmail" value="{{ (order$ | async)?.senderEmail }}" readonly />
-                </mat-form-field>
-                <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Sender Address" formControlName="senderAddress" value="{{ (order$ | async)?.senderAddress }}" readonly />
+                  <input matInput type="number" placeholder="Cost ($)" formControlName="cost" value="{{ (order$ | async)?.cost }}" readonly />
                 </mat-form-field>
 
+                <mat-form-field class="widen">
+                  <input matInput type="text" placeholder="Size (w x l x h)" formControlName="size" value="{{ (order$ | async)?.size }}" readonly />
+                </mat-form-field>
+
+                <mat-form-field class="widen">
+                  <input matInput type="number" placeholder="Order Price" formControlName="orderValue" value="{{ (order$ | async)?.orderValue }}" readonly />
+                </mat-form-field>
+
+                <mat-form-field class="widen">
+                  <mat-label>Total</mat-label>
+
+                  <input matInput type="number" placeholder="Total (lb)" formControlName="total" value="{{ (order$ | async)?.total }}" readonly />
+                </mat-form-field>
               </div>
-
-              <div fxFlex class="vertical-separate">&nbsp;</div>
-
               <div class="col-2" fxFlex="49%" fxFlex.sm="95%" fxFlex.xs="95%">
-                <h3>Receiver Information</h3>
+                <mat-form-field class="widen">
+                  <mat-label>Tax</mat-label>
+
+                  <input matInput type="number" placeholder="Tax (%)" formControlName="tax" value="{{ (order$ | async)?.tax }}" readonly />
+                </mat-form-field>
+
 
                 <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="ReceiverName" formControlName="receiverName" value="{{ (order$ | async)?.receiverName }}" readonly />
+                  <input matInput type="number" placeholder="Weight (lb)" formControlName="weight" value="{{ (order$ | async)?.weight }}" readonly />
                 </mat-form-field>
-                <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Receiver Phone" formControlName="receiverPhone" value="{{ (order$ | async)?.receiverPhone }}" readonly />
-                </mat-form-field>
-                <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="ReceiverEmail" formControlName="receiverEmail" value="{{ (order$ | async)?.receiverEmail }}" readonly />
-                </mat-form-field>
-                <mat-form-field class="widen">
-                  <input matInput type="text" placeholder="Receiver Address" formControlName="receiverAddress" value="{{ (order$ | async)?.receiverAddress }}" readonly />
-                </mat-form-field>
+
+                <section class="section" >
+                  <mat-checkbox formControlName="insurance" [ngModel]="checked">Insurance</mat-checkbox>
+                </section>
               </div>
             </div>
-
-            <hr class="verizontal-seperator"/>
-
-            <h3>Routes Definition</h3>
-
-              <mat-stepper #stepper>
-                <mat-step *ngFor="let route of (order$ | async)?.routes">
-                  <ng-template matStepLabel>{{ route.name }}</ng-template>
-                  <div>Address: {{ route.address }}</div>
-                  <div>PIC: {{ route.PIC }}</div>
-                  <div>Status: {{ route.status }}</div>
-                </mat-step>
-              </mat-stepper>
-
-              <hr class="verizontal-seperator"/>
-            
-
-          </div>
-        </form>
-
-      </mat-card-content>
-    </mat-card>
+      </mat-tab>
+      <mat-tab label="Picture">
+        <h3>Package Image</h3>
+        <img src="{{ (order$ | async)?.images }}" alt="Package Image">
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>
