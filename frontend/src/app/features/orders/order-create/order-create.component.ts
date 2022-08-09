@@ -17,7 +17,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { Warehouse } from "src/app/models/warehouse";
 import { environment } from "src/environments/environment";
 import { MatDialog } from "@angular/material/dialog";
-import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
+
 //import { GlobalState } from "src/app/store/states/global.state";
 
 @Component({
@@ -41,7 +41,7 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   requiredImgType: Array<string> = ['.jpg', '.png', '.jpeg'];
   from!: Warehouse;
   to!: Warehouse;
-  orderImages!: Array<string>;
+  orderImages!: string;
   backendUrl: string = environment.backendUrl;
 
   constructor(
@@ -51,7 +51,6 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
     private router: Router,
     private orderService: OrderService,
     private notificationService: NotificationService,
-    private dialog: ConfirmDialogComponent,
     public spinnerService: SpinnerService
   ) { }
 
@@ -63,15 +62,6 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
         if (this.router.url.includes('/edit/')) {
           this.mode = 'edit';
           this.titleServic.setTitle('Delivery Management System - Edit Order');
-        } else if (this.router.url.includes('/delete/')) {
-          this.mode = 'delete';
-          this.orderId = <string>paramMap.get('id');
-          //Dialog here
-          // this.orderService.deleteOrderById(this.orderId).subscribe(response => {
-          //   this.router.navigate(['orders']);
-          // }, error => {
-          //   this.notificationService.openSnackBar(error.error.error);
-          // });
 
         } else {
           this.mode = 'view';
@@ -199,7 +189,7 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   public onSaveOrder() {
     console.log('onSaveOrder',this.form.invalid);
     if (this.form.invalid) {
-      //return;
+      return;
     }
     console.log('' + this.mode);
     if (this.mode === 'create') {
@@ -248,6 +238,13 @@ export class OrderCreateComponent implements OnInit, AfterViewInit {
   public onDeleteImage() {
     this.fileUploader.nativeElement.value = null;
     this.imagePreview = '';
+    this.form.get('imageFile')?.patchValue('');
+    this.form.get('imageName')?.patchValue('');
+  }
+
+  public onDeleteImage2() {
+    this.fileUploader.nativeElement.value = null;
+    this.orderImages = '';
     this.form.get('imageFile')?.patchValue('');
     this.form.get('imageName')?.patchValue('');
   }

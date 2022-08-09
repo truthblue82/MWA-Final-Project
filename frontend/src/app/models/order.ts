@@ -21,7 +21,7 @@ export interface Order {
   size: string;
   orderValue: number;
   insurance: boolean;
-  images: [string, string];
+  images: string;
   imageFile: File;
   imageName: string;
   orderStatus: string;

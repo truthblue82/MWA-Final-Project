@@ -22,7 +22,8 @@ export class OrderService {
   public addOrder(order: Order): Observable<Order> {
     //build formData because of image uploading
     const postData = new FormData();
-    postData.append('imageFile', order.imageFile, order.imageName);
+    if(order.imageFile)
+      postData.append('imageFile', order.imageFile, order.imageName);
     postData.append('senderName', order.senderName);
     postData.append('senderPhone', order.senderPhone);
     postData.append('senderEmail', order.senderEmail);
@@ -42,6 +43,7 @@ export class OrderService {
     postData.append('orderDate', order.orderDate.toString());
     postData.append('note', order.note);
     postData.append('routes', JSON.stringify(order.routes));
+    postData.append('images', order.images);
 
     return this.http.post<Order>(`${environment.backendUrl}/orders`, postData);
   }
@@ -75,6 +77,7 @@ export class OrderService {
     postData.append('orderDate', updatedOrder.orderDate.toString());
     postData.append('note', updatedOrder.note);
     postData.append('routes', JSON.stringify(updatedOrder.routes));
+    postData.append('images', updatedOrder.images);
 
     return this.http.post<Order>(`${environment.backendUrl}/orders/${orderId}`, postData);
   }

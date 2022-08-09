@@ -20,11 +20,10 @@ exports.addOrder = async (req) => {
         
         if (orderObj.routes) {
             const routes = JSON.parse(orderObj.routes);
-            for (let i = 0; i < routes.length; i++) {
-                console.log(routes[i]);
-            }
+            
             //add last route from last warehouse to receiver home
-            const lastRoute = routes[routes.length];
+            const lastRoute = routes[routes.length-1];
+
             routes.push({
                 name: `House of ${orderObj.receiverName}`,
                 from: {
@@ -38,6 +37,7 @@ exports.addOrder = async (req) => {
                 color: '',
                 note: ''
             });
+            
             orderObj.routes = routes;
         }
         
@@ -50,7 +50,7 @@ exports.addOrder = async (req) => {
         if (req.file && req.file.filename) {
             const pictureName = req.file.filename;
             const picturePath = path.join('/', 'images', pictureName);
-            orderObj.images = [picturePath];
+            orderObj.images = picturePath;
         }
 
         const order = new Order(orderObj);
@@ -127,15 +127,12 @@ exports.updateOrderById = async (orderId, req) => {
         if (req.file && req.file.filename) {
             const pictureName = req.file.filename;
             const picturePath = path.join('/', 'images', pictureName);
-            orderObj.images = [picturePath];
+            orderObj.images = picturePath;
         }
-        if (req.routes) {
+        if (orderObj.routes) {
             const routes = JSON.parse(orderObj.routes);
-            for (let i = 0; i < routes.length; i++) {
-                console.log(routes[i]);
-            }
             //add last route from last warehouse to receiver home
-            const lastRoute = routes[routes.length];
+            const lastRoute = routes[routes.length - 1];
             routes.push({
                 name: `House of ${orderObj.receiverName}`,
                 from: {
@@ -156,7 +153,7 @@ exports.updateOrderById = async (orderId, req) => {
             complete: true
         });
         orderObj.orderCreater = decode.payload.employeeId;
-        console.log('orderObj',orderObj)
+        
         const result = await Order.findOneAndUpdate({ _id: orderId }, orderObj);
         
         console.log('result',result);

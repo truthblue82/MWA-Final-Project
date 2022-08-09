@@ -21,7 +21,7 @@ const orderSchema = new Schema({
   cost: { type: Number, required: true },
   tax: { type: Number, required: true },
   total: { type: Number, required: true},
-  images: [String, String],
+  images: String,
   weight: { type: String },
   size: { type: String},
   orderValue: { type: Number },
