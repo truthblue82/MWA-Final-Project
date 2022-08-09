@@ -155,7 +155,6 @@ exports.updateOrderById = async (orderId, req) => {
         
         const result = await Order.findOneAndUpdate({ _id: orderId }, orderObj);
         
-        console.log('result',result);
         return orderObj;
     } catch (err) {
         console.log(err.message)
