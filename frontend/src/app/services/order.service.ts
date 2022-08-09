@@ -19,7 +19,29 @@ export class OrderService {
   }
 
   public addOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(`${environment.backendUrl}/orders`, order);
+    //build formData because of image uploading
+    const postData = new FormData();
+    postData.append('images', order.images, order.imageName);
+    postData.append('senderName', order.senderName);
+    postData.append('senderPhone', order.senderPhone);
+    postData.append('senderEmail', order.senderEmail);
+    postData.append('senderAddress', order.senderAddress);
+    postData.append('receiverName', order.receiverName);
+    postData.append('receiverPhone', order.receiverPhone);
+    postData.append('receiverEmail', order.receiverEmail);
+    postData.append('receiverAddress', order.receiverAddress);
+      //define fo routes //
+    postData.append('cost', order.cost.toString());
+    postData.append('size', order.size);
+    postData.append('orderValue', order.orderValue.toString());
+    postData.append('tax', order.tax.toString());
+    postData.append('total', order.total.toString());
+    postData.append('weight', order.weight.toString());
+    postData.append('insurance', order.insurance.toString());
+    postData.append('orderDate', order.orderDate.toString());
+    postData.append('note', order.note);
+
+    return this.http.post<Order>(`${environment.backendUrl}/orders`, postData);
   }
 
   public getOrder(orderId: string): Observable<Order> {
@@ -27,6 +49,28 @@ export class OrderService {
   }
 
   public updateOrderById(orderId: string, updatedOrder: Order): Observable<Order> {
-    return this.http.put<Order>(`${environment.backendUrl}/orders/${orderId}`, updatedOrder);
+    //build formData because of image uploading
+    const postData = new FormData();
+    postData.append('images', updatedOrder.images, updatedOrder.imageName);
+    postData.append('senderName', updatedOrder.senderName);
+    postData.append('senderPhone', updatedOrder.senderPhone);
+    postData.append('senderEmail', updatedOrder.senderEmail);
+    postData.append('senderAddress', updatedOrder.senderAddress);
+    postData.append('receiverName', updatedOrder.receiverName);
+    postData.append('receiverPhone', updatedOrder.receiverPhone);
+    postData.append('receiverEmail', updatedOrder.receiverEmail);
+    postData.append('receiverAddress', updatedOrder.receiverAddress);
+      //define fo routes //
+    postData.append('cost', updatedOrder.cost.toString());
+    postData.append('size', updatedOrder.size);
+    postData.append('orderValue', updatedOrder.orderValue.toString());
+    postData.append('tax', updatedOrder.tax.toString());
+    postData.append('total', updatedOrder.total.toString());
+    postData.append('weight', updatedOrder.weight.toString());
+    postData.append('insurance', updatedOrder.insurance.toString());
+    postData.append('orderDate', updatedOrder.orderDate.toString());
+    postData.append('note', updatedOrder.note);
+
+    return this.http.post<Order>(`${environment.backendUrl}/orders/${orderId}`, postData);
   }
 }

@@ -2,6 +2,7 @@ import { OrderRoute } from "./order-route";
 
 export interface Order {
   _id: string;
+  trackingNumber: string;
   senderName: string;
   senderPhone: string;
   senderAddress: string;
@@ -20,7 +21,8 @@ export interface Order {
   size: string;
   orderValue: number;
   insurance: boolean;
-  images: [string, string];
+  images: File; //[string, string];
+  imageName: string;
   orderStatus: string;
   total: number;
   note: string;

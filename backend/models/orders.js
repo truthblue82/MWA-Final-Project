@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const orderSchema = new Schema({
+  trackingNumber: { type: String, required: true, index: true},
   senderName: { type: String, required: true },
   senderPhone: { type: String, required: true, index: true },
   senderEmail: { type: String },

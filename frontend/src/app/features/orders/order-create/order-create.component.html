@@ -165,6 +165,28 @@
             </div>
 
             <div class="widen note">
+              <button mat-stroked-button color="primary" type="button" (click)="filePicker.click()">Upload order picture
+                <mat-icon>file_upload</mat-icon>
+              </button>
+              <mat-hint class="hint">Maximum uploaded images is one.</mat-hint>
+              <input type="file" #filePicker [accept]="requiredImgType" (change)="onImagePicker($event)" />
+            </div>
+
+            <!-- <div class="widen" *ngIf="imagePreviews && imagePreviews.length > 0">
+              <div class="image-preview" *ngFor="let imagePreview of imagePreviews" >
+                <img [src]="imagePreview" alt="order image">
+              </div>
+            </div> //display fine but not process remove image and backend-->
+
+            <div class="image-preview" *ngIf="imagePreview && imagePreview !== ''">
+              <img [src]="imagePreview" alt="order image">
+              <button class="img-delete" mat-icon-button color="accent" type="button" (click)="onDeleteImage()">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+
+            <div class="widen note">
               <mat-form-field class="widen">
                 <textarea rows="6" matInput formControlName="note" placeholder="Description"></textarea>
                 <mat-hint class="hint">Input order description: number of child item, color, status,...</mat-hint>
@@ -173,8 +195,8 @@
             </div>
 
             <div class="center">
-              <button mat-raised-button color="basic" type="button">Cancel</button>
-              <button mat-raised-button color="accent" type="submit">Save</button>
+              <button mat-raised-button color="basic" type="button" (click)="onCancel()">Cancel</button>
+              <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">Save</button>
             </div>
           </div>
         </form>

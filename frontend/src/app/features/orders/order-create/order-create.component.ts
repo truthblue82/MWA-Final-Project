@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { C, COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
@@ -21,6 +21,8 @@ import { NotificationService } from "src/app/core/services/notification.service"
   styleUrls: ['./order-create.component.css']
 })
 export class OrderCreateComponent implements OnInit {
+  @ViewChild('filePicker') fileUploader!: ElementRef;
+
   colors: Array<ThemePalette> = [undefined, 'primary', 'warn'];
   separatorKeysCodes: number[] = [ENTER, COMMA];
   orderRoutes: OrderRoute[] = [];
@@ -28,6 +30,9 @@ export class OrderCreateComponent implements OnInit {
   private mode: string = 'create';
   private orderId!: string;
   order!: Order;
+  //imagePreviews: Array<string> = [];
+  imagePreview: string = '';
+  requiredImgType: Array<string> = ['.jpg', '.png', '.jpeg'];
 
   //need to change
   panelOpenState: boolean = false;
@@ -47,11 +52,10 @@ export class OrderCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleServic.setTitle('Delivery Management System - Create Order');
-
     this.buildForm();
     this.ar.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('id')) {
+        this.titleServic.setTitle('Delivery Management System - Edit Order');
         this.mode = 'edit';
         this.orderId = <string>paramMap.get('id');
 
@@ -63,6 +67,7 @@ export class OrderCreateComponent implements OnInit {
           this.notificationService.openSnackBar(error.error.error);
         });
       } else {
+        this.titleServic.setTitle('Delivery Management System - Create Order');
         this.mode = 'create';
         this.orderId = '';
       }
@@ -72,12 +77,12 @@ export class OrderCreateComponent implements OnInit {
   private buildForm() {
     this.form = this.fb.group({
       senderName: ['', Validators.required],
-      senderPhone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      senderEmail: ['', [Validators.required, Validators.email]],
+      senderPhone: ['', Validators.pattern('^[0-9]{10}$')],
+      senderEmail: ['', Validators.email],
       senderAddress: ['', Validators.required],
       receiverName: ['', Validators.required],
-      receiverPhone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      receiverEmail: ['', [Validators.required, Validators.email]],
+      receiverPhone: ['', Validators.pattern('^[0-9]{10}$')],
+      receiverEmail: ['', Validators.email],
       receiverAddress: ['', Validators.required],
       //define fo routes //
       cost: ['', Validators.required],
@@ -88,6 +93,8 @@ export class OrderCreateComponent implements OnInit {
       weight: ['', Validators.required],
       insurance: [false],
       orderDate: [Date.now()],
+      images: [''],
+      imageName: [''],
       note: ['']
     });
   }
@@ -115,7 +122,7 @@ export class OrderCreateComponent implements OnInit {
       });
   }
 
-  onSaveOrder() {
+  public onSaveOrder() {
     if (this.form.invalid) {
       return;
     }
@@ -137,5 +144,33 @@ export class OrderCreateComponent implements OnInit {
           this.notificationService.openSnackBar(error.error.error);
       })
     }
+  }
+
+  public onImagePicker(event: Event) {
+    const element = (event.target as HTMLInputElement);
+    const files = element.files ? element.files[0] : null;
+
+    this.form.get('images')?.patchValue(files);
+    this.form.get('images')?.updateValueAndValidity();
+    this.form.get('imageName')?.patchValue(files?.name)
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      //this.imagePreviews.push(reader.result as string);
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(files as File);
+  }
+
+  public onDeleteImage() {
+    this.fileUploader.nativeElement.value = null;
+    this.imagePreview = '';
+    this.form.get('images')?.patchValue('');
+    this.form.get('imageName')?.patchValue('');
+  }
+
+  public onCancel() {
+    this.form.reset();
+    this.route.navigate(['orders']);
   }
 }

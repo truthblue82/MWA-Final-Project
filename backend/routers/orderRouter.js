@@ -12,7 +12,8 @@ const storage = multer.diskStorage({
     cb(null, dest);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+    const filename = Date.now() + path.extname(file.originalname);
+    cb(null, filename);
     //cb(null, file.originalname);
   }
 });
@@ -34,7 +35,9 @@ const imageUpload = multer({
 router.get('/', fetchAll);
 router.post('', imageUpload.single('images'), addOrder);
 router.get('/:id', getOrderById);
-router.put('/:id', updateOrderById);
+
+//using post for updating because of uploading image
+router.post('/:id', imageUpload.single('images'), updateOrderById);
 // router.patch('/:id',);
 // router.delete('/:id',);
 
