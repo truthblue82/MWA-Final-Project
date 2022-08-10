@@ -41,12 +41,4 @@ export interface Order {
       }
   ]*/
 }
-// routes: [
-//       {
-//         name: string,
-//         address: string,
-//         PIC: string,
-//         status: string
-//       }
-//     ]
 

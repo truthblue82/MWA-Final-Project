@@ -43,7 +43,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     //this.authData = <AuthData>this.authService.getCurrentUser();
     this.authService.getCurrentAccount().subscribe(account => {
       this.accountProfile = account;
-      let defaultImg = `/images/${account.gender}.jpg`;
+      let defaultImg = `/images/${account.gender.toLowerCase()}.jpg`;
       if (!account.avatar) this.avatar = this.imgUrl + defaultImg;
       else this.avatar = this.imgUrl + account.avatar;
       this.fullname = `${account.firstname} ${account.lastname}`;
