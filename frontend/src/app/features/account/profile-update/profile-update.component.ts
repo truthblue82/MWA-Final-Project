@@ -52,13 +52,13 @@ export class ProfileUpdateComponent implements OnInit{
     this.form = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      phone: [Validators.required, Validators.pattern('^[0-9]{10}$')],
-      email: [Validators.required, Validators.email],
-      username: [Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,}$')],
-      role: [Validators.required],
-      avatar: [],
-      file: [],
-      gender: [Validators.required]
+      phone: ['', Validators.pattern('^[0-9]{10}$')],
+      email: ['',Validators.email],
+      username: ['', Validators.pattern('^[a-zA-Z0-9]{6,}$')],
+      role: ['',Validators.required],
+      avatar: [''],
+      file: [''],
+      gender: ['',Validators.required]
     });
   }
 
