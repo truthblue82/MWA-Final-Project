@@ -58,10 +58,10 @@ exports.updateEmployeeById = async (req, res) => {
 };
 
 exports.updateEmployeePassword = async (req, res) => {
-  const { password } = req.body;
-  const result = await updateEmployeePassword(req.params.id, password);
+  const { currentPwd, newPwd } = req.body;
+  const result = await updateEmployeePassword(req.params.id, newPwd);
   if (result && result.status) {
-    res.status(result.status).json({ error: result.status });
+    res.status(result.status).json({ error: result.error });
   }
-  else res.status(200).json({ result: result });
+  else res.status(200).json( result );
 }

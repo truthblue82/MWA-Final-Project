@@ -8,6 +8,7 @@ import * as moment from 'moment';
 
 import { environment } from "src/environments/environment";
 import { AccountData } from 'src/app/models/account';
+import { stringToKeyValue } from '@angular/flex-layout/extended/style/style-transforms';
 
 @Injectable({
   providedIn: 'root'
@@ -77,8 +78,9 @@ export class AuthenticationService {
     return of(true).pipe(delay(1000));
   }
 
-  changePassword(email: string, currentPwd: string, newPwd: string) {
-    return of(true).pipe(delay(1000));
+  changePassword(id: string, currentPwd: string, newPwd: string) {
+    return this.http.patch(`${environment.backendUrl}/employees/${id}/change-password`, { currentPwd, newPwd });
+    //return of(true).pipe(delay(1000));
   }
 
   passwordReset(email: string, token: string, password: string, confirmPassword: string): any {

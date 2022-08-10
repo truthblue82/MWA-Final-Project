@@ -44,6 +44,7 @@ router.put('/:id', updateEmployeeById);
 
 router.post('/:id', imageUpload.single('image'), updateEmployeeById);
 
-router.patch('/:id', updateEmployeePassword);
+router.patch('/:id/change-password', updateEmployeePassword);
+
 
 module.exports = router;

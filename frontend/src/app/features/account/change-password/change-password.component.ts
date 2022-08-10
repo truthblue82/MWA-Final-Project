@@ -57,9 +57,9 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
 
-    const email = <string>this.authService.getCurrentUser()?.email;
+    const id = <string>this.authService.getCurrentUser()?.employeeId;
 
-    this.authService.changePassword(email, this.currentPassword, this.newPassword)
+    this.authService.changePassword(id, this.currentPassword, this.newPassword)
       .subscribe(
         //10KG need to update here
         response => {
@@ -67,7 +67,7 @@ export class ChangePasswordComponent implements OnInit {
           this.notificationService.openSnackBar('Your password has been changed.');
         },
         error => {
-          this.notificationService.openSnackBar(error.error);
+          this.notificationService.openSnackBar(error.error.error);
         }
       );
   }

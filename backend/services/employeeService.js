@@ -105,9 +105,9 @@ exports.updateEmployeeById = async (request) => {
   }
 };
 
-exports.updateEmployeePassword = async (id, password) => {
+exports.updateEmployeePassword = async (id, newPwd) => {
   try {
-    bcrypt.hash(password, 10)
+    bcrypt.hash(newPwd, 10)
       .then(async hash => {
         const result = await Employee.findOneAndUpdate({ _id: id }, { password: hash });
         return result;

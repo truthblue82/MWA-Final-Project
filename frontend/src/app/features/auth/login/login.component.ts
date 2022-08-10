@@ -68,7 +68,6 @@ export class LoginComponent implements OnInit {
 
     // Get data from auth.selectors.ts
     this.store.select(selectToken).subscribe(data => {
-      console.log("111",data);
       if (data) {
         if (rememberMe) {
           localStorage.setItem('savedUserEmail', email);
@@ -79,10 +78,10 @@ export class LoginComponent implements OnInit {
         this.authenticationService.persistState();
         this.router.navigate(['/']);
       } else {
-        this.notificationService.openSnackBar("Something wrong!");
+        //this.notificationService.openSnackBar("Something wrong!");
         this.loading = false;
       }
-     })
+    })
 
     // this.authenticationService
     //   .login(email.toLowerCase(), password)
