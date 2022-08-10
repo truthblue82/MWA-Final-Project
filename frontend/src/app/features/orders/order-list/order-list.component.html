@@ -43,9 +43,18 @@
               <ng-container matColumnDef="actions">
                 <th mat-header-cell class="dc-label" *matHeaderCellDef mat-sort-header>Actions</th>
                 <td mat-cell class="dc-content" *matCellDef="let element">
-                  <a href="/orders/view/{{element._id}}">View</a>&nbsp;
+                  <button mat-button color="primary" class="btn" (click)="OnViewBtn(element._id)">
+                    <mat-label>View</mat-label>
+                  </button>
+                  <button mat-button color="primary" class="btn" (click)="OnEditBtn(element._id)">
+                    <mat-label>Edit</mat-label>
+                  </button>
+                  <button mat-button color="primary" class="btn" (click)="OnDeleteBtn(element._id)">
+                    <mat-label>Delete</mat-label>
+                  </button>
+                  <!-- <a href="/orders/view/{{element._id}}">View</a>&nbsp;
                   <a href="/orders/edit/{{element._id}}">Edit</a>&nbsp;
-                  <a href="/orders/delete/{{element._id}}" color="#e8eaf6">Delete</a>
+                  <a href="/orders/delete/{{element._id}}" color="#e8eaf6">Delete</a> -->
                 </td>
               </ng-container>
 
