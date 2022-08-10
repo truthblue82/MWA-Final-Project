@@ -142,7 +142,7 @@ export class OrderListComponent
     delConfirmationDialog.afterClosed().subscribe(result => {
       if (result) {
         this.store.dispatch(deleteOrder({ _id: id }));
-        this.router.navigate(['/']);
+        window.location.href = '/orders';
       }
     });
   }
