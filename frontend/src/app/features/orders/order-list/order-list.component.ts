@@ -18,10 +18,15 @@ import {
 } from "src/app/store/selectors/order.selectors";
 import {
   loadingOrders,
+  deleteOrder
 } from "src/app/store/actions/order.actions";
 import { MatPaginator } from "@angular/material/paginator";
 import { Observable, merge, Subject, Subscription } from "rxjs";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { ThisReceiver } from "@angular/compiler";
 
 @Component({
   selector: "app-order-list",
@@ -51,11 +56,11 @@ export class OrderListComponent
   public error$!: Observable<boolean>;
   public filterSubject = new Subject<string>();
   public defaultSort: Sort = { active: "role", direction: "asc" };
-
+  
   private filter: string = "";
   private subscription: Subscription = new Subscription();
 
-  constructor(public store: Store<GlobalState>) {}
+  constructor(private router: Router, public dialog: MatDialog, public store: Store<GlobalState>) {}
 
   public ngOnInit(): void {
     this.store
@@ -115,6 +120,31 @@ export class OrderListComponent
     this.dataSource = new MatTableDataSource(
       orders.length ? orders : this.noData
     );
+  }
+
+  OnEditBtn(id: string): void {
+    this.router.navigate([`/orders/edit/${id}`]);
+  }
+
+  OnViewBtn(id: string): void {
+    this.router.navigate([`/orders/view/${id}`]);
+  }
+
+  OnDeleteBtn(id: string): void {
+    let delConfirmationDialog = this.dialog.open(
+      ConfirmDialogComponent, 
+      {
+        data: {
+          title: 'Delete Order', 
+          message: `Are you sure you want to delete order ${id}?`
+        }
+      });
+    delConfirmationDialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(deleteOrder({ _id: id }));
+        window.location.href = '/orders';
+      }
+    });
   }
 
   public ngOnDestroy(): void {

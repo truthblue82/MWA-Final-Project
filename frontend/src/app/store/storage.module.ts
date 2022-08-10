@@ -6,7 +6,6 @@ import { environment } from '../../environments/environment';
 import { reducers } from '.';
 import { OrderEffects } from './effects/order.effects';
 import { AuthEffects } from './effects/auth.effects';
-import { AuthModule } from '../features/auth/auth.module';
 
 @NgModule({
   imports: [

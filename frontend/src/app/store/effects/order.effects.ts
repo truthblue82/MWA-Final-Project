@@ -7,7 +7,17 @@ import { OrderParams } from "../../models/order-params";
 import { Order } from '../../models/order';
 import { OrderResponse } from "../../models/order-response";
 import { OrderService } from "../../services/order.service";
-import { loadOrdersFailure, loadOrdersSuccess, loadingOrders, LoadOrderFailure, LoadOrderSuccess, LoadOrder } from "../actions/order.actions";
+import { 
+  loadOrdersFailure,
+  loadOrdersSuccess,
+  loadingOrders,
+  LoadOrderFailure,
+  LoadOrderSuccess,
+  LoadOrder,
+  deleteOrder,
+  deleteOrderSuccess,
+  deleteOrderFailure
+} from "../actions/order.actions";
 
 @Injectable()
 export class OrderEffects {
@@ -40,6 +50,19 @@ export class OrderEffects {
           return LoadOrderSuccess({order});
         }),
         catchError(err => of(LoadOrderFailure({err})))
+      );
+    })
+  ));
+
+  public deleteOrder$ = createEffect((): Observable<Action> => this.actions$.pipe(
+    ofType(deleteOrder),
+    map((action) => action._id),
+    switchMap(_id => {
+      return this.service.deleteOrderById(_id).pipe(
+        map((order: Order) => {
+          return deleteOrderSuccess({order});
+        }),
+        catchError(err => of(deleteOrderFailure({err})))
       );
     })
   ));

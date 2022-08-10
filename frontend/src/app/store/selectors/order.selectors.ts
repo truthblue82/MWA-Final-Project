@@ -35,7 +35,6 @@ export const selectOrderLoading = createSelector(
   (state: OrderState): boolean => state.loading
 );
 
-
 export const selectOrderTotal = createSelector(
   selectOrderState,
   (state: OrderState): number => state.total

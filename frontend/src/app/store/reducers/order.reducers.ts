@@ -7,7 +7,7 @@ import { createReducer, on } from "@ngrx/store";
 
 export const orderReducer = createReducer(
   initialOrderState,
-  on(order.loadingOrders, order.LoadOrder, (state) => ({ ...state, selectedOrderId: null!, loading: true })),
+  on(order.loadingOrders, order.LoadOrder, order.deleteOrder, (state) => ({ ...state, selectedOrderId: null!, loading: true })),
   on(order.loadOrdersSuccess, (state, { response }) =>
     orderAdapter.setAll(response.orders, {
       ...state,
@@ -33,6 +33,19 @@ export const orderReducer = createReducer(
     })
   ),
   on(order.LoadOrderFailure, (state, { err }) => ({
+      ...state,
+      loading: false,
+      errorMessage: err.message
+  })),
+  on(order.deleteOrderSuccess, (state, { order }) =>
+    orderAdapter.removeOne(order._id, {
+      ...state,
+      error: false,
+      loading: false,
+      selectedOrderId: order._id
+    })
+  ),
+  on(order.deleteOrderFailure, (state, { err }) => ({
       ...state,
       loading: false,
       errorMessage: err.message
